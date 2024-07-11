@@ -64,7 +64,7 @@
 			]
 		},
 		{
-			"label": "01 - gongc gongreqif -skipGoModCommands -skipNpmInstall -compileForDebug go/models",
+			"label": "01 - gongc gongreqif -skipNg -skipGoModCommands -compileForDebug go/models",
 			"type": "shell",
 			"options": {
 				"cwd": "${workspaceFolder}/go/models"
@@ -74,7 +74,7 @@
 			"args": [
 				"-skipGoModCommands",
 				"-compileForDebug",
-				"-skipNpmInstall"
+				"-skipNg"
 			]
 		},
 		{

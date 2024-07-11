@@ -128,6 +128,88 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 
 	}
 
+	map_REQIFHEADER_Identifiers := make(map[*REQIFHEADER]string)
+	_ = map_REQIFHEADER_Identifiers
+
+	reqifheaderOrdered := []*REQIFHEADER{}
+	for reqifheader := range stage.REQIFHEADERs {
+		reqifheaderOrdered = append(reqifheaderOrdered, reqifheader)
+	}
+	sort.Slice(reqifheaderOrdered[:], func(i, j int) bool {
+		return reqifheaderOrdered[i].Name < reqifheaderOrdered[j].Name
+	})
+	if len(reqifheaderOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, reqifheader := range reqifheaderOrdered {
+
+		id = generatesIdentifier("REQIFHEADER", idx, reqifheader.Name)
+		map_REQIFHEADER_Identifiers[reqifheader] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQIFHEADER")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", reqifheader.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqifheader.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIERAttr")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqifheader.IDENTIFIERAttr))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "COMMENT")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqifheader.COMMENT))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "CREATIONTIME")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqifheader.CREATIONTIME))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "REPOSITORYID")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqifheader.REPOSITORYID))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "REQIFTOOLID")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqifheader.REQIFTOOLID))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "REQIFVERSION")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqifheader.REQIFVERSION))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SOURCETOOLID")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqifheader.SOURCETOOLID))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "TITLE")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqifheader.TITLE))
+		initializerStatements += setValueField
+
+	}
+
 	// insertion initialization of objects to stage
 	for idx, reqif := range reqifOrdered {
 		var setPointerField string
@@ -135,6 +217,24 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 
 		id = generatesIdentifier("REQIF", idx, reqif.Name)
 		map_REQIF_Identifiers[reqif] = id
+
+		// Initialisation of values
+		if reqif.REQIFHEADER != nil {
+			setPointerField = PointerFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "REQIFHEADER")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFHEADER_Identifiers[reqif.REQIFHEADER])
+			pointersInitializesStatements += setPointerField
+		}
+
+	}
+
+	for idx, reqifheader := range reqifheaderOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("REQIFHEADER", idx, reqifheader.Name)
+		map_REQIFHEADER_Identifiers[reqifheader] = id
 
 		// Initialisation of values
 	}

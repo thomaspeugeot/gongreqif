@@ -24,6 +24,24 @@ func GetReverseFieldOwnerName[T models.Gongstruct](
 		case "REQIF":
 			switch reverseField.Fieldname {
 			}
+		case "REQIFHEADER":
+			switch reverseField.Fieldname {
+			}
+		}
+
+	case *models.REQIFHEADER:
+		tmp := GetInstanceDBFromInstance[models.REQIFHEADER, REQIFHEADERDB](
+			stage, backRepo, inst,
+		)
+		_ = tmp
+		switch reverseField.GongstructName {
+		// insertion point
+		case "REQIF":
+			switch reverseField.Fieldname {
+			}
+		case "REQIFHEADER":
+			switch reverseField.Fieldname {
+			}
 		}
 
 	default:
@@ -49,6 +67,24 @@ func GetReverseFieldOwner[T models.Gongstruct](
 		switch reverseField.GongstructName {
 		// insertion point
 		case "REQIF":
+			switch reverseField.Fieldname {
+			}
+		case "REQIFHEADER":
+			switch reverseField.Fieldname {
+			}
+		}
+
+	case *models.REQIFHEADER:
+		tmp := GetInstanceDBFromInstance[models.REQIFHEADER, REQIFHEADERDB](
+			stage, backRepo, inst,
+		)
+		_ = tmp
+		switch reverseField.GongstructName {
+		// insertion point
+		case "REQIF":
+			switch reverseField.Fieldname {
+			}
+		case "REQIFHEADER":
 			switch reverseField.Fieldname {
 			}
 		}

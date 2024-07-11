@@ -22,6 +22,28 @@ func FillUpForm[T models.Gongstruct](
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+		AssociationFieldToForm("REQIFHEADER", instanceWithInferedType.REQIFHEADER, formGroup, probe)
+
+	case *models.REQIFHEADER:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("IDENTIFIERAttr", instanceWithInferedType.IDENTIFIERAttr, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("COMMENT", instanceWithInferedType.COMMENT, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("CREATIONTIME", instanceWithInferedType.CREATIONTIME, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("REPOSITORYID", instanceWithInferedType.REPOSITORYID, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("REQIFTOOLID", instanceWithInferedType.REQIFTOOLID, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("REQIFVERSION", instanceWithInferedType.REQIFVERSION, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("SOURCETOOLID", instanceWithInferedType.SOURCETOOLID, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("TITLE", instanceWithInferedType.TITLE, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
 
 	default:
 		_ = instanceWithInferedType

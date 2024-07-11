@@ -22,6 +22,8 @@ func fillUpTablePointerToGongstruct[T models.PointerToGongstruct](
 	// insertion point
 	case *models.REQIF:
 		fillUpTable[models.REQIF](probe)
+	case *models.REQIFHEADER:
+		fillUpTable[models.REQIFHEADER](probe)
 	default:
 		log.Println("unknow type")
 	}

@@ -9,6 +9,7 @@ import (
 
 	"github.com/thomaspeugeot/gongreqif/go/schema"
 
+	gongreqif_models "github.com/thomaspeugeot/gongreqif/go/models"
 	gongreqif_stack "github.com/thomaspeugeot/gongreqif/go/stack"
 	gongreqif_static "github.com/thomaspeugeot/gongreqif/go/static"
 )
@@ -55,6 +56,13 @@ func main() {
 		fmt.Println("Error parsing XML:", err)
 		return
 	}
+
+	reqifModels := new(gongreqif_models.REQIF).Stage(stack.Stage)
+	reqifModels.SetD(&reqif)
+	reqifModels.SetStage(stack.Stage)
+	reqifModels.Walk()
+
+	stack.Stage.Commit()
 
 	// Access and process parsed data
 	fmt.Println("ReqIF Header:")

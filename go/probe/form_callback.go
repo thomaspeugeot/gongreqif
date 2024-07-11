@@ -63,6 +63,8 @@ func (reqifFormCallback *REQIFFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(reqif_.Name), formDiv)
+		case "REQIFHEADER":
+			FormDivSelectFieldToField(&(reqif_.REQIFHEADER), reqifFormCallback.probe.stageOfInterest, formDiv)
 		}
 	}
 
@@ -94,4 +96,97 @@ func (reqifFormCallback *REQIFFormCallback) OnSave() {
 	}
 
 	fillUpTree(reqifFormCallback.probe)
+}
+func __gong__New__REQIFHEADERFormCallback(
+	reqifheader *models.REQIFHEADER,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (reqifheaderFormCallback *REQIFHEADERFormCallback) {
+	reqifheaderFormCallback = new(REQIFHEADERFormCallback)
+	reqifheaderFormCallback.probe = probe
+	reqifheaderFormCallback.reqifheader = reqifheader
+	reqifheaderFormCallback.formGroup = formGroup
+
+	reqifheaderFormCallback.CreationMode = (reqifheader == nil)
+
+	return
+}
+
+type REQIFHEADERFormCallback struct {
+	reqifheader *models.REQIFHEADER
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (reqifheaderFormCallback *REQIFHEADERFormCallback) OnSave() {
+
+	log.Println("REQIFHEADERFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	reqifheaderFormCallback.probe.formStage.Checkout()
+
+	if reqifheaderFormCallback.reqifheader == nil {
+		reqifheaderFormCallback.reqifheader = new(models.REQIFHEADER).Stage(reqifheaderFormCallback.probe.stageOfInterest)
+	}
+	reqifheader_ := reqifheaderFormCallback.reqifheader
+	_ = reqifheader_
+
+	for _, formDiv := range reqifheaderFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(reqifheader_.Name), formDiv)
+		case "IDENTIFIERAttr":
+			FormDivBasicFieldToField(&(reqifheader_.IDENTIFIERAttr), formDiv)
+		case "COMMENT":
+			FormDivBasicFieldToField(&(reqifheader_.COMMENT), formDiv)
+		case "CREATIONTIME":
+			FormDivBasicFieldToField(&(reqifheader_.CREATIONTIME), formDiv)
+		case "REPOSITORYID":
+			FormDivBasicFieldToField(&(reqifheader_.REPOSITORYID), formDiv)
+		case "REQIFTOOLID":
+			FormDivBasicFieldToField(&(reqifheader_.REQIFTOOLID), formDiv)
+		case "REQIFVERSION":
+			FormDivBasicFieldToField(&(reqifheader_.REQIFVERSION), formDiv)
+		case "SOURCETOOLID":
+			FormDivBasicFieldToField(&(reqifheader_.SOURCETOOLID), formDiv)
+		case "TITLE":
+			FormDivBasicFieldToField(&(reqifheader_.TITLE), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if reqifheaderFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		reqifheader_.Unstage(reqifheaderFormCallback.probe.stageOfInterest)
+	}
+
+	reqifheaderFormCallback.probe.stageOfInterest.Commit()
+	fillUpTable[models.REQIFHEADER](
+		reqifheaderFormCallback.probe,
+	)
+	reqifheaderFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if reqifheaderFormCallback.CreationMode || reqifheaderFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		reqifheaderFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: table.FormGroupDefaultName.ToString(),
+		}).Stage(reqifheaderFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__REQIFHEADERFormCallback(
+			nil,
+			reqifheaderFormCallback.probe,
+			newFormGroup,
+		)
+		reqifheader := new(models.REQIFHEADER)
+		FillUpForm(reqifheader, newFormGroup, reqifheaderFormCallback.probe)
+		reqifheaderFormCallback.probe.formStage.Commit()
+	}
+
+	fillUpTree(reqifheaderFormCallback.probe)
 }

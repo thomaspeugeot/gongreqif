@@ -315,6 +315,7 @@ var __gong__map_Indentifiers_gongstructName = make(map[string]string)
 
 // insertion point for identifiers maps
 var __gong__map_REQIF = make(map[string]*REQIF)
+var __gong__map_REQIFHEADER = make(map[string]*REQIFHEADER)
 
 // Parser needs to be configured for having the [Name1.Name2] or [pkg.Name1] ...
 // to be recognized as a proper identifier.
@@ -491,6 +492,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 										instanceREQIF := (&REQIF{Name: instanceName}).Stage(stage)
 										instance = any(instanceREQIF)
 										__gong__map_REQIF[identifier] = instanceREQIF
+									case "REQIFHEADER":
+										instanceREQIFHEADER := (&REQIFHEADER{Name: instanceName}).Stage(stage)
+										instance = any(instanceREQIFHEADER)
+										__gong__map_REQIFHEADER[identifier] = instanceREQIFHEADER
 									}
 									__gong__map_Indentifiers_gongstructName[identifier] = gongstructName
 									return
@@ -531,6 +536,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 							switch fieldName {
 							// insertion point for date assign code
 							}
+						case "REQIFHEADER":
+							switch fieldName {
+							// insertion point for date assign code
+							}
 						}
 					}
 				}
@@ -557,6 +566,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					switch gongstructName {
 					// insertion point for slice of pointers assignments
 					case "REQIF":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "REQIFHEADER":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -617,6 +630,46 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_REQIF[identifier].Name = fielValue
 				}
+			case "REQIFHEADER":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_REQIFHEADER[identifier].Name = fielValue
+				case "IDENTIFIERAttr":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_REQIFHEADER[identifier].IDENTIFIERAttr = fielValue
+				case "COMMENT":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_REQIFHEADER[identifier].COMMENT = fielValue
+				case "CREATIONTIME":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_REQIFHEADER[identifier].CREATIONTIME = fielValue
+				case "REPOSITORYID":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_REQIFHEADER[identifier].REPOSITORYID = fielValue
+				case "REQIFTOOLID":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_REQIFHEADER[identifier].REQIFTOOLID = fielValue
+				case "REQIFVERSION":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_REQIFHEADER[identifier].REQIFVERSION = fielValue
+				case "SOURCETOOLID":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_REQIFHEADER[identifier].SOURCETOOLID = fielValue
+				case "TITLE":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_REQIFHEADER[identifier].TITLE = fielValue
+				}
 			}
 		case *ast.Ident:
 			// assignment to boolean field ?
@@ -632,6 +685,13 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 			switch gongstructName {
 			// insertion point for bool & pointers assignments
 			case "REQIF":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "REQIFHEADER":
+					targetIdentifier := ident.Name
+					__gong__map_REQIF[identifier].REQIFHEADER = __gong__map_REQIFHEADER[targetIdentifier]
+				}
+			case "REQIFHEADER":
 				switch fieldName {
 				// insertion point for field dependant code
 				}
@@ -664,6 +724,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 				switch gongstructName {
 				// insertion point for enums assignments
 				case "REQIF":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "REQIFHEADER":
 					switch fieldName {
 					// insertion point for enum assign code
 					}
