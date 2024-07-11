@@ -7,7 +7,11 @@ import (
 )
 
 // REQIF ...
-type REQIF *REQIF
+type REQIF struct {
+	XMLName        xml.Name `xml:"REQ-IF"`
+	HEADER *THEHEADER `xml:"THE-HEADER"`
+	CORECONTENT*CORECONTENT `xml:"CORE-CONTENT"`
+}
 
 // LOCALREF ...
 type LOCALREF string
