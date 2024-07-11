@@ -18,13 +18,12 @@ func FillUpForm[T models.Gongstruct](
 
 	switch instanceWithInferedType := any(instance).(type) {
 	// insertion point
-	case *models.REQIF:
+	case *models.CONTENT:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		AssociationFieldToForm("REQIFHEADER", instanceWithInferedType.REQIFHEADER, formGroup, probe)
 
-	case *models.REQIFHEADER:
+	case *models.HEADER:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
@@ -44,6 +43,13 @@ func FillUpForm[T models.Gongstruct](
 			false, false, 0, false, 0)
 		BasicFieldtoForm("TITLE", instanceWithInferedType.TITLE, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+
+	case *models.REQIF:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		AssociationFieldToForm("HEADER", instanceWithInferedType.HEADER, formGroup, probe)
+		AssociationFieldToForm("CONTENT", instanceWithInferedType.CONTENT, formGroup, probe)
 
 	default:
 		_ = instanceWithInferedType

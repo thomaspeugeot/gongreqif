@@ -20,24 +20,36 @@ func FillUpNamedFormFromGongstruct[T models.Gongstruct](instance *T, probe *Prob
 
 	switch instancesTyped := any(instance).(type) {
 	// insertion point
-	case *models.REQIF:
+	case *models.CONTENT:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,
-			Label: "REQIF Form",
+			Label: "CONTENT Form",
 		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__REQIFFormCallback(
+		formGroup.OnSave = __gong__New__CONTENTFormCallback(
 			instancesTyped,
 			probe,
 			formGroup,
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
-	case *models.REQIFHEADER:
+	case *models.HEADER:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,
-			Label: "REQIFHEADER Form",
+			Label: "HEADER Form",
 		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__REQIFHEADERFormCallback(
+		formGroup.OnSave = __gong__New__HEADERFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.REQIF:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "REQIF Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__REQIFFormCallback(
 			instancesTyped,
 			probe,
 			formGroup,

@@ -7,17 +7,17 @@ import "time"
 var __GONG_time_The_fool_doth_think_he_is_wise__ = time.Hour
 
 // insertion point
-type REQIF_WOP struct {
+type CONTENT_WOP struct {
 	// insertion point
 	Name string
 }
 
-func (from *REQIF) CopyBasicFields(to *REQIF) {
+func (from *CONTENT) CopyBasicFields(to *CONTENT) {
 	// insertion point
 	to.Name = from.Name
 }
 
-type REQIFHEADER_WOP struct {
+type HEADER_WOP struct {
 	// insertion point
 	Name string
 	IDENTIFIERAttr string
@@ -30,7 +30,7 @@ type REQIFHEADER_WOP struct {
 	TITLE string
 }
 
-func (from *REQIFHEADER) CopyBasicFields(to *REQIFHEADER) {
+func (from *HEADER) CopyBasicFields(to *HEADER) {
 	// insertion point
 	to.Name = from.Name
 	to.IDENTIFIERAttr = from.IDENTIFIERAttr
@@ -41,5 +41,15 @@ func (from *REQIFHEADER) CopyBasicFields(to *REQIFHEADER) {
 	to.REQIFVERSION = from.REQIFVERSION
 	to.SOURCETOOLID = from.SOURCETOOLID
 	to.TITLE = from.TITLE
+}
+
+type REQIF_WOP struct {
+	// insertion point
+	Name string
+}
+
+func (from *REQIF) CopyBasicFields(to *REQIF) {
+	// insertion point
+	to.Name = from.Name
 }
 

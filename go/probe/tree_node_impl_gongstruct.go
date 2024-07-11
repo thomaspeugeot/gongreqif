@@ -52,11 +52,14 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	log.Println("NodeImplGongstruct:OnAfterUpdate with: ", nodeImplGongstruct.gongStruct.GetName())
 
 	// insertion point
+	if nodeImplGongstruct.gongStruct.GetName() == "CONTENT" {
+		fillUpTable[models.CONTENT](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "HEADER" {
+		fillUpTable[models.HEADER](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "REQIF" {
 		fillUpTable[models.REQIF](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "REQIFHEADER" {
-		fillUpTable[models.REQIFHEADER](nodeImplGongstruct.probe)
 	}
 
 	// set color for node and reset all other nodes color

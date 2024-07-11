@@ -62,6 +62,26 @@ func fillUpTree(
 
 		switch gongStruct.Name {
 		// insertion point
+		case "CONTENT":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.CONTENT](probe.stageOfInterest)
+			for _content := range set {
+				nodeInstance := (&tree.Node{Name: _content.GetName()}).Stage(probe.treeStage)
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_content, "CONTENT", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "HEADER":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.HEADER](probe.stageOfInterest)
+			for _header := range set {
+				nodeInstance := (&tree.Node{Name: _header.GetName()}).Stage(probe.treeStage)
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_header, "HEADER", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "REQIF":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.REQIF](probe.stageOfInterest)
@@ -69,16 +89,6 @@ func fillUpTree(
 				nodeInstance := (&tree.Node{Name: _reqif.GetName()}).Stage(probe.treeStage)
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_reqif, "REQIF", probe)
-
-				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
-			}
-		case "REQIFHEADER":
-			nodeGongstruct.Name = name
-			set := *models.GetGongstructInstancesSet[models.REQIFHEADER](probe.stageOfInterest)
-			for _reqifheader := range set {
-				nodeInstance := (&tree.Node{Name: _reqifheader.GetName()}).Stage(probe.treeStage)
-				nodeInstance.IsNodeClickable = true
-				nodeInstance.Impl = NewInstanceNodeCallback(_reqifheader, "REQIFHEADER", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}

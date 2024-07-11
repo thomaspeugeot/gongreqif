@@ -14,6 +14,42 @@ func GetReverseFieldOwnerName[T models.Gongstruct](
 	res = ""
 	switch inst := any(instance).(type) {
 	// insertion point
+	case *models.CONTENT:
+		tmp := GetInstanceDBFromInstance[models.CONTENT, CONTENTDB](
+			stage, backRepo, inst,
+		)
+		_ = tmp
+		switch reverseField.GongstructName {
+		// insertion point
+		case "CONTENT":
+			switch reverseField.Fieldname {
+			}
+		case "HEADER":
+			switch reverseField.Fieldname {
+			}
+		case "REQIF":
+			switch reverseField.Fieldname {
+			}
+		}
+
+	case *models.HEADER:
+		tmp := GetInstanceDBFromInstance[models.HEADER, HEADERDB](
+			stage, backRepo, inst,
+		)
+		_ = tmp
+		switch reverseField.GongstructName {
+		// insertion point
+		case "CONTENT":
+			switch reverseField.Fieldname {
+			}
+		case "HEADER":
+			switch reverseField.Fieldname {
+			}
+		case "REQIF":
+			switch reverseField.Fieldname {
+			}
+		}
+
 	case *models.REQIF:
 		tmp := GetInstanceDBFromInstance[models.REQIF, REQIFDB](
 			stage, backRepo, inst,
@@ -21,25 +57,13 @@ func GetReverseFieldOwnerName[T models.Gongstruct](
 		_ = tmp
 		switch reverseField.GongstructName {
 		// insertion point
+		case "CONTENT":
+			switch reverseField.Fieldname {
+			}
+		case "HEADER":
+			switch reverseField.Fieldname {
+			}
 		case "REQIF":
-			switch reverseField.Fieldname {
-			}
-		case "REQIFHEADER":
-			switch reverseField.Fieldname {
-			}
-		}
-
-	case *models.REQIFHEADER:
-		tmp := GetInstanceDBFromInstance[models.REQIFHEADER, REQIFHEADERDB](
-			stage, backRepo, inst,
-		)
-		_ = tmp
-		switch reverseField.GongstructName {
-		// insertion point
-		case "REQIF":
-			switch reverseField.Fieldname {
-			}
-		case "REQIFHEADER":
 			switch reverseField.Fieldname {
 			}
 		}
@@ -59,6 +83,42 @@ func GetReverseFieldOwner[T models.Gongstruct](
 	res = nil
 	switch inst := any(instance).(type) {
 	// insertion point
+	case *models.CONTENT:
+		tmp := GetInstanceDBFromInstance[models.CONTENT, CONTENTDB](
+			stage, backRepo, inst,
+		)
+		_ = tmp
+		switch reverseField.GongstructName {
+		// insertion point
+		case "CONTENT":
+			switch reverseField.Fieldname {
+			}
+		case "HEADER":
+			switch reverseField.Fieldname {
+			}
+		case "REQIF":
+			switch reverseField.Fieldname {
+			}
+		}
+
+	case *models.HEADER:
+		tmp := GetInstanceDBFromInstance[models.HEADER, HEADERDB](
+			stage, backRepo, inst,
+		)
+		_ = tmp
+		switch reverseField.GongstructName {
+		// insertion point
+		case "CONTENT":
+			switch reverseField.Fieldname {
+			}
+		case "HEADER":
+			switch reverseField.Fieldname {
+			}
+		case "REQIF":
+			switch reverseField.Fieldname {
+			}
+		}
+
 	case *models.REQIF:
 		tmp := GetInstanceDBFromInstance[models.REQIF, REQIFDB](
 			stage, backRepo, inst,
@@ -66,25 +126,13 @@ func GetReverseFieldOwner[T models.Gongstruct](
 		_ = tmp
 		switch reverseField.GongstructName {
 		// insertion point
+		case "CONTENT":
+			switch reverseField.Fieldname {
+			}
+		case "HEADER":
+			switch reverseField.Fieldname {
+			}
 		case "REQIF":
-			switch reverseField.Fieldname {
-			}
-		case "REQIFHEADER":
-			switch reverseField.Fieldname {
-			}
-		}
-
-	case *models.REQIFHEADER:
-		tmp := GetInstanceDBFromInstance[models.REQIFHEADER, REQIFHEADERDB](
-			stage, backRepo, inst,
-		)
-		_ = tmp
-		switch reverseField.GongstructName {
-		// insertion point
-		case "REQIF":
-			switch reverseField.Fieldname {
-			}
-		case "REQIFHEADER":
 			switch reverseField.Fieldname {
 			}
 		}

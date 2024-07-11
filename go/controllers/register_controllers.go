@@ -47,19 +47,26 @@ type ValidationError struct {
 func registerControllers(r *gin.Engine) {
 	v1 := r.Group("/api/github.com/thomaspeugeot/gongreqif/go")
 	{ // insertion point for registrations
+		v1.GET("/v1/contents", GetController().GetCONTENTs)
+		v1.GET("/v1/contents/:id", GetController().GetCONTENT)
+		v1.POST("/v1/contents", GetController().PostCONTENT)
+		v1.PATCH("/v1/contents/:id", GetController().UpdateCONTENT)
+		v1.PUT("/v1/contents/:id", GetController().UpdateCONTENT)
+		v1.DELETE("/v1/contents/:id", GetController().DeleteCONTENT)
+
+		v1.GET("/v1/headers", GetController().GetHEADERs)
+		v1.GET("/v1/headers/:id", GetController().GetHEADER)
+		v1.POST("/v1/headers", GetController().PostHEADER)
+		v1.PATCH("/v1/headers/:id", GetController().UpdateHEADER)
+		v1.PUT("/v1/headers/:id", GetController().UpdateHEADER)
+		v1.DELETE("/v1/headers/:id", GetController().DeleteHEADER)
+
 		v1.GET("/v1/reqifs", GetController().GetREQIFs)
 		v1.GET("/v1/reqifs/:id", GetController().GetREQIF)
 		v1.POST("/v1/reqifs", GetController().PostREQIF)
 		v1.PATCH("/v1/reqifs/:id", GetController().UpdateREQIF)
 		v1.PUT("/v1/reqifs/:id", GetController().UpdateREQIF)
 		v1.DELETE("/v1/reqifs/:id", GetController().DeleteREQIF)
-
-		v1.GET("/v1/reqifheaders", GetController().GetREQIFHEADERs)
-		v1.GET("/v1/reqifheaders/:id", GetController().GetREQIFHEADER)
-		v1.POST("/v1/reqifheaders", GetController().PostREQIFHEADER)
-		v1.PATCH("/v1/reqifheaders/:id", GetController().UpdateREQIFHEADER)
-		v1.PUT("/v1/reqifheaders/:id", GetController().UpdateREQIFHEADER)
-		v1.DELETE("/v1/reqifheaders/:id", GetController().DeleteREQIFHEADER)
 
 		v1.GET("/v1/commitfrombacknb", GetController().GetLastCommitFromBackNb)
 		v1.GET("/v1/pushfromfrontnb", GetController().GetLastPushFromFrontNb)

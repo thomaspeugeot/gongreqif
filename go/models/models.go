@@ -11,7 +11,8 @@ type REQIF struct {
 
 	d *schema.REQIF
 
-	REQIFHEADER *REQIFHEADER
+	HEADER  *HEADER
+	CONTENT *CONTENT
 }
 
 func (reqif *REQIF) SetD(_reqif *schema.REQIF) {
@@ -25,12 +26,16 @@ func (reqif *REQIF) SetStage(_stage *StageStruct) {
 func (reqif *REQIF) Walk() {
 	reqif.Name = reqif.d.XMLName.Local
 
-	reqif.REQIFHEADER = new(REQIFHEADER).Stage(stage)
-	reqif.REQIFHEADER.d = reqif.d.HEADER.REQIFHEADER
-	reqif.REQIFHEADER.Walk()
+	reqif.HEADER = new(HEADER).Stage(stage)
+	reqif.HEADER.d = reqif.d.HEADER.REQIFHEADER
+	reqif.HEADER.Walk()
+
+	reqif.CONTENT = new(CONTENT).Stage(stage)
+	reqif.CONTENT.d = reqif.d.CORECONTENT.REQIFCONTENT
+	reqif.CONTENT.Walk()
 }
 
-type REQIFHEADER struct {
+type HEADER struct {
 	d *schema.REQIFHEADER
 
 	Name           string
@@ -44,14 +49,24 @@ type REQIFHEADER struct {
 	TITLE          string
 }
 
-func (_REQIFHEADER *REQIFHEADER) Walk() {
+func (header *HEADER) Walk() {
 
-	_REQIFHEADER.Name = _REQIFHEADER.d.XMLName.Local
-	_REQIFHEADER.COMMENT = _REQIFHEADER.d.COMMENT
-	_REQIFHEADER.CREATIONTIME = _REQIFHEADER.d.CREATIONTIME
-	_REQIFHEADER.REPOSITORYID = _REQIFHEADER.d.REPOSITORYID
-	_REQIFHEADER.REQIFTOOLID = _REQIFHEADER.d.REQIFTOOLID
-	_REQIFHEADER.REQIFVERSION = _REQIFHEADER.d.REQIFVERSION
-	_REQIFHEADER.SOURCETOOLID = _REQIFHEADER.d.SOURCETOOLID
-	_REQIFHEADER.TITLE = _REQIFHEADER.d.TITLE
+	header.Name = header.d.XMLName.Local
+	header.IDENTIFIERAttr = header.d.IDENTIFIERAttr
+	header.COMMENT = header.d.COMMENT
+	header.CREATIONTIME = header.d.CREATIONTIME
+	header.REPOSITORYID = header.d.REPOSITORYID
+	header.REQIFTOOLID = header.d.REQIFTOOLID
+	header.REQIFVERSION = header.d.REQIFVERSION
+	header.SOURCETOOLID = header.d.SOURCETOOLID
+	header.TITLE = header.d.TITLE
+}
+
+type CONTENT struct {
+	Name string
+	d    *schema.REQIFCONTENT
+}
+
+func (content *CONTENT) Walk() {
+
 }

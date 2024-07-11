@@ -314,8 +314,9 @@ func ParseAstFileFromAst(stage *StageStruct, inFile *ast.File, fset *token.FileS
 var __gong__map_Indentifiers_gongstructName = make(map[string]string)
 
 // insertion point for identifiers maps
+var __gong__map_CONTENT = make(map[string]*CONTENT)
+var __gong__map_HEADER = make(map[string]*HEADER)
 var __gong__map_REQIF = make(map[string]*REQIF)
-var __gong__map_REQIFHEADER = make(map[string]*REQIFHEADER)
 
 // Parser needs to be configured for having the [Name1.Name2] or [pkg.Name1] ...
 // to be recognized as a proper identifier.
@@ -488,14 +489,18 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 									// this is the place where an instance is created
 									switch gongstructName {
 									// insertion point for identifiers
+									case "CONTENT":
+										instanceCONTENT := (&CONTENT{Name: instanceName}).Stage(stage)
+										instance = any(instanceCONTENT)
+										__gong__map_CONTENT[identifier] = instanceCONTENT
+									case "HEADER":
+										instanceHEADER := (&HEADER{Name: instanceName}).Stage(stage)
+										instance = any(instanceHEADER)
+										__gong__map_HEADER[identifier] = instanceHEADER
 									case "REQIF":
 										instanceREQIF := (&REQIF{Name: instanceName}).Stage(stage)
 										instance = any(instanceREQIF)
 										__gong__map_REQIF[identifier] = instanceREQIF
-									case "REQIFHEADER":
-										instanceREQIFHEADER := (&REQIFHEADER{Name: instanceName}).Stage(stage)
-										instance = any(instanceREQIFHEADER)
-										__gong__map_REQIFHEADER[identifier] = instanceREQIFHEADER
 									}
 									__gong__map_Indentifiers_gongstructName[identifier] = gongstructName
 									return
@@ -532,11 +537,15 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 						}
 						switch gongstructName {
 						// insertion point for basic lit assignments
-						case "REQIF":
+						case "CONTENT":
 							switch fieldName {
 							// insertion point for date assign code
 							}
-						case "REQIFHEADER":
+						case "HEADER":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "REQIF":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -565,11 +574,15 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					}
 					switch gongstructName {
 					// insertion point for slice of pointers assignments
-					case "REQIF":
+					case "CONTENT":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
-					case "REQIFHEADER":
+					case "HEADER":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "REQIF":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -622,6 +635,54 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 
 			switch gongstructName {
 			// insertion point for basic lit assignments
+			case "CONTENT":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_CONTENT[identifier].Name = fielValue
+				}
+			case "HEADER":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_HEADER[identifier].Name = fielValue
+				case "IDENTIFIERAttr":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_HEADER[identifier].IDENTIFIERAttr = fielValue
+				case "COMMENT":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_HEADER[identifier].COMMENT = fielValue
+				case "CREATIONTIME":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_HEADER[identifier].CREATIONTIME = fielValue
+				case "REPOSITORYID":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_HEADER[identifier].REPOSITORYID = fielValue
+				case "REQIFTOOLID":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_HEADER[identifier].REQIFTOOLID = fielValue
+				case "REQIFVERSION":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_HEADER[identifier].REQIFVERSION = fielValue
+				case "SOURCETOOLID":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_HEADER[identifier].SOURCETOOLID = fielValue
+				case "TITLE":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_HEADER[identifier].TITLE = fielValue
+				}
 			case "REQIF":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -629,46 +690,6 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_REQIF[identifier].Name = fielValue
-				}
-			case "REQIFHEADER":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFHEADER[identifier].Name = fielValue
-				case "IDENTIFIERAttr":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFHEADER[identifier].IDENTIFIERAttr = fielValue
-				case "COMMENT":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFHEADER[identifier].COMMENT = fielValue
-				case "CREATIONTIME":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFHEADER[identifier].CREATIONTIME = fielValue
-				case "REPOSITORYID":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFHEADER[identifier].REPOSITORYID = fielValue
-				case "REQIFTOOLID":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFHEADER[identifier].REQIFTOOLID = fielValue
-				case "REQIFVERSION":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFHEADER[identifier].REQIFVERSION = fielValue
-				case "SOURCETOOLID":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFHEADER[identifier].SOURCETOOLID = fielValue
-				case "TITLE":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFHEADER[identifier].TITLE = fielValue
 				}
 			}
 		case *ast.Ident:
@@ -684,16 +705,23 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 			}
 			switch gongstructName {
 			// insertion point for bool & pointers assignments
+			case "CONTENT":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
+			case "HEADER":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
 			case "REQIF":
 				switch fieldName {
 				// insertion point for field dependant code
-				case "REQIFHEADER":
+				case "HEADER":
 					targetIdentifier := ident.Name
-					__gong__map_REQIF[identifier].REQIFHEADER = __gong__map_REQIFHEADER[targetIdentifier]
-				}
-			case "REQIFHEADER":
-				switch fieldName {
-				// insertion point for field dependant code
+					__gong__map_REQIF[identifier].HEADER = __gong__map_HEADER[targetIdentifier]
+				case "CONTENT":
+					targetIdentifier := ident.Name
+					__gong__map_REQIF[identifier].CONTENT = __gong__map_CONTENT[targetIdentifier]
 				}
 			}
 		case *ast.SelectorExpr:
@@ -723,11 +751,15 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 				_ = enumValue
 				switch gongstructName {
 				// insertion point for enums assignments
-				case "REQIF":
+				case "CONTENT":
 					switch fieldName {
 					// insertion point for enum assign code
 					}
-				case "REQIFHEADER":
+				case "HEADER":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "REQIF":
 					switch fieldName {
 					// insertion point for enum assign code
 					}

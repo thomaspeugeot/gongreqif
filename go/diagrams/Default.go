@@ -24,27 +24,27 @@ var _ map[string]any = map[string]any{
 
 	"ref_models.REQIF.Name": (ref_models.REQIF{}).Name,
 
-	"ref_models.REQIF.REQIFHEADER": (ref_models.REQIF{}).REQIFHEADER,
+	"ref_models.REQIF.REQIFHEADER": (ref_models.REQIF{}).HEADER,
 
-	"ref_models.REQIFHEADER": &(ref_models.REQIFHEADER{}),
+	"ref_models.REQIFHEADER": &(ref_models.HEADER{}),
 
-	"ref_models.REQIFHEADER.COMMENT": (ref_models.REQIFHEADER{}).COMMENT,
+	"ref_models.REQIFHEADER.COMMENT": (ref_models.HEADER{}).COMMENT,
 
-	"ref_models.REQIFHEADER.CREATIONTIME": (ref_models.REQIFHEADER{}).CREATIONTIME,
+	"ref_models.REQIFHEADER.CREATIONTIME": (ref_models.HEADER{}).CREATIONTIME,
 
-	"ref_models.REQIFHEADER.IDENTIFIERAttr": (ref_models.REQIFHEADER{}).IDENTIFIERAttr,
+	"ref_models.REQIFHEADER.IDENTIFIERAttr": (ref_models.HEADER{}).IDENTIFIERAttr,
 
-	"ref_models.REQIFHEADER.Name": (ref_models.REQIFHEADER{}).Name,
+	"ref_models.REQIFHEADER.Name": (ref_models.HEADER{}).Name,
 
-	"ref_models.REQIFHEADER.REPOSITORYID": (ref_models.REQIFHEADER{}).REPOSITORYID,
+	"ref_models.REQIFHEADER.REPOSITORYID": (ref_models.HEADER{}).REPOSITORYID,
 
-	"ref_models.REQIFHEADER.REQIFTOOLID": (ref_models.REQIFHEADER{}).REQIFTOOLID,
+	"ref_models.REQIFHEADER.REQIFTOOLID": (ref_models.HEADER{}).REQIFTOOLID,
 
-	"ref_models.REQIFHEADER.REQIFVERSION": (ref_models.REQIFHEADER{}).REQIFVERSION,
+	"ref_models.REQIFHEADER.REQIFVERSION": (ref_models.HEADER{}).REQIFVERSION,
 
-	"ref_models.REQIFHEADER.SOURCETOOLID": (ref_models.REQIFHEADER{}).SOURCETOOLID,
+	"ref_models.REQIFHEADER.SOURCETOOLID": (ref_models.HEADER{}).SOURCETOOLID,
 
-	"ref_models.REQIFHEADER.TITLE": (ref_models.REQIFHEADER{}).TITLE,
+	"ref_models.REQIFHEADER.TITLE": (ref_models.HEADER{}).TITLE,
 }
 
 // function will stage objects

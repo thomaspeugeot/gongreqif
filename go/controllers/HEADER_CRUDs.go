@@ -14,16 +14,16 @@ import (
 )
 
 // declaration in order to justify use of the models import
-var __REQIFHEADER__dummysDeclaration__ models.REQIFHEADER
-var __REQIFHEADER_time__dummyDeclaration time.Duration
+var __HEADER__dummysDeclaration__ models.HEADER
+var __HEADER_time__dummyDeclaration time.Duration
 
-var mutexREQIFHEADER sync.Mutex
+var mutexHEADER sync.Mutex
 
-// An REQIFHEADERID parameter model.
+// An HEADERID parameter model.
 //
 // This is used for operations that want the ID of an order in the path
-// swagger:parameters getREQIFHEADER updateREQIFHEADER deleteREQIFHEADER
-type REQIFHEADERID struct {
+// swagger:parameters getHEADER updateHEADER deleteHEADER
+type HEADERID struct {
 	// The ID of the order
 	//
 	// in: path
@@ -31,29 +31,29 @@ type REQIFHEADERID struct {
 	ID int64
 }
 
-// REQIFHEADERInput is a schema that can validate the user’s
+// HEADERInput is a schema that can validate the user’s
 // input to prevent us from getting invalid data
-// swagger:parameters postREQIFHEADER updateREQIFHEADER
-type REQIFHEADERInput struct {
-	// The REQIFHEADER to submit or modify
+// swagger:parameters postHEADER updateHEADER
+type HEADERInput struct {
+	// The HEADER to submit or modify
 	// in: body
-	REQIFHEADER *orm.REQIFHEADERAPI
+	HEADER *orm.HEADERAPI
 }
 
-// GetREQIFHEADERs
+// GetHEADERs
 //
-// swagger:route GET /reqifheaders reqifheaders getREQIFHEADERs
+// swagger:route GET /headers headers getHEADERs
 //
-// # Get all reqifheaders
+// # Get all headers
 //
 // Responses:
 // default: genericError
 //
-//	200: reqifheaderDBResponse
-func (controller *Controller) GetREQIFHEADERs(c *gin.Context) {
+//	200: headerDBResponse
+func (controller *Controller) GetHEADERs(c *gin.Context) {
 
 	// source slice
-	var reqifheaderDBs []orm.REQIFHEADERDB
+	var headerDBs []orm.HEADERDB
 
 	values := c.Request.URL.Query()
 	stackPath := ""
@@ -61,16 +61,16 @@ func (controller *Controller) GetREQIFHEADERs(c *gin.Context) {
 		value := values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetREQIFHEADERs", "GONG__StackPath", stackPath)
+			// log.Println("GetHEADERs", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFHEADER.GetDB()
+	db := backRepo.BackRepoHEADER.GetDB()
 
-	query := db.Find(&reqifheaderDBs)
+	query := db.Find(&headerDBs)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -81,29 +81,29 @@ func (controller *Controller) GetREQIFHEADERs(c *gin.Context) {
 	}
 
 	// slice that will be transmitted to the front
-	reqifheaderAPIs := make([]orm.REQIFHEADERAPI, 0)
+	headerAPIs := make([]orm.HEADERAPI, 0)
 
-	// for each reqifheader, update fields from the database nullable fields
-	for idx := range reqifheaderDBs {
-		reqifheaderDB := &reqifheaderDBs[idx]
-		_ = reqifheaderDB
-		var reqifheaderAPI orm.REQIFHEADERAPI
+	// for each header, update fields from the database nullable fields
+	for idx := range headerDBs {
+		headerDB := &headerDBs[idx]
+		_ = headerDB
+		var headerAPI orm.HEADERAPI
 
 		// insertion point for updating fields
-		reqifheaderAPI.ID = reqifheaderDB.ID
-		reqifheaderDB.CopyBasicFieldsToREQIFHEADER_WOP(&reqifheaderAPI.REQIFHEADER_WOP)
-		reqifheaderAPI.REQIFHEADERPointersEncoding = reqifheaderDB.REQIFHEADERPointersEncoding
-		reqifheaderAPIs = append(reqifheaderAPIs, reqifheaderAPI)
+		headerAPI.ID = headerDB.ID
+		headerDB.CopyBasicFieldsToHEADER_WOP(&headerAPI.HEADER_WOP)
+		headerAPI.HEADERPointersEncoding = headerDB.HEADERPointersEncoding
+		headerAPIs = append(headerAPIs, headerAPI)
 	}
 
-	c.JSON(http.StatusOK, reqifheaderAPIs)
+	c.JSON(http.StatusOK, headerAPIs)
 }
 
-// PostREQIFHEADER
+// PostHEADER
 //
-// swagger:route POST /reqifheaders reqifheaders postREQIFHEADER
+// swagger:route POST /headers headers postHEADER
 //
-// Creates a reqifheader
+// Creates a header
 //
 //	Consumes:
 //	- application/json
@@ -113,10 +113,10 @@ func (controller *Controller) GetREQIFHEADERs(c *gin.Context) {
 //
 //	Responses:
 //	  200: nodeDBResponse
-func (controller *Controller) PostREQIFHEADER(c *gin.Context) {
+func (controller *Controller) PostHEADER(c *gin.Context) {
 
-	mutexREQIFHEADER.Lock()
-	defer mutexREQIFHEADER.Unlock()
+	mutexHEADER.Lock()
+	defer mutexHEADER.Unlock()
 
 	values := c.Request.URL.Query()
 	stackPath := ""
@@ -124,17 +124,17 @@ func (controller *Controller) PostREQIFHEADER(c *gin.Context) {
 		value := values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("PostREQIFHEADERs", "GONG__StackPath", stackPath)
+			// log.Println("PostHEADERs", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFHEADER.GetDB()
+	db := backRepo.BackRepoHEADER.GetDB()
 
 	// Validate input
-	var input orm.REQIFHEADERAPI
+	var input orm.HEADERAPI
 
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
@@ -146,12 +146,12 @@ func (controller *Controller) PostREQIFHEADER(c *gin.Context) {
 		return
 	}
 
-	// Create reqifheader
-	reqifheaderDB := orm.REQIFHEADERDB{}
-	reqifheaderDB.REQIFHEADERPointersEncoding = input.REQIFHEADERPointersEncoding
-	reqifheaderDB.CopyBasicFieldsFromREQIFHEADER_WOP(&input.REQIFHEADER_WOP)
+	// Create header
+	headerDB := orm.HEADERDB{}
+	headerDB.HEADERPointersEncoding = input.HEADERPointersEncoding
+	headerDB.CopyBasicFieldsFromHEADER_WOP(&input.HEADER_WOP)
 
-	query := db.Create(&reqifheaderDB)
+	query := db.Create(&headerDB)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -162,31 +162,31 @@ func (controller *Controller) PostREQIFHEADER(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	backRepo.BackRepoREQIFHEADER.CheckoutPhaseOneInstance(&reqifheaderDB)
-	reqifheader := backRepo.BackRepoREQIFHEADER.Map_REQIFHEADERDBID_REQIFHEADERPtr[reqifheaderDB.ID]
+	backRepo.BackRepoHEADER.CheckoutPhaseOneInstance(&headerDB)
+	header := backRepo.BackRepoHEADER.Map_HEADERDBID_HEADERPtr[headerDB.ID]
 
-	if reqifheader != nil {
-		models.AfterCreateFromFront(backRepo.GetStage(), reqifheader)
+	if header != nil {
+		models.AfterCreateFromFront(backRepo.GetStage(), header)
 	}
 
 	// a POST is equivalent to a back repo commit increase
 	// (this will be improved with implementation of unit of work design pattern)
 	backRepo.IncrementPushFromFrontNb()
 
-	c.JSON(http.StatusOK, reqifheaderDB)
+	c.JSON(http.StatusOK, headerDB)
 }
 
-// GetREQIFHEADER
+// GetHEADER
 //
-// swagger:route GET /reqifheaders/{ID} reqifheaders getREQIFHEADER
+// swagger:route GET /headers/{ID} headers getHEADER
 //
-// Gets the details for a reqifheader.
+// Gets the details for a header.
 //
 // Responses:
 // default: genericError
 //
-//	200: reqifheaderDBResponse
-func (controller *Controller) GetREQIFHEADER(c *gin.Context) {
+//	200: headerDBResponse
+func (controller *Controller) GetHEADER(c *gin.Context) {
 
 	values := c.Request.URL.Query()
 	stackPath := ""
@@ -194,18 +194,18 @@ func (controller *Controller) GetREQIFHEADER(c *gin.Context) {
 		value := values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetREQIFHEADER", "GONG__StackPath", stackPath)
+			// log.Println("GetHEADER", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFHEADER.GetDB()
+	db := backRepo.BackRepoHEADER.GetDB()
 
-	// Get reqifheaderDB in DB
-	var reqifheaderDB orm.REQIFHEADERDB
-	if err := db.First(&reqifheaderDB, c.Param("id")).Error; err != nil {
+	// Get headerDB in DB
+	var headerDB orm.HEADERDB
+	if err := db.First(&headerDB, c.Param("id")).Error; err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -214,28 +214,28 @@ func (controller *Controller) GetREQIFHEADER(c *gin.Context) {
 		return
 	}
 
-	var reqifheaderAPI orm.REQIFHEADERAPI
-	reqifheaderAPI.ID = reqifheaderDB.ID
-	reqifheaderAPI.REQIFHEADERPointersEncoding = reqifheaderDB.REQIFHEADERPointersEncoding
-	reqifheaderDB.CopyBasicFieldsToREQIFHEADER_WOP(&reqifheaderAPI.REQIFHEADER_WOP)
+	var headerAPI orm.HEADERAPI
+	headerAPI.ID = headerDB.ID
+	headerAPI.HEADERPointersEncoding = headerDB.HEADERPointersEncoding
+	headerDB.CopyBasicFieldsToHEADER_WOP(&headerAPI.HEADER_WOP)
 
-	c.JSON(http.StatusOK, reqifheaderAPI)
+	c.JSON(http.StatusOK, headerAPI)
 }
 
-// UpdateREQIFHEADER
+// UpdateHEADER
 //
-// swagger:route PATCH /reqifheaders/{ID} reqifheaders updateREQIFHEADER
+// swagger:route PATCH /headers/{ID} headers updateHEADER
 //
-// # Update a reqifheader
+// # Update a header
 //
 // Responses:
 // default: genericError
 //
-//	200: reqifheaderDBResponse
-func (controller *Controller) UpdateREQIFHEADER(c *gin.Context) {
+//	200: headerDBResponse
+func (controller *Controller) UpdateHEADER(c *gin.Context) {
 
-	mutexREQIFHEADER.Lock()
-	defer mutexREQIFHEADER.Unlock()
+	mutexHEADER.Lock()
+	defer mutexHEADER.Unlock()
 
 	values := c.Request.URL.Query()
 	stackPath := ""
@@ -243,17 +243,17 @@ func (controller *Controller) UpdateREQIFHEADER(c *gin.Context) {
 		value := values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("UpdateREQIFHEADER", "GONG__StackPath", stackPath)
+			// log.Println("UpdateHEADER", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFHEADER.GetDB()
+	db := backRepo.BackRepoHEADER.GetDB()
 
 	// Validate input
-	var input orm.REQIFHEADERAPI
+	var input orm.HEADERAPI
 	if err := c.ShouldBindJSON(&input); err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -261,10 +261,10 @@ func (controller *Controller) UpdateREQIFHEADER(c *gin.Context) {
 	}
 
 	// Get model if exist
-	var reqifheaderDB orm.REQIFHEADERDB
+	var headerDB orm.HEADERDB
 
-	// fetch the reqifheader
-	query := db.First(&reqifheaderDB, c.Param("id"))
+	// fetch the header
+	query := db.First(&headerDB, c.Param("id"))
 
 	if query.Error != nil {
 		var returnError GenericError
@@ -276,10 +276,10 @@ func (controller *Controller) UpdateREQIFHEADER(c *gin.Context) {
 	}
 
 	// update
-	reqifheaderDB.CopyBasicFieldsFromREQIFHEADER_WOP(&input.REQIFHEADER_WOP)
-	reqifheaderDB.REQIFHEADERPointersEncoding = input.REQIFHEADERPointersEncoding
+	headerDB.CopyBasicFieldsFromHEADER_WOP(&input.HEADER_WOP)
+	headerDB.HEADERPointersEncoding = input.HEADERPointersEncoding
 
-	query = db.Model(&reqifheaderDB).Updates(reqifheaderDB)
+	query = db.Model(&headerDB).Updates(headerDB)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -290,16 +290,16 @@ func (controller *Controller) UpdateREQIFHEADER(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	reqifheaderNew := new(models.REQIFHEADER)
-	reqifheaderDB.CopyBasicFieldsToREQIFHEADER(reqifheaderNew)
+	headerNew := new(models.HEADER)
+	headerDB.CopyBasicFieldsToHEADER(headerNew)
 
 	// redeem pointers
-	reqifheaderDB.DecodePointers(backRepo, reqifheaderNew)
+	headerDB.DecodePointers(backRepo, headerNew)
 
 	// get stage instance from DB instance, and call callback function
-	reqifheaderOld := backRepo.BackRepoREQIFHEADER.Map_REQIFHEADERDBID_REQIFHEADERPtr[reqifheaderDB.ID]
-	if reqifheaderOld != nil {
-		models.AfterUpdateFromFront(backRepo.GetStage(), reqifheaderOld, reqifheaderNew)
+	headerOld := backRepo.BackRepoHEADER.Map_HEADERDBID_HEADERPtr[headerDB.ID]
+	if headerOld != nil {
+		models.AfterUpdateFromFront(backRepo.GetStage(), headerOld, headerNew)
 	}
 
 	// an UPDATE generates a back repo commit increase
@@ -308,23 +308,23 @@ func (controller *Controller) UpdateREQIFHEADER(c *gin.Context) {
 	// generates a checkout
 	backRepo.IncrementPushFromFrontNb()
 
-	// return status OK with the marshalling of the the reqifheaderDB
-	c.JSON(http.StatusOK, reqifheaderDB)
+	// return status OK with the marshalling of the the headerDB
+	c.JSON(http.StatusOK, headerDB)
 }
 
-// DeleteREQIFHEADER
+// DeleteHEADER
 //
-// swagger:route DELETE /reqifheaders/{ID} reqifheaders deleteREQIFHEADER
+// swagger:route DELETE /headers/{ID} headers deleteHEADER
 //
-// # Delete a reqifheader
+// # Delete a header
 //
 // default: genericError
 //
-//	200: reqifheaderDBResponse
-func (controller *Controller) DeleteREQIFHEADER(c *gin.Context) {
+//	200: headerDBResponse
+func (controller *Controller) DeleteHEADER(c *gin.Context) {
 
-	mutexREQIFHEADER.Lock()
-	defer mutexREQIFHEADER.Unlock()
+	mutexHEADER.Lock()
+	defer mutexHEADER.Unlock()
 
 	values := c.Request.URL.Query()
 	stackPath := ""
@@ -332,18 +332,18 @@ func (controller *Controller) DeleteREQIFHEADER(c *gin.Context) {
 		value := values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("DeleteREQIFHEADER", "GONG__StackPath", stackPath)
+			// log.Println("DeleteHEADER", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFHEADER.GetDB()
+	db := backRepo.BackRepoHEADER.GetDB()
 
 	// Get model if exist
-	var reqifheaderDB orm.REQIFHEADERDB
-	if err := db.First(&reqifheaderDB, c.Param("id")).Error; err != nil {
+	var headerDB orm.HEADERDB
+	if err := db.First(&headerDB, c.Param("id")).Error; err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,16 +353,16 @@ func (controller *Controller) DeleteREQIFHEADER(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&reqifheaderDB)
+	db.Unscoped().Delete(&headerDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
-	reqifheaderDeleted := new(models.REQIFHEADER)
-	reqifheaderDB.CopyBasicFieldsToREQIFHEADER(reqifheaderDeleted)
+	headerDeleted := new(models.HEADER)
+	headerDB.CopyBasicFieldsToHEADER(headerDeleted)
 
 	// get stage instance from DB instance, and call callback function
-	reqifheaderStaged := backRepo.BackRepoREQIFHEADER.Map_REQIFHEADERDBID_REQIFHEADERPtr[reqifheaderDB.ID]
-	if reqifheaderStaged != nil {
-		models.AfterDeleteFromFront(backRepo.GetStage(), reqifheaderStaged, reqifheaderDeleted)
+	headerStaged := backRepo.BackRepoHEADER.Map_HEADERDBID_HEADERPtr[headerDB.ID]
+	if headerStaged != nil {
+		models.AfterDeleteFromFront(backRepo.GetStage(), headerStaged, headerDeleted)
 	}
 
 	// a DELETE generates a back repo commit increase

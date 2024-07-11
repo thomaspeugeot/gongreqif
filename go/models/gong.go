@@ -49,6 +49,26 @@ type StageStruct struct {
 	path string
 
 	// insertion point for definition of arrays registering instances
+	CONTENTs           map[*CONTENT]any
+	CONTENTs_mapString map[string]*CONTENT
+
+	// insertion point for slice of pointers maps
+
+	OnAfterCONTENTCreateCallback OnAfterCreateInterface[CONTENT]
+	OnAfterCONTENTUpdateCallback OnAfterUpdateInterface[CONTENT]
+	OnAfterCONTENTDeleteCallback OnAfterDeleteInterface[CONTENT]
+	OnAfterCONTENTReadCallback   OnAfterReadInterface[CONTENT]
+
+	HEADERs           map[*HEADER]any
+	HEADERs_mapString map[string]*HEADER
+
+	// insertion point for slice of pointers maps
+
+	OnAfterHEADERCreateCallback OnAfterCreateInterface[HEADER]
+	OnAfterHEADERUpdateCallback OnAfterUpdateInterface[HEADER]
+	OnAfterHEADERDeleteCallback OnAfterDeleteInterface[HEADER]
+	OnAfterHEADERReadCallback   OnAfterReadInterface[HEADER]
+
 	REQIFs           map[*REQIF]any
 	REQIFs_mapString map[string]*REQIF
 
@@ -58,16 +78,6 @@ type StageStruct struct {
 	OnAfterREQIFUpdateCallback OnAfterUpdateInterface[REQIF]
 	OnAfterREQIFDeleteCallback OnAfterDeleteInterface[REQIF]
 	OnAfterREQIFReadCallback   OnAfterReadInterface[REQIF]
-
-	REQIFHEADERs           map[*REQIFHEADER]any
-	REQIFHEADERs_mapString map[string]*REQIFHEADER
-
-	// insertion point for slice of pointers maps
-
-	OnAfterREQIFHEADERCreateCallback OnAfterCreateInterface[REQIFHEADER]
-	OnAfterREQIFHEADERUpdateCallback OnAfterUpdateInterface[REQIFHEADER]
-	OnAfterREQIFHEADERDeleteCallback OnAfterDeleteInterface[REQIFHEADER]
-	OnAfterREQIFHEADERReadCallback   OnAfterReadInterface[REQIFHEADER]
 
 	AllModelsStructCreateCallback AllModelsStructCreateInterface
 
@@ -137,10 +147,12 @@ type BackRepoInterface interface {
 	BackupXL(stage *StageStruct, dirPath string)
 	RestoreXL(stage *StageStruct, dirPath string)
 	// insertion point for Commit and Checkout signatures
+	CommitCONTENT(content *CONTENT)
+	CheckoutCONTENT(content *CONTENT)
+	CommitHEADER(header *HEADER)
+	CheckoutHEADER(header *HEADER)
 	CommitREQIF(reqif *REQIF)
 	CheckoutREQIF(reqif *REQIF)
-	CommitREQIFHEADER(reqifheader *REQIFHEADER)
-	CheckoutREQIFHEADER(reqifheader *REQIFHEADER)
 	GetLastCommitFromBackNb() uint
 	GetLastPushFromFrontNb() uint
 }
@@ -148,11 +160,14 @@ type BackRepoInterface interface {
 func NewStage(path string) (stage *StageStruct) {
 
 	stage = &StageStruct{ // insertion point for array initiatialisation
+		CONTENTs:           make(map[*CONTENT]any),
+		CONTENTs_mapString: make(map[string]*CONTENT),
+
+		HEADERs:           make(map[*HEADER]any),
+		HEADERs_mapString: make(map[string]*HEADER),
+
 		REQIFs:           make(map[*REQIF]any),
 		REQIFs_mapString: make(map[string]*REQIF),
-
-		REQIFHEADERs:           make(map[*REQIFHEADER]any),
-		REQIFHEADERs_mapString: make(map[string]*REQIFHEADER),
 
 		// end of insertion point
 		Map_GongStructName_InstancesNb: make(map[string]int),
@@ -187,8 +202,9 @@ func (stage *StageStruct) Commit() {
 	}
 
 	// insertion point for computing the map of number of instances per gongstruct
+	stage.Map_GongStructName_InstancesNb["CONTENT"] = len(stage.CONTENTs)
+	stage.Map_GongStructName_InstancesNb["HEADER"] = len(stage.HEADERs)
 	stage.Map_GongStructName_InstancesNb["REQIF"] = len(stage.REQIFs)
-	stage.Map_GongStructName_InstancesNb["REQIFHEADER"] = len(stage.REQIFHEADERs)
 
 }
 
@@ -199,8 +215,9 @@ func (stage *StageStruct) Checkout() {
 
 	stage.ComputeReverseMaps()
 	// insertion point for computing the map of number of instances per gongstruct
+	stage.Map_GongStructName_InstancesNb["CONTENT"] = len(stage.CONTENTs)
+	stage.Map_GongStructName_InstancesNb["HEADER"] = len(stage.HEADERs)
 	stage.Map_GongStructName_InstancesNb["REQIF"] = len(stage.REQIFs)
-	stage.Map_GongStructName_InstancesNb["REQIFHEADER"] = len(stage.REQIFHEADERs)
 
 }
 
@@ -233,6 +250,106 @@ func (stage *StageStruct) RestoreXL(dirPath string) {
 }
 
 // insertion point for cumulative sub template with model space calls
+// Stage puts content to the model stage
+func (content *CONTENT) Stage(stage *StageStruct) *CONTENT {
+	stage.CONTENTs[content] = __member
+	stage.CONTENTs_mapString[content.Name] = content
+
+	return content
+}
+
+// Unstage removes content off the model stage
+func (content *CONTENT) Unstage(stage *StageStruct) *CONTENT {
+	delete(stage.CONTENTs, content)
+	delete(stage.CONTENTs_mapString, content.Name)
+	return content
+}
+
+// UnstageVoid removes content off the model stage
+func (content *CONTENT) UnstageVoid(stage *StageStruct) {
+	delete(stage.CONTENTs, content)
+	delete(stage.CONTENTs_mapString, content.Name)
+}
+
+// commit content to the back repo (if it is already staged)
+func (content *CONTENT) Commit(stage *StageStruct) *CONTENT {
+	if _, ok := stage.CONTENTs[content]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitCONTENT(content)
+		}
+	}
+	return content
+}
+
+func (content *CONTENT) CommitVoid(stage *StageStruct) {
+	content.Commit(stage)
+}
+
+// Checkout content to the back repo (if it is already staged)
+func (content *CONTENT) Checkout(stage *StageStruct) *CONTENT {
+	if _, ok := stage.CONTENTs[content]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutCONTENT(content)
+		}
+	}
+	return content
+}
+
+// for satisfaction of GongStruct interface
+func (content *CONTENT) GetName() (res string) {
+	return content.Name
+}
+
+// Stage puts header to the model stage
+func (header *HEADER) Stage(stage *StageStruct) *HEADER {
+	stage.HEADERs[header] = __member
+	stage.HEADERs_mapString[header.Name] = header
+
+	return header
+}
+
+// Unstage removes header off the model stage
+func (header *HEADER) Unstage(stage *StageStruct) *HEADER {
+	delete(stage.HEADERs, header)
+	delete(stage.HEADERs_mapString, header.Name)
+	return header
+}
+
+// UnstageVoid removes header off the model stage
+func (header *HEADER) UnstageVoid(stage *StageStruct) {
+	delete(stage.HEADERs, header)
+	delete(stage.HEADERs_mapString, header.Name)
+}
+
+// commit header to the back repo (if it is already staged)
+func (header *HEADER) Commit(stage *StageStruct) *HEADER {
+	if _, ok := stage.HEADERs[header]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitHEADER(header)
+		}
+	}
+	return header
+}
+
+func (header *HEADER) CommitVoid(stage *StageStruct) {
+	header.Commit(stage)
+}
+
+// Checkout header to the back repo (if it is already staged)
+func (header *HEADER) Checkout(stage *StageStruct) *HEADER {
+	if _, ok := stage.HEADERs[header]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutHEADER(header)
+		}
+	}
+	return header
+}
+
+// for satisfaction of GongStruct interface
+func (header *HEADER) GetName() (res string) {
+	return header.Name
+}
+
 // Stage puts reqif to the model stage
 func (reqif *REQIF) Stage(stage *StageStruct) *REQIF {
 	stage.REQIFs[reqif] = __member
@@ -283,92 +400,54 @@ func (reqif *REQIF) GetName() (res string) {
 	return reqif.Name
 }
 
-// Stage puts reqifheader to the model stage
-func (reqifheader *REQIFHEADER) Stage(stage *StageStruct) *REQIFHEADER {
-	stage.REQIFHEADERs[reqifheader] = __member
-	stage.REQIFHEADERs_mapString[reqifheader.Name] = reqifheader
-
-	return reqifheader
-}
-
-// Unstage removes reqifheader off the model stage
-func (reqifheader *REQIFHEADER) Unstage(stage *StageStruct) *REQIFHEADER {
-	delete(stage.REQIFHEADERs, reqifheader)
-	delete(stage.REQIFHEADERs_mapString, reqifheader.Name)
-	return reqifheader
-}
-
-// UnstageVoid removes reqifheader off the model stage
-func (reqifheader *REQIFHEADER) UnstageVoid(stage *StageStruct) {
-	delete(stage.REQIFHEADERs, reqifheader)
-	delete(stage.REQIFHEADERs_mapString, reqifheader.Name)
-}
-
-// commit reqifheader to the back repo (if it is already staged)
-func (reqifheader *REQIFHEADER) Commit(stage *StageStruct) *REQIFHEADER {
-	if _, ok := stage.REQIFHEADERs[reqifheader]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CommitREQIFHEADER(reqifheader)
-		}
-	}
-	return reqifheader
-}
-
-func (reqifheader *REQIFHEADER) CommitVoid(stage *StageStruct) {
-	reqifheader.Commit(stage)
-}
-
-// Checkout reqifheader to the back repo (if it is already staged)
-func (reqifheader *REQIFHEADER) Checkout(stage *StageStruct) *REQIFHEADER {
-	if _, ok := stage.REQIFHEADERs[reqifheader]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CheckoutREQIFHEADER(reqifheader)
-		}
-	}
-	return reqifheader
-}
-
-// for satisfaction of GongStruct interface
-func (reqifheader *REQIFHEADER) GetName() (res string) {
-	return reqifheader.Name
-}
-
 // swagger:ignore
 type AllModelsStructCreateInterface interface { // insertion point for Callbacks on creation
+	CreateORMCONTENT(CONTENT *CONTENT)
+	CreateORMHEADER(HEADER *HEADER)
 	CreateORMREQIF(REQIF *REQIF)
-	CreateORMREQIFHEADER(REQIFHEADER *REQIFHEADER)
 }
 
 type AllModelsStructDeleteInterface interface { // insertion point for Callbacks on deletion
+	DeleteORMCONTENT(CONTENT *CONTENT)
+	DeleteORMHEADER(HEADER *HEADER)
 	DeleteORMREQIF(REQIF *REQIF)
-	DeleteORMREQIFHEADER(REQIFHEADER *REQIFHEADER)
 }
 
 func (stage *StageStruct) Reset() { // insertion point for array reset
+	stage.CONTENTs = make(map[*CONTENT]any)
+	stage.CONTENTs_mapString = make(map[string]*CONTENT)
+
+	stage.HEADERs = make(map[*HEADER]any)
+	stage.HEADERs_mapString = make(map[string]*HEADER)
+
 	stage.REQIFs = make(map[*REQIF]any)
 	stage.REQIFs_mapString = make(map[string]*REQIF)
-
-	stage.REQIFHEADERs = make(map[*REQIFHEADER]any)
-	stage.REQIFHEADERs_mapString = make(map[string]*REQIFHEADER)
 
 }
 
 func (stage *StageStruct) Nil() { // insertion point for array nil
+	stage.CONTENTs = nil
+	stage.CONTENTs_mapString = nil
+
+	stage.HEADERs = nil
+	stage.HEADERs_mapString = nil
+
 	stage.REQIFs = nil
 	stage.REQIFs_mapString = nil
-
-	stage.REQIFHEADERs = nil
-	stage.REQIFHEADERs_mapString = nil
 
 }
 
 func (stage *StageStruct) Unstage() { // insertion point for array nil
-	for reqif := range stage.REQIFs {
-		reqif.Unstage(stage)
+	for content := range stage.CONTENTs {
+		content.Unstage(stage)
 	}
 
-	for reqifheader := range stage.REQIFHEADERs {
-		reqifheader.Unstage(stage)
+	for header := range stage.HEADERs {
+		header.Unstage(stage)
+	}
+
+	for reqif := range stage.REQIFs {
+		reqif.Unstage(stage)
 	}
 
 }
@@ -379,7 +458,7 @@ func (stage *StageStruct) Unstage() { // insertion point for array nil
 // - full refactoring of Gongstruct identifiers / fields
 type Gongstruct interface {
 	// insertion point for generic types
-	REQIF | REQIFHEADER
+	CONTENT | HEADER | REQIF
 }
 
 type GongtructBasicField interface {
@@ -392,7 +471,7 @@ type GongtructBasicField interface {
 // - full refactoring of Gongstruct identifiers / fields
 type PointerToGongstruct interface {
 	// insertion point for generic types
-	*REQIF | *REQIFHEADER
+	*CONTENT | *HEADER | *REQIF
 	GetName() string
 	CommitVoid(*StageStruct)
 	UnstageVoid(stage *StageStruct)
@@ -421,16 +500,18 @@ func GetGongstrucsSorted[T PointerToGongstruct](stage *StageStruct) (sortedSlice
 type GongstructSet interface {
 	map[any]any |
 		// insertion point for generic types
+		map[*CONTENT]any |
+		map[*HEADER]any |
 		map[*REQIF]any |
-		map[*REQIFHEADER]any |
 		map[*any]any // because go does not support an extra "|" at the end of type specifications
 }
 
 type GongstructMapString interface {
 	map[any]any |
 		// insertion point for generic types
+		map[string]*CONTENT |
+		map[string]*HEADER |
 		map[string]*REQIF |
-		map[string]*REQIFHEADER |
 		map[*any]any // because go does not support an extra "|" at the end of type specifications
 }
 
@@ -441,10 +522,12 @@ func GongGetSet[Type GongstructSet](stage *StageStruct) *Type {
 
 	switch any(ret).(type) {
 	// insertion point for generic get functions
+	case map[*CONTENT]any:
+		return any(&stage.CONTENTs).(*Type)
+	case map[*HEADER]any:
+		return any(&stage.HEADERs).(*Type)
 	case map[*REQIF]any:
 		return any(&stage.REQIFs).(*Type)
-	case map[*REQIFHEADER]any:
-		return any(&stage.REQIFHEADERs).(*Type)
 	default:
 		return nil
 	}
@@ -457,10 +540,12 @@ func GongGetMap[Type GongstructMapString](stage *StageStruct) *Type {
 
 	switch any(ret).(type) {
 	// insertion point for generic get functions
+	case map[string]*CONTENT:
+		return any(&stage.CONTENTs_mapString).(*Type)
+	case map[string]*HEADER:
+		return any(&stage.HEADERs_mapString).(*Type)
 	case map[string]*REQIF:
 		return any(&stage.REQIFs_mapString).(*Type)
-	case map[string]*REQIFHEADER:
-		return any(&stage.REQIFHEADERs_mapString).(*Type)
 	default:
 		return nil
 	}
@@ -473,10 +558,12 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *StageStruct) *map[*Type]a
 
 	switch any(ret).(type) {
 	// insertion point for generic get functions
+	case CONTENT:
+		return any(&stage.CONTENTs).(*map[*Type]any)
+	case HEADER:
+		return any(&stage.HEADERs).(*map[*Type]any)
 	case REQIF:
 		return any(&stage.REQIFs).(*map[*Type]any)
-	case REQIFHEADER:
-		return any(&stage.REQIFHEADERs).(*map[*Type]any)
 	default:
 		return nil
 	}
@@ -489,10 +576,12 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 
 	switch any(ret).(type) {
 	// insertion point for generic get functions
+	case *CONTENT:
+		return any(&stage.CONTENTs).(*map[Type]any)
+	case *HEADER:
+		return any(&stage.HEADERs).(*map[Type]any)
 	case *REQIF:
 		return any(&stage.REQIFs).(*map[Type]any)
-	case *REQIFHEADER:
-		return any(&stage.REQIFHEADERs).(*map[Type]any)
 	default:
 		return nil
 	}
@@ -505,10 +594,12 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *StageStruct) *map[string]
 
 	switch any(ret).(type) {
 	// insertion point for generic get functions
+	case CONTENT:
+		return any(&stage.CONTENTs_mapString).(*map[string]*Type)
+	case HEADER:
+		return any(&stage.HEADERs_mapString).(*map[string]*Type)
 	case REQIF:
 		return any(&stage.REQIFs_mapString).(*map[string]*Type)
-	case REQIFHEADER:
-		return any(&stage.REQIFHEADERs_mapString).(*map[string]*Type)
 	default:
 		return nil
 	}
@@ -523,15 +614,21 @@ func GetAssociationName[Type Gongstruct]() *Type {
 
 	switch any(ret).(type) {
 	// insertion point for instance with special fields
+	case CONTENT:
+		return any(&CONTENT{
+			// Initialisation of associations
+		}).(*Type)
+	case HEADER:
+		return any(&HEADER{
+			// Initialisation of associations
+		}).(*Type)
 	case REQIF:
 		return any(&REQIF{
 			// Initialisation of associations
-			// field is initialized with an instance of REQIFHEADER with the name of the field
-			REQIFHEADER: &REQIFHEADER{Name: "REQIFHEADER"},
-		}).(*Type)
-	case REQIFHEADER:
-		return any(&REQIFHEADER{
-			// Initialisation of associations
+			// field is initialized with an instance of HEADER with the name of the field
+			HEADER: &HEADER{Name: "HEADER"},
+			// field is initialized with an instance of CONTENT with the name of the field
+			CONTENT: &CONTENT{Name: "CONTENT"},
 		}).(*Type)
 	default:
 		return nil
@@ -551,32 +648,54 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 
 	switch any(ret).(type) {
 	// insertion point of functions that provide maps for reverse associations
+	// reverse maps of direct associations of CONTENT
+	case CONTENT:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of HEADER
+	case HEADER:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
 	// reverse maps of direct associations of REQIF
 	case REQIF:
 		switch fieldname {
 		// insertion point for per direct association field
-		case "REQIFHEADER":
-			res := make(map[*REQIFHEADER][]*REQIF)
+		case "HEADER":
+			res := make(map[*HEADER][]*REQIF)
 			for reqif := range stage.REQIFs {
-				if reqif.REQIFHEADER != nil {
-					reqifheader_ := reqif.REQIFHEADER
+				if reqif.HEADER != nil {
+					header_ := reqif.HEADER
 					var reqifs []*REQIF
-					_, ok := res[reqifheader_]
+					_, ok := res[header_]
 					if ok {
-						reqifs = res[reqifheader_]
+						reqifs = res[header_]
 					} else {
 						reqifs = make([]*REQIF, 0)
 					}
 					reqifs = append(reqifs, reqif)
-					res[reqifheader_] = reqifs
+					res[header_] = reqifs
 				}
 			}
 			return any(res).(map[*End][]*Start)
-		}
-	// reverse maps of direct associations of REQIFHEADER
-	case REQIFHEADER:
-		switch fieldname {
-		// insertion point for per direct association field
+		case "CONTENT":
+			res := make(map[*CONTENT][]*REQIF)
+			for reqif := range stage.REQIFs {
+				if reqif.CONTENT != nil {
+					content_ := reqif.CONTENT
+					var reqifs []*REQIF
+					_, ok := res[content_]
+					if ok {
+						reqifs = res[content_]
+					} else {
+						reqifs = make([]*REQIF, 0)
+					}
+					reqifs = append(reqifs, reqif)
+					res[content_] = reqifs
+				}
+			}
+			return any(res).(map[*End][]*Start)
 		}
 	}
 	return nil
@@ -594,13 +713,18 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 
 	switch any(ret).(type) {
 	// insertion point of functions that provide maps for reverse associations
-	// reverse maps of direct associations of REQIF
-	case REQIF:
+	// reverse maps of direct associations of CONTENT
+	case CONTENT:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
-	// reverse maps of direct associations of REQIFHEADER
-	case REQIFHEADER:
+	// reverse maps of direct associations of HEADER
+	case HEADER:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of REQIF
+	case REQIF:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -616,10 +740,12 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 
 	switch any(ret).(type) {
 	// insertion point for generic get gongstruct name
+	case CONTENT:
+		res = "CONTENT"
+	case HEADER:
+		res = "HEADER"
 	case REQIF:
 		res = "REQIF"
-	case REQIFHEADER:
-		res = "REQIFHEADER"
 	}
 	return res
 }
@@ -632,10 +758,12 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 
 	switch any(ret).(type) {
 	// insertion point for generic get gongstruct name
+	case *CONTENT:
+		res = "CONTENT"
+	case *HEADER:
+		res = "HEADER"
 	case *REQIF:
 		res = "REQIF"
-	case *REQIFHEADER:
-		res = "REQIFHEADER"
 	}
 	return res
 }
@@ -647,10 +775,12 @@ func GetFields[Type Gongstruct]() (res []string) {
 
 	switch any(ret).(type) {
 	// insertion point for generic get gongstruct name
-	case REQIF:
-		res = []string{"Name", "REQIFHEADER"}
-	case REQIFHEADER:
+	case CONTENT:
+		res = []string{"Name"}
+	case HEADER:
 		res = []string{"Name", "IDENTIFIERAttr", "COMMENT", "CREATIONTIME", "REPOSITORYID", "REQIFTOOLID", "REQIFVERSION", "SOURCETOOLID", "TITLE"}
+	case REQIF:
+		res = []string{"Name", "HEADER", "CONTENT"}
 	}
 	return
 }
@@ -669,10 +799,13 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 	switch any(ret).(type) {
 
 	// insertion point for generic get gongstruct name
-	case REQIF:
+	case CONTENT:
 		var rf ReverseField
 		_ = rf
-	case REQIFHEADER:
+	case HEADER:
+		var rf ReverseField
+		_ = rf
+	case REQIF:
 		var rf ReverseField
 		_ = rf
 	}
@@ -686,10 +819,12 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 
 	switch any(ret).(type) {
 	// insertion point for generic get gongstruct name
-	case *REQIF:
-		res = []string{"Name", "REQIFHEADER"}
-	case *REQIFHEADER:
+	case *CONTENT:
+		res = []string{"Name"}
+	case *HEADER:
 		res = []string{"Name", "IDENTIFIERAttr", "COMMENT", "CREATIONTIME", "REPOSITORYID", "REQIFTOOLID", "REQIFVERSION", "SOURCETOOLID", "TITLE"}
+	case *REQIF:
+		res = []string{"Name", "HEADER", "CONTENT"}
 	}
 	return
 }
@@ -698,17 +833,13 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 
 	switch inferedInstance := any(instance).(type) {
 	// insertion point for generic get gongstruct field value
-	case *REQIF:
+	case *CONTENT:
 		switch fieldName {
 		// string value of fields
 		case "Name":
 			res = inferedInstance.Name
-		case "REQIFHEADER":
-			if inferedInstance.REQIFHEADER != nil {
-				res = inferedInstance.REQIFHEADER.Name
-			}
 		}
-	case *REQIFHEADER:
+	case *HEADER:
 		switch fieldName {
 		// string value of fields
 		case "Name":
@@ -729,6 +860,20 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 			res = inferedInstance.SOURCETOOLID
 		case "TITLE":
 			res = inferedInstance.TITLE
+		}
+	case *REQIF:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res = inferedInstance.Name
+		case "HEADER":
+			if inferedInstance.HEADER != nil {
+				res = inferedInstance.HEADER.Name
+			}
+		case "CONTENT":
+			if inferedInstance.CONTENT != nil {
+				res = inferedInstance.CONTENT.Name
+			}
 		}
 	default:
 		_ = inferedInstance
@@ -740,17 +885,13 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 
 	switch inferedInstance := any(instance).(type) {
 	// insertion point for generic get gongstruct field value
-	case REQIF:
+	case CONTENT:
 		switch fieldName {
 		// string value of fields
 		case "Name":
 			res = inferedInstance.Name
-		case "REQIFHEADER":
-			if inferedInstance.REQIFHEADER != nil {
-				res = inferedInstance.REQIFHEADER.Name
-			}
 		}
-	case REQIFHEADER:
+	case HEADER:
 		switch fieldName {
 		// string value of fields
 		case "Name":
@@ -771,6 +912,20 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 			res = inferedInstance.SOURCETOOLID
 		case "TITLE":
 			res = inferedInstance.TITLE
+		}
+	case REQIF:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res = inferedInstance.Name
+		case "HEADER":
+			if inferedInstance.HEADER != nil {
+				res = inferedInstance.HEADER.Name
+			}
+		case "CONTENT":
+			if inferedInstance.CONTENT != nil {
+				res = inferedInstance.CONTENT.Name
+			}
 		}
 	default:
 		_ = inferedInstance
