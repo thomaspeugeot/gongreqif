@@ -9,15 +9,16 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "go/cmd/gongreqif/main.go"
+            "program": "go/cmd/gongreqif"
         },
         {
             "name": "go run on toto",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "go/cmd/gongreqif/main.go",
+            "program": "go/cmd/gongreqif",
             "args": [
+                "-filename",
                 "../../../../toto.reqif"
             ]
         }
