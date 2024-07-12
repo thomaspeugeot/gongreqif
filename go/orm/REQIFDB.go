@@ -51,9 +51,9 @@ type REQIFPointersEncoding struct {
 	// This field is generated into another field to enable AS ONE association
 	HEADERID sql.NullInt64
 
-	// field CONTENT is a pointer to another Struct (optional or 0..1)
+	// field CORECONTENT is a pointer to another Struct (optional or 0..1)
 	// This field is generated into another field to enable AS ONE association
-	CONTENTID sql.NullInt64
+	CORECONTENTID sql.NullInt64
 }
 
 // REQIFDB describes a reqif in the database
@@ -222,7 +222,7 @@ func (backRepoREQIF *BackRepoREQIFStruct) CommitPhaseTwoInstance(backRepo *BackR
 		// commit pointer value reqif.HEADER translates to updating the reqif.HEADERID
 		reqifDB.HEADERID.Valid = true // allow for a 0 value (nil association)
 		if reqif.HEADER != nil {
-			if HEADERId, ok := backRepo.BackRepoHEADER.Map_HEADERPtr_HEADERDBID[reqif.HEADER]; ok {
+			if HEADERId, ok := backRepo.BackRepoTHEHEADER.Map_THEHEADERPtr_THEHEADERDBID[reqif.HEADER]; ok {
 				reqifDB.HEADERID.Int64 = int64(HEADERId)
 				reqifDB.HEADERID.Valid = true
 			}
@@ -231,16 +231,16 @@ func (backRepoREQIF *BackRepoREQIFStruct) CommitPhaseTwoInstance(backRepo *BackR
 			reqifDB.HEADERID.Valid = true
 		}
 
-		// commit pointer value reqif.CONTENT translates to updating the reqif.CONTENTID
-		reqifDB.CONTENTID.Valid = true // allow for a 0 value (nil association)
-		if reqif.CONTENT != nil {
-			if CONTENTId, ok := backRepo.BackRepoCONTENT.Map_CONTENTPtr_CONTENTDBID[reqif.CONTENT]; ok {
-				reqifDB.CONTENTID.Int64 = int64(CONTENTId)
-				reqifDB.CONTENTID.Valid = true
+		// commit pointer value reqif.CORECONTENT translates to updating the reqif.CORECONTENTID
+		reqifDB.CORECONTENTID.Valid = true // allow for a 0 value (nil association)
+		if reqif.CORECONTENT != nil {
+			if CORECONTENTId, ok := backRepo.BackRepoCORECONTENT.Map_CORECONTENTPtr_CORECONTENTDBID[reqif.CORECONTENT]; ok {
+				reqifDB.CORECONTENTID.Int64 = int64(CORECONTENTId)
+				reqifDB.CORECONTENTID.Valid = true
 			}
 		} else {
-			reqifDB.CONTENTID.Int64 = 0
-			reqifDB.CONTENTID.Valid = true
+			reqifDB.CORECONTENTID.Int64 = 0
+			reqifDB.CORECONTENTID.Valid = true
 		}
 
 		query := backRepoREQIF.db.Save(&reqifDB)
@@ -359,12 +359,12 @@ func (reqifDB *REQIFDB) DecodePointers(backRepo *BackRepoStruct, reqif *models.R
 	// HEADER field
 	reqif.HEADER = nil
 	if reqifDB.HEADERID.Int64 != 0 {
-		reqif.HEADER = backRepo.BackRepoHEADER.Map_HEADERDBID_HEADERPtr[uint(reqifDB.HEADERID.Int64)]
+		reqif.HEADER = backRepo.BackRepoTHEHEADER.Map_THEHEADERDBID_THEHEADERPtr[uint(reqifDB.HEADERID.Int64)]
 	}
-	// CONTENT field
-	reqif.CONTENT = nil
-	if reqifDB.CONTENTID.Int64 != 0 {
-		reqif.CONTENT = backRepo.BackRepoCONTENT.Map_CONTENTDBID_CONTENTPtr[uint(reqifDB.CONTENTID.Int64)]
+	// CORECONTENT field
+	reqif.CORECONTENT = nil
+	if reqifDB.CORECONTENTID.Int64 != 0 {
+		reqif.CORECONTENT = backRepo.BackRepoCORECONTENT.Map_CORECONTENTDBID_CORECONTENTPtr[uint(reqifDB.CORECONTENTID.Int64)]
 	}
 	return
 }
@@ -596,14 +596,14 @@ func (backRepoREQIF *BackRepoREQIFStruct) RestorePhaseTwo() {
 		// insertion point for reindexing pointers encoding
 		// reindexing HEADER field
 		if reqifDB.HEADERID.Int64 != 0 {
-			reqifDB.HEADERID.Int64 = int64(BackRepoHEADERid_atBckpTime_newID[uint(reqifDB.HEADERID.Int64)])
+			reqifDB.HEADERID.Int64 = int64(BackRepoTHEHEADERid_atBckpTime_newID[uint(reqifDB.HEADERID.Int64)])
 			reqifDB.HEADERID.Valid = true
 		}
 
-		// reindexing CONTENT field
-		if reqifDB.CONTENTID.Int64 != 0 {
-			reqifDB.CONTENTID.Int64 = int64(BackRepoCONTENTid_atBckpTime_newID[uint(reqifDB.CONTENTID.Int64)])
-			reqifDB.CONTENTID.Valid = true
+		// reindexing CORECONTENT field
+		if reqifDB.CORECONTENTID.Int64 != 0 {
+			reqifDB.CORECONTENTID.Int64 = int64(BackRepoCORECONTENTid_atBckpTime_newID[uint(reqifDB.CORECONTENTID.Int64)])
+			reqifDB.CORECONTENTID.Valid = true
 		}
 
 		// update databse with new index encoding
