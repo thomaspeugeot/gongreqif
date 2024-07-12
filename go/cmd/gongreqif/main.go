@@ -7,8 +7,6 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/thomaspeugeot/gongreqif/go/schema"
-
 	gongreqif_models "github.com/thomaspeugeot/gongreqif/go/models"
 	gongreqif_stack "github.com/thomaspeugeot/gongreqif/go/stack"
 	gongreqif_static "github.com/thomaspeugeot/gongreqif/go/static"
@@ -50,17 +48,14 @@ func main() {
 		return
 	}
 
-	var reqif schema.REQIF
+	var reqif gongreqif_models.REQIF
 	err = xml.Unmarshal(data, &reqif)
 	if err != nil {
 		fmt.Println("Error parsing XML:", err)
 		return
 	}
 
-	reqifModels := new(gongreqif_models.REQIF).Stage(stack.Stage)
-	reqifModels.SetD(&reqif)
-	reqifModels.SetStage(stack.Stage)
-	reqifModels.Walk()
+	gongreqif_models.StageBranch(stack.Stage, &reqif)
 
 	stack.Stage.Commit()
 

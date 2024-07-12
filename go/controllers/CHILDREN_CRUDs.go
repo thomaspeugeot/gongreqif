@@ -14,16 +14,16 @@ import (
 )
 
 // declaration in order to justify use of the models import
-var __HEADER__dummysDeclaration__ models.HEADER
-var __HEADER_time__dummyDeclaration time.Duration
+var __CHILDREN__dummysDeclaration__ models.CHILDREN
+var __CHILDREN_time__dummyDeclaration time.Duration
 
-var mutexHEADER sync.Mutex
+var mutexCHILDREN sync.Mutex
 
-// An HEADERID parameter model.
+// An CHILDRENID parameter model.
 //
 // This is used for operations that want the ID of an order in the path
-// swagger:parameters getHEADER updateHEADER deleteHEADER
-type HEADERID struct {
+// swagger:parameters getCHILDREN updateCHILDREN deleteCHILDREN
+type CHILDRENID struct {
 	// The ID of the order
 	//
 	// in: path
@@ -31,46 +31,46 @@ type HEADERID struct {
 	ID int64
 }
 
-// HEADERInput is a schema that can validate the user’s
+// CHILDRENInput is a schema that can validate the user’s
 // input to prevent us from getting invalid data
-// swagger:parameters postHEADER updateHEADER
-type HEADERInput struct {
-	// The HEADER to submit or modify
+// swagger:parameters postCHILDREN updateCHILDREN
+type CHILDRENInput struct {
+	// The CHILDREN to submit or modify
 	// in: body
-	HEADER *orm.HEADERAPI
+	CHILDREN *orm.CHILDRENAPI
 }
 
-// GetHEADERs
+// GetCHILDRENs
 //
-// swagger:route GET /headers headers getHEADERs
+// swagger:route GET /childrens childrens getCHILDRENs
 //
-// # Get all headers
+// # Get all childrens
 //
 // Responses:
 // default: genericError
 //
-//	200: headerDBResponse
-func (controller *Controller) GetHEADERs(c *gin.Context) {
+//	200: childrenDBResponse
+func (controller *Controller) GetCHILDRENs(c *gin.Context) {
 
 	// source slice
-	var headerDBs []orm.HEADERDB
+	var childrenDBs []orm.CHILDRENDB
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetHEADERs", "GONG__StackPath", stackPath)
+			// log.Println("GetCHILDRENs", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoHEADER.GetDB()
+	db := backRepo.BackRepoCHILDREN.GetDB()
 
-	query := db.Find(&headerDBs)
+	query := db.Find(&childrenDBs)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -81,29 +81,29 @@ func (controller *Controller) GetHEADERs(c *gin.Context) {
 	}
 
 	// slice that will be transmitted to the front
-	headerAPIs := make([]orm.HEADERAPI, 0)
+	childrenAPIs := make([]orm.CHILDRENAPI, 0)
 
-	// for each header, update fields from the database nullable fields
-	for idx := range headerDBs {
-		headerDB := &headerDBs[idx]
-		_ = headerDB
-		var headerAPI orm.HEADERAPI
+	// for each children, update fields from the database nullable fields
+	for idx := range childrenDBs {
+		childrenDB := &childrenDBs[idx]
+		_ = childrenDB
+		var childrenAPI orm.CHILDRENAPI
 
 		// insertion point for updating fields
-		headerAPI.ID = headerDB.ID
-		headerDB.CopyBasicFieldsToHEADER_WOP(&headerAPI.HEADER_WOP)
-		headerAPI.HEADERPointersEncoding = headerDB.HEADERPointersEncoding
-		headerAPIs = append(headerAPIs, headerAPI)
+		childrenAPI.ID = childrenDB.ID
+		childrenDB.CopyBasicFieldsToCHILDREN_WOP(&childrenAPI.CHILDREN_WOP)
+		childrenAPI.CHILDRENPointersEncoding = childrenDB.CHILDRENPointersEncoding
+		childrenAPIs = append(childrenAPIs, childrenAPI)
 	}
 
-	c.JSON(http.StatusOK, headerAPIs)
+	c.JSON(http.StatusOK, childrenAPIs)
 }
 
-// PostHEADER
+// PostCHILDREN
 //
-// swagger:route POST /headers headers postHEADER
+// swagger:route POST /childrens childrens postCHILDREN
 //
-// Creates a header
+// Creates a children
 //
 //	Consumes:
 //	- application/json
@@ -113,28 +113,28 @@ func (controller *Controller) GetHEADERs(c *gin.Context) {
 //
 //	Responses:
 //	  200: nodeDBResponse
-func (controller *Controller) PostHEADER(c *gin.Context) {
+func (controller *Controller) PostCHILDREN(c *gin.Context) {
 
-	mutexHEADER.Lock()
-	defer mutexHEADER.Unlock()
+	mutexCHILDREN.Lock()
+	defer mutexCHILDREN.Unlock()
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("PostHEADERs", "GONG__StackPath", stackPath)
+			// log.Println("PostCHILDRENs", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoHEADER.GetDB()
+	db := backRepo.BackRepoCHILDREN.GetDB()
 
 	// Validate input
-	var input orm.HEADERAPI
+	var input orm.CHILDRENAPI
 
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
@@ -146,12 +146,12 @@ func (controller *Controller) PostHEADER(c *gin.Context) {
 		return
 	}
 
-	// Create header
-	headerDB := orm.HEADERDB{}
-	headerDB.HEADERPointersEncoding = input.HEADERPointersEncoding
-	headerDB.CopyBasicFieldsFromHEADER_WOP(&input.HEADER_WOP)
+	// Create children
+	childrenDB := orm.CHILDRENDB{}
+	childrenDB.CHILDRENPointersEncoding = input.CHILDRENPointersEncoding
+	childrenDB.CopyBasicFieldsFromCHILDREN_WOP(&input.CHILDREN_WOP)
 
-	query := db.Create(&headerDB)
+	query := db.Create(&childrenDB)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -162,50 +162,50 @@ func (controller *Controller) PostHEADER(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	backRepo.BackRepoHEADER.CheckoutPhaseOneInstance(&headerDB)
-	header := backRepo.BackRepoHEADER.Map_HEADERDBID_HEADERPtr[headerDB.ID]
+	backRepo.BackRepoCHILDREN.CheckoutPhaseOneInstance(&childrenDB)
+	children := backRepo.BackRepoCHILDREN.Map_CHILDRENDBID_CHILDRENPtr[childrenDB.ID]
 
-	if header != nil {
-		models.AfterCreateFromFront(backRepo.GetStage(), header)
+	if children != nil {
+		models.AfterCreateFromFront(backRepo.GetStage(), children)
 	}
 
 	// a POST is equivalent to a back repo commit increase
 	// (this will be improved with implementation of unit of work design pattern)
 	backRepo.IncrementPushFromFrontNb()
 
-	c.JSON(http.StatusOK, headerDB)
+	c.JSON(http.StatusOK, childrenDB)
 }
 
-// GetHEADER
+// GetCHILDREN
 //
-// swagger:route GET /headers/{ID} headers getHEADER
+// swagger:route GET /childrens/{ID} childrens getCHILDREN
 //
-// Gets the details for a header.
+// Gets the details for a children.
 //
 // Responses:
 // default: genericError
 //
-//	200: headerDBResponse
-func (controller *Controller) GetHEADER(c *gin.Context) {
+//	200: childrenDBResponse
+func (controller *Controller) GetCHILDREN(c *gin.Context) {
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetHEADER", "GONG__StackPath", stackPath)
+			// log.Println("GetCHILDREN", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoHEADER.GetDB()
+	db := backRepo.BackRepoCHILDREN.GetDB()
 
-	// Get headerDB in DB
-	var headerDB orm.HEADERDB
-	if err := db.First(&headerDB, c.Param("id")).Error; err != nil {
+	// Get childrenDB in DB
+	var childrenDB orm.CHILDRENDB
+	if err := db.First(&childrenDB, c.Param("id")).Error; err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -214,46 +214,46 @@ func (controller *Controller) GetHEADER(c *gin.Context) {
 		return
 	}
 
-	var headerAPI orm.HEADERAPI
-	headerAPI.ID = headerDB.ID
-	headerAPI.HEADERPointersEncoding = headerDB.HEADERPointersEncoding
-	headerDB.CopyBasicFieldsToHEADER_WOP(&headerAPI.HEADER_WOP)
+	var childrenAPI orm.CHILDRENAPI
+	childrenAPI.ID = childrenDB.ID
+	childrenAPI.CHILDRENPointersEncoding = childrenDB.CHILDRENPointersEncoding
+	childrenDB.CopyBasicFieldsToCHILDREN_WOP(&childrenAPI.CHILDREN_WOP)
 
-	c.JSON(http.StatusOK, headerAPI)
+	c.JSON(http.StatusOK, childrenAPI)
 }
 
-// UpdateHEADER
+// UpdateCHILDREN
 //
-// swagger:route PATCH /headers/{ID} headers updateHEADER
+// swagger:route PATCH /childrens/{ID} childrens updateCHILDREN
 //
-// # Update a header
+// # Update a children
 //
 // Responses:
 // default: genericError
 //
-//	200: headerDBResponse
-func (controller *Controller) UpdateHEADER(c *gin.Context) {
+//	200: childrenDBResponse
+func (controller *Controller) UpdateCHILDREN(c *gin.Context) {
 
-	mutexHEADER.Lock()
-	defer mutexHEADER.Unlock()
+	mutexCHILDREN.Lock()
+	defer mutexCHILDREN.Unlock()
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("UpdateHEADER", "GONG__StackPath", stackPath)
+			// log.Println("UpdateCHILDREN", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoHEADER.GetDB()
+	db := backRepo.BackRepoCHILDREN.GetDB()
 
 	// Validate input
-	var input orm.HEADERAPI
+	var input orm.CHILDRENAPI
 	if err := c.ShouldBindJSON(&input); err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -261,10 +261,10 @@ func (controller *Controller) UpdateHEADER(c *gin.Context) {
 	}
 
 	// Get model if exist
-	var headerDB orm.HEADERDB
+	var childrenDB orm.CHILDRENDB
 
-	// fetch the header
-	query := db.First(&headerDB, c.Param("id"))
+	// fetch the children
+	query := db.First(&childrenDB, c.Param("id"))
 
 	if query.Error != nil {
 		var returnError GenericError
@@ -276,10 +276,10 @@ func (controller *Controller) UpdateHEADER(c *gin.Context) {
 	}
 
 	// update
-	headerDB.CopyBasicFieldsFromHEADER_WOP(&input.HEADER_WOP)
-	headerDB.HEADERPointersEncoding = input.HEADERPointersEncoding
+	childrenDB.CopyBasicFieldsFromCHILDREN_WOP(&input.CHILDREN_WOP)
+	childrenDB.CHILDRENPointersEncoding = input.CHILDRENPointersEncoding
 
-	query = db.Model(&headerDB).Updates(headerDB)
+	query = db.Model(&childrenDB).Updates(childrenDB)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -290,16 +290,16 @@ func (controller *Controller) UpdateHEADER(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	headerNew := new(models.HEADER)
-	headerDB.CopyBasicFieldsToHEADER(headerNew)
+	childrenNew := new(models.CHILDREN)
+	childrenDB.CopyBasicFieldsToCHILDREN(childrenNew)
 
 	// redeem pointers
-	headerDB.DecodePointers(backRepo, headerNew)
+	childrenDB.DecodePointers(backRepo, childrenNew)
 
 	// get stage instance from DB instance, and call callback function
-	headerOld := backRepo.BackRepoHEADER.Map_HEADERDBID_HEADERPtr[headerDB.ID]
-	if headerOld != nil {
-		models.AfterUpdateFromFront(backRepo.GetStage(), headerOld, headerNew)
+	childrenOld := backRepo.BackRepoCHILDREN.Map_CHILDRENDBID_CHILDRENPtr[childrenDB.ID]
+	if childrenOld != nil {
+		models.AfterUpdateFromFront(backRepo.GetStage(), childrenOld, childrenNew)
 	}
 
 	// an UPDATE generates a back repo commit increase
@@ -308,42 +308,42 @@ func (controller *Controller) UpdateHEADER(c *gin.Context) {
 	// generates a checkout
 	backRepo.IncrementPushFromFrontNb()
 
-	// return status OK with the marshalling of the the headerDB
-	c.JSON(http.StatusOK, headerDB)
+	// return status OK with the marshalling of the the childrenDB
+	c.JSON(http.StatusOK, childrenDB)
 }
 
-// DeleteHEADER
+// DeleteCHILDREN
 //
-// swagger:route DELETE /headers/{ID} headers deleteHEADER
+// swagger:route DELETE /childrens/{ID} childrens deleteCHILDREN
 //
-// # Delete a header
+// # Delete a children
 //
 // default: genericError
 //
-//	200: headerDBResponse
-func (controller *Controller) DeleteHEADER(c *gin.Context) {
+//	200: childrenDBResponse
+func (controller *Controller) DeleteCHILDREN(c *gin.Context) {
 
-	mutexHEADER.Lock()
-	defer mutexHEADER.Unlock()
+	mutexCHILDREN.Lock()
+	defer mutexCHILDREN.Unlock()
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("DeleteHEADER", "GONG__StackPath", stackPath)
+			// log.Println("DeleteCHILDREN", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoHEADER.GetDB()
+	db := backRepo.BackRepoCHILDREN.GetDB()
 
 	// Get model if exist
-	var headerDB orm.HEADERDB
-	if err := db.First(&headerDB, c.Param("id")).Error; err != nil {
+	var childrenDB orm.CHILDRENDB
+	if err := db.First(&childrenDB, c.Param("id")).Error; err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,16 +353,16 @@ func (controller *Controller) DeleteHEADER(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&headerDB)
+	db.Unscoped().Delete(&childrenDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
-	headerDeleted := new(models.HEADER)
-	headerDB.CopyBasicFieldsToHEADER(headerDeleted)
+	childrenDeleted := new(models.CHILDREN)
+	childrenDB.CopyBasicFieldsToCHILDREN(childrenDeleted)
 
 	// get stage instance from DB instance, and call callback function
-	headerStaged := backRepo.BackRepoHEADER.Map_HEADERDBID_HEADERPtr[headerDB.ID]
-	if headerStaged != nil {
-		models.AfterDeleteFromFront(backRepo.GetStage(), headerStaged, headerDeleted)
+	childrenStaged := backRepo.BackRepoCHILDREN.Map_CHILDRENDBID_CHILDRENPtr[childrenDB.ID]
+	if childrenStaged != nil {
+		models.AfterDeleteFromFront(backRepo.GetStage(), childrenStaged, childrenDeleted)
 	}
 
 	// a DELETE generates a back repo commit increase

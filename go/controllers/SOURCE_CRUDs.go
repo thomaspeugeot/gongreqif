@@ -14,16 +14,16 @@ import (
 )
 
 // declaration in order to justify use of the models import
-var __CONTENT__dummysDeclaration__ models.CONTENT
-var __CONTENT_time__dummyDeclaration time.Duration
+var __SOURCE__dummysDeclaration__ models.SOURCE
+var __SOURCE_time__dummyDeclaration time.Duration
 
-var mutexCONTENT sync.Mutex
+var mutexSOURCE sync.Mutex
 
-// An CONTENTID parameter model.
+// An SOURCEID parameter model.
 //
 // This is used for operations that want the ID of an order in the path
-// swagger:parameters getCONTENT updateCONTENT deleteCONTENT
-type CONTENTID struct {
+// swagger:parameters getSOURCE updateSOURCE deleteSOURCE
+type SOURCEID struct {
 	// The ID of the order
 	//
 	// in: path
@@ -31,46 +31,46 @@ type CONTENTID struct {
 	ID int64
 }
 
-// CONTENTInput is a schema that can validate the user’s
+// SOURCEInput is a schema that can validate the user’s
 // input to prevent us from getting invalid data
-// swagger:parameters postCONTENT updateCONTENT
-type CONTENTInput struct {
-	// The CONTENT to submit or modify
+// swagger:parameters postSOURCE updateSOURCE
+type SOURCEInput struct {
+	// The SOURCE to submit or modify
 	// in: body
-	CONTENT *orm.CONTENTAPI
+	SOURCE *orm.SOURCEAPI
 }
 
-// GetCONTENTs
+// GetSOURCEs
 //
-// swagger:route GET /contents contents getCONTENTs
+// swagger:route GET /sources sources getSOURCEs
 //
-// # Get all contents
+// # Get all sources
 //
 // Responses:
 // default: genericError
 //
-//	200: contentDBResponse
-func (controller *Controller) GetCONTENTs(c *gin.Context) {
+//	200: sourceDBResponse
+func (controller *Controller) GetSOURCEs(c *gin.Context) {
 
 	// source slice
-	var contentDBs []orm.CONTENTDB
+	var sourceDBs []orm.SOURCEDB
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetCONTENTs", "GONG__StackPath", stackPath)
+			// log.Println("GetSOURCEs", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoCONTENT.GetDB()
+	db := backRepo.BackRepoSOURCE.GetDB()
 
-	query := db.Find(&contentDBs)
+	query := db.Find(&sourceDBs)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -81,29 +81,29 @@ func (controller *Controller) GetCONTENTs(c *gin.Context) {
 	}
 
 	// slice that will be transmitted to the front
-	contentAPIs := make([]orm.CONTENTAPI, 0)
+	sourceAPIs := make([]orm.SOURCEAPI, 0)
 
-	// for each content, update fields from the database nullable fields
-	for idx := range contentDBs {
-		contentDB := &contentDBs[idx]
-		_ = contentDB
-		var contentAPI orm.CONTENTAPI
+	// for each source, update fields from the database nullable fields
+	for idx := range sourceDBs {
+		sourceDB := &sourceDBs[idx]
+		_ = sourceDB
+		var sourceAPI orm.SOURCEAPI
 
 		// insertion point for updating fields
-		contentAPI.ID = contentDB.ID
-		contentDB.CopyBasicFieldsToCONTENT_WOP(&contentAPI.CONTENT_WOP)
-		contentAPI.CONTENTPointersEncoding = contentDB.CONTENTPointersEncoding
-		contentAPIs = append(contentAPIs, contentAPI)
+		sourceAPI.ID = sourceDB.ID
+		sourceDB.CopyBasicFieldsToSOURCE_WOP(&sourceAPI.SOURCE_WOP)
+		sourceAPI.SOURCEPointersEncoding = sourceDB.SOURCEPointersEncoding
+		sourceAPIs = append(sourceAPIs, sourceAPI)
 	}
 
-	c.JSON(http.StatusOK, contentAPIs)
+	c.JSON(http.StatusOK, sourceAPIs)
 }
 
-// PostCONTENT
+// PostSOURCE
 //
-// swagger:route POST /contents contents postCONTENT
+// swagger:route POST /sources sources postSOURCE
 //
-// Creates a content
+// Creates a source
 //
 //	Consumes:
 //	- application/json
@@ -113,28 +113,28 @@ func (controller *Controller) GetCONTENTs(c *gin.Context) {
 //
 //	Responses:
 //	  200: nodeDBResponse
-func (controller *Controller) PostCONTENT(c *gin.Context) {
+func (controller *Controller) PostSOURCE(c *gin.Context) {
 
-	mutexCONTENT.Lock()
-	defer mutexCONTENT.Unlock()
+	mutexSOURCE.Lock()
+	defer mutexSOURCE.Unlock()
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("PostCONTENTs", "GONG__StackPath", stackPath)
+			// log.Println("PostSOURCEs", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoCONTENT.GetDB()
+	db := backRepo.BackRepoSOURCE.GetDB()
 
 	// Validate input
-	var input orm.CONTENTAPI
+	var input orm.SOURCEAPI
 
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
@@ -146,12 +146,12 @@ func (controller *Controller) PostCONTENT(c *gin.Context) {
 		return
 	}
 
-	// Create content
-	contentDB := orm.CONTENTDB{}
-	contentDB.CONTENTPointersEncoding = input.CONTENTPointersEncoding
-	contentDB.CopyBasicFieldsFromCONTENT_WOP(&input.CONTENT_WOP)
+	// Create source
+	sourceDB := orm.SOURCEDB{}
+	sourceDB.SOURCEPointersEncoding = input.SOURCEPointersEncoding
+	sourceDB.CopyBasicFieldsFromSOURCE_WOP(&input.SOURCE_WOP)
 
-	query := db.Create(&contentDB)
+	query := db.Create(&sourceDB)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -162,50 +162,50 @@ func (controller *Controller) PostCONTENT(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	backRepo.BackRepoCONTENT.CheckoutPhaseOneInstance(&contentDB)
-	content := backRepo.BackRepoCONTENT.Map_CONTENTDBID_CONTENTPtr[contentDB.ID]
+	backRepo.BackRepoSOURCE.CheckoutPhaseOneInstance(&sourceDB)
+	source := backRepo.BackRepoSOURCE.Map_SOURCEDBID_SOURCEPtr[sourceDB.ID]
 
-	if content != nil {
-		models.AfterCreateFromFront(backRepo.GetStage(), content)
+	if source != nil {
+		models.AfterCreateFromFront(backRepo.GetStage(), source)
 	}
 
 	// a POST is equivalent to a back repo commit increase
 	// (this will be improved with implementation of unit of work design pattern)
 	backRepo.IncrementPushFromFrontNb()
 
-	c.JSON(http.StatusOK, contentDB)
+	c.JSON(http.StatusOK, sourceDB)
 }
 
-// GetCONTENT
+// GetSOURCE
 //
-// swagger:route GET /contents/{ID} contents getCONTENT
+// swagger:route GET /sources/{ID} sources getSOURCE
 //
-// Gets the details for a content.
+// Gets the details for a source.
 //
 // Responses:
 // default: genericError
 //
-//	200: contentDBResponse
-func (controller *Controller) GetCONTENT(c *gin.Context) {
+//	200: sourceDBResponse
+func (controller *Controller) GetSOURCE(c *gin.Context) {
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetCONTENT", "GONG__StackPath", stackPath)
+			// log.Println("GetSOURCE", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoCONTENT.GetDB()
+	db := backRepo.BackRepoSOURCE.GetDB()
 
-	// Get contentDB in DB
-	var contentDB orm.CONTENTDB
-	if err := db.First(&contentDB, c.Param("id")).Error; err != nil {
+	// Get sourceDB in DB
+	var sourceDB orm.SOURCEDB
+	if err := db.First(&sourceDB, c.Param("id")).Error; err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -214,46 +214,46 @@ func (controller *Controller) GetCONTENT(c *gin.Context) {
 		return
 	}
 
-	var contentAPI orm.CONTENTAPI
-	contentAPI.ID = contentDB.ID
-	contentAPI.CONTENTPointersEncoding = contentDB.CONTENTPointersEncoding
-	contentDB.CopyBasicFieldsToCONTENT_WOP(&contentAPI.CONTENT_WOP)
+	var sourceAPI orm.SOURCEAPI
+	sourceAPI.ID = sourceDB.ID
+	sourceAPI.SOURCEPointersEncoding = sourceDB.SOURCEPointersEncoding
+	sourceDB.CopyBasicFieldsToSOURCE_WOP(&sourceAPI.SOURCE_WOP)
 
-	c.JSON(http.StatusOK, contentAPI)
+	c.JSON(http.StatusOK, sourceAPI)
 }
 
-// UpdateCONTENT
+// UpdateSOURCE
 //
-// swagger:route PATCH /contents/{ID} contents updateCONTENT
+// swagger:route PATCH /sources/{ID} sources updateSOURCE
 //
-// # Update a content
+// # Update a source
 //
 // Responses:
 // default: genericError
 //
-//	200: contentDBResponse
-func (controller *Controller) UpdateCONTENT(c *gin.Context) {
+//	200: sourceDBResponse
+func (controller *Controller) UpdateSOURCE(c *gin.Context) {
 
-	mutexCONTENT.Lock()
-	defer mutexCONTENT.Unlock()
+	mutexSOURCE.Lock()
+	defer mutexSOURCE.Unlock()
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("UpdateCONTENT", "GONG__StackPath", stackPath)
+			// log.Println("UpdateSOURCE", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoCONTENT.GetDB()
+	db := backRepo.BackRepoSOURCE.GetDB()
 
 	// Validate input
-	var input orm.CONTENTAPI
+	var input orm.SOURCEAPI
 	if err := c.ShouldBindJSON(&input); err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -261,10 +261,10 @@ func (controller *Controller) UpdateCONTENT(c *gin.Context) {
 	}
 
 	// Get model if exist
-	var contentDB orm.CONTENTDB
+	var sourceDB orm.SOURCEDB
 
-	// fetch the content
-	query := db.First(&contentDB, c.Param("id"))
+	// fetch the source
+	query := db.First(&sourceDB, c.Param("id"))
 
 	if query.Error != nil {
 		var returnError GenericError
@@ -276,10 +276,10 @@ func (controller *Controller) UpdateCONTENT(c *gin.Context) {
 	}
 
 	// update
-	contentDB.CopyBasicFieldsFromCONTENT_WOP(&input.CONTENT_WOP)
-	contentDB.CONTENTPointersEncoding = input.CONTENTPointersEncoding
+	sourceDB.CopyBasicFieldsFromSOURCE_WOP(&input.SOURCE_WOP)
+	sourceDB.SOURCEPointersEncoding = input.SOURCEPointersEncoding
 
-	query = db.Model(&contentDB).Updates(contentDB)
+	query = db.Model(&sourceDB).Updates(sourceDB)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -290,16 +290,16 @@ func (controller *Controller) UpdateCONTENT(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	contentNew := new(models.CONTENT)
-	contentDB.CopyBasicFieldsToCONTENT(contentNew)
+	sourceNew := new(models.SOURCE)
+	sourceDB.CopyBasicFieldsToSOURCE(sourceNew)
 
 	// redeem pointers
-	contentDB.DecodePointers(backRepo, contentNew)
+	sourceDB.DecodePointers(backRepo, sourceNew)
 
 	// get stage instance from DB instance, and call callback function
-	contentOld := backRepo.BackRepoCONTENT.Map_CONTENTDBID_CONTENTPtr[contentDB.ID]
-	if contentOld != nil {
-		models.AfterUpdateFromFront(backRepo.GetStage(), contentOld, contentNew)
+	sourceOld := backRepo.BackRepoSOURCE.Map_SOURCEDBID_SOURCEPtr[sourceDB.ID]
+	if sourceOld != nil {
+		models.AfterUpdateFromFront(backRepo.GetStage(), sourceOld, sourceNew)
 	}
 
 	// an UPDATE generates a back repo commit increase
@@ -308,42 +308,42 @@ func (controller *Controller) UpdateCONTENT(c *gin.Context) {
 	// generates a checkout
 	backRepo.IncrementPushFromFrontNb()
 
-	// return status OK with the marshalling of the the contentDB
-	c.JSON(http.StatusOK, contentDB)
+	// return status OK with the marshalling of the the sourceDB
+	c.JSON(http.StatusOK, sourceDB)
 }
 
-// DeleteCONTENT
+// DeleteSOURCE
 //
-// swagger:route DELETE /contents/{ID} contents deleteCONTENT
+// swagger:route DELETE /sources/{ID} sources deleteSOURCE
 //
-// # Delete a content
+// # Delete a source
 //
 // default: genericError
 //
-//	200: contentDBResponse
-func (controller *Controller) DeleteCONTENT(c *gin.Context) {
+//	200: sourceDBResponse
+func (controller *Controller) DeleteSOURCE(c *gin.Context) {
 
-	mutexCONTENT.Lock()
-	defer mutexCONTENT.Unlock()
+	mutexSOURCE.Lock()
+	defer mutexSOURCE.Unlock()
 
-	values := c.Request.URL.Query()
+	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(values) == 1 {
-		value := values["GONG__StackPath"]
+	if len(_values) == 1 {
+		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("DeleteCONTENT", "GONG__StackPath", stackPath)
+			// log.Println("DeleteSOURCE", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoCONTENT.GetDB()
+	db := backRepo.BackRepoSOURCE.GetDB()
 
 	// Get model if exist
-	var contentDB orm.CONTENTDB
-	if err := db.First(&contentDB, c.Param("id")).Error; err != nil {
+	var sourceDB orm.SOURCEDB
+	if err := db.First(&sourceDB, c.Param("id")).Error; err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,16 +353,16 @@ func (controller *Controller) DeleteCONTENT(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&contentDB)
+	db.Unscoped().Delete(&sourceDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
-	contentDeleted := new(models.CONTENT)
-	contentDB.CopyBasicFieldsToCONTENT(contentDeleted)
+	sourceDeleted := new(models.SOURCE)
+	sourceDB.CopyBasicFieldsToSOURCE(sourceDeleted)
 
 	// get stage instance from DB instance, and call callback function
-	contentStaged := backRepo.BackRepoCONTENT.Map_CONTENTDBID_CONTENTPtr[contentDB.ID]
-	if contentStaged != nil {
-		models.AfterDeleteFromFront(backRepo.GetStage(), contentStaged, contentDeleted)
+	sourceStaged := backRepo.BackRepoSOURCE.Map_SOURCEDBID_SOURCEPtr[sourceDB.ID]
+	if sourceStaged != nil {
+		models.AfterDeleteFromFront(backRepo.GetStage(), sourceStaged, sourceDeleted)
 	}
 
 	// a DELETE generates a back repo commit increase
