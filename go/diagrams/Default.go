@@ -13,7 +13,7 @@ import (
 // if there are no elements in the stage to marshall
 var _ time.Time
 
-// Injection point for meta package dummy declaration
+// _ point for meta package dummy declaration
 var _ ref_models.StageStruct
 
 // When parsed, those maps will help with the renaming process
@@ -1248,20 +1248,20 @@ func _(stage *models.StageStruct) {
 	__Link__000000_HEADER.EndRatio = 0.500000
 	__Link__000000_HEADER.CornerOffsetRatio = 1.380000
 
-	__Position__000000_Pos_Default_DATATYPEDEFINITIONXHTML.X = 75.000000
-	__Position__000000_Pos_Default_DATATYPEDEFINITIONXHTML.Y = 55.000000
+	__Position__000000_Pos_Default_DATATYPEDEFINITIONXHTML.X = 1144.000061
+	__Position__000000_Pos_Default_DATATYPEDEFINITIONXHTML.Y = 624.000000
 	__Position__000000_Pos_Default_DATATYPEDEFINITIONXHTML.Name = `Pos-Default-DATATYPEDEFINITIONXHTML`
 
-	__Position__000001_Pos_Default_DATATYPES.X = 37.000000
-	__Position__000001_Pos_Default_DATATYPES.Y = 45.000000
+	__Position__000001_Pos_Default_DATATYPES.X = 19.000000
+	__Position__000001_Pos_Default_DATATYPES.Y = 712.000000
 	__Position__000001_Pos_Default_DATATYPES.Name = `Pos-Default-DATATYPES`
 
 	__Position__000002_Pos_Default_DEFAULTVALUE.X = 75.000000
 	__Position__000002_Pos_Default_DEFAULTVALUE.Y = 14.000000
 	__Position__000002_Pos_Default_DEFAULTVALUE.Name = `Pos-Default-DEFAULTVALUE`
 
-	__Position__000003_Pos_Default_DEFINITION.X = 86.000000
-	__Position__000003_Pos_Default_DEFINITION.Y = 71.000000
+	__Position__000003_Pos_Default_DEFINITION.X = 117.000000
+	__Position__000003_Pos_Default_DEFINITION.Y = 149.000000
 	__Position__000003_Pos_Default_DEFINITION.Name = `Pos-Default-DEFINITION`
 
 	__Position__000004_Pos_Default_EDITABLEATTS.X = 812.000000
