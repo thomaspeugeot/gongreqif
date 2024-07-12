@@ -14,3 +14,5 @@ export * from './lib/web-socket-service'
 
 
 
+export * from './lib/GLOBALREF'
+export * from './lib/LOCALREF'
