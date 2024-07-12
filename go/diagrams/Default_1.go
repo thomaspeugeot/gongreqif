@@ -1045,10 +1045,10 @@ func _(stage *models.StageStruct) {
 	__Link__000000_CHILDREN.SourceMultiplicityOffsetX = 10.000000
 	__Link__000000_CHILDREN.SourceMultiplicityOffsetY = -50.000000
 	__Link__000000_CHILDREN.StartOrientation = models.ORIENTATION_VERTICAL
-	__Link__000000_CHILDREN.StartRatio = 0.996806
-	__Link__000000_CHILDREN.EndOrientation = models.ORIENTATION_VERTICAL
-	__Link__000000_CHILDREN.EndRatio = 0.496806
-	__Link__000000_CHILDREN.CornerOffsetRatio = 1.953175
+	__Link__000000_CHILDREN.StartRatio = 0.296806
+	__Link__000000_CHILDREN.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__Link__000000_CHILDREN.EndRatio = 0.520109
+	__Link__000000_CHILDREN.CornerOffsetRatio = 1.154167
 
 	__Link__000001_CHILDREN.Name = `CHILDREN`
 
@@ -1067,9 +1067,9 @@ func _(stage *models.StageStruct) {
 	__Link__000001_CHILDREN.SourceMultiplicityOffsetY = -50.000000
 	__Link__000001_CHILDREN.StartOrientation = models.ORIENTATION_HORIZONTAL
 	__Link__000001_CHILDREN.StartRatio = 0.500000
-	__Link__000001_CHILDREN.EndOrientation = models.ORIENTATION_HORIZONTAL
-	__Link__000001_CHILDREN.EndRatio = 0.500000
-	__Link__000001_CHILDREN.CornerOffsetRatio = 1.380000
+	__Link__000001_CHILDREN.EndOrientation = models.ORIENTATION_VERTICAL
+	__Link__000001_CHILDREN.EndRatio = 0.605139
+	__Link__000001_CHILDREN.CornerOffsetRatio = 2.274527
 
 	__Link__000002_CORECONTENT.Name = `CORECONTENT`
 
@@ -1323,8 +1323,8 @@ func _(stage *models.StageStruct) {
 	__Link__000013_VALUES.EndRatio = 0.500000
 	__Link__000013_VALUES.CornerOffsetRatio = 1.380000
 
-	__Position__000000_Pos_Default_1_CHILDREN.X = 1186.000061
-	__Position__000000_Pos_Default_1_CHILDREN.Y = 720.000000
+	__Position__000000_Pos_Default_1_CHILDREN.X = 868.000061
+	__Position__000000_Pos_Default_1_CHILDREN.Y = 862.000000
 	__Position__000000_Pos_Default_1_CHILDREN.Name = `Pos-Default_1-CHILDREN`
 
 	__Position__000001_Pos_Default_1_CORECONTENT.X = 602.000000
@@ -1347,8 +1347,8 @@ func _(stage *models.StageStruct) {
 	__Position__000005_Pos_Default_1_REQIFTYPE.Y = 221.000000
 	__Position__000005_Pos_Default_1_REQIFTYPE.Name = `Pos-Default_1-REQIFTYPE`
 
-	__Position__000006_Pos_Default_1_SPECHIERARCHY.X = 684.000000
-	__Position__000006_Pos_Default_1_SPECHIERARCHY.Y = 841.000000
+	__Position__000006_Pos_Default_1_SPECHIERARCHY.X = 491.000000
+	__Position__000006_Pos_Default_1_SPECHIERARCHY.Y = 1032.000000
 	__Position__000006_Pos_Default_1_SPECHIERARCHY.Name = `Pos-Default_1-SPECHIERARCHY`
 
 	__Position__000007_Pos_Default_1_SPECIFICATION.X = 678.000000
