@@ -299,7 +299,7 @@ func EvictInOtherSlices[OwningType PointerToGongstruct, FieldType PointerToGongs
 	case *REQIFTOOLEXTENSION:
 		// insertion point per field
 
-	case *REQIFTYPE:
+	case *REQTYPE:
 		// insertion point per field
 
 	case *SOURCE:
@@ -859,7 +859,7 @@ func (stage *StageStruct) ComputeReverseMaps() {
 	// Compute reverse map for named struct REQIFTOOLEXTENSION
 	// insertion point per field
 
-	// Compute reverse map for named struct REQIFTYPE
+	// Compute reverse map for named struct REQTYPE
 	// insertion point per field
 
 	// Compute reverse map for named struct SOURCE

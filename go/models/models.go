@@ -32,8 +32,8 @@ type DEFAULTVALUE struct {
 	ATTRIBUTEVALUEBOOLEAN *ATTRIBUTEVALUEBOOLEAN `xml:"ATTRIBUTE-VALUE-BOOLEAN"`
 }
 
-// REQIFTYPE ...
-type REQIFTYPE struct {
+// REQTYPE ...
+type REQTYPE struct {
 	Name                         string
 	DATATYPEDEFINITIONBOOLEANREF string `xml:"DATATYPE-DEFINITION-BOOLEAN-REF"`
 }
@@ -49,7 +49,7 @@ type ATTRIBUTEDEFINITIONBOOLEAN struct {
 	LONGNAMEAttr   string         `xml:"LONG-NAME,attr,omitempty"`
 	ALTERNATIVEID  *ALTERNATIVEID `xml:"ALTERNATIVE-ID"`
 	DEFAULTVALUE   *DEFAULTVALUE  `xml:"DEFAULT-VALUE"`
-	TYPE           *REQIFTYPE     `xml:"TYPE"`
+	TYPE           *REQTYPE       `xml:"TYPE"`
 }
 
 // ATTRIBUTEDEFINITIONDATE ...
@@ -63,7 +63,7 @@ type ATTRIBUTEDEFINITIONDATE struct {
 	LONGNAMEAttr   string         `xml:"LONG-NAME,attr,omitempty"`
 	ALTERNATIVEID  *ALTERNATIVEID `xml:"ALTERNATIVE-ID"`
 	DEFAULTVALUE   *DEFAULTVALUE  `xml:"DEFAULT-VALUE"`
-	TYPE           *REQIFTYPE     `xml:"TYPE"`
+	TYPE           *REQTYPE       `xml:"TYPE"`
 }
 
 // ATTRIBUTEDEFINITIONENUMERATION ...
@@ -78,7 +78,7 @@ type ATTRIBUTEDEFINITIONENUMERATION struct {
 	MULTIVALUEDAttr bool           `xml:"MULTI-VALUED,attr"`
 	DEFAULTVALUE    *DEFAULTVALUE  `xml:"DEFAULT-VALUE"`
 	ALTERNATIVEID   *ALTERNATIVEID `xml:"ALTERNATIVE-ID"`
-	TYPE            *REQIFTYPE     `xml:"TYPE"`
+	TYPE            *REQTYPE       `xml:"TYPE"`
 }
 
 // ATTRIBUTEDEFINITIONINTEGER ...
@@ -92,7 +92,7 @@ type ATTRIBUTEDEFINITIONINTEGER struct {
 	LONGNAMEAttr   string         `xml:"LONG-NAME,attr,omitempty"`
 	ALTERNATIVEID  *ALTERNATIVEID `xml:"ALTERNATIVE-ID"`
 	DEFAULTVALUE   *DEFAULTVALUE  `xml:"DEFAULT-VALUE"`
-	TYPE           *REQIFTYPE     `xml:"TYPE"`
+	TYPE           *REQTYPE       `xml:"TYPE"`
 }
 
 // ATTRIBUTEDEFINITIONREAL ...
@@ -106,7 +106,7 @@ type ATTRIBUTEDEFINITIONREAL struct {
 	LONGNAMEAttr   string         `xml:"LONG-NAME,attr,omitempty"`
 	ALTERNATIVEID  *ALTERNATIVEID `xml:"ALTERNATIVE-ID"`
 	DEFAULTVALUE   *DEFAULTVALUE  `xml:"DEFAULT-VALUE"`
-	TYPE           *REQIFTYPE     `xml:"TYPE"`
+	TYPE           *REQTYPE       `xml:"TYPE"`
 }
 
 // ATTRIBUTEDEFINITIONSTRING ...
@@ -120,7 +120,7 @@ type ATTRIBUTEDEFINITIONSTRING struct {
 	LONGNAMEAttr   string         `xml:"LONG-NAME,attr,omitempty"`
 	ALTERNATIVEID  *ALTERNATIVEID `xml:"ALTERNATIVE-ID"`
 	DEFAULTVALUE   *DEFAULTVALUE  `xml:"DEFAULT-VALUE"`
-	TYPE           *REQIFTYPE     `xml:"TYPE"`
+	TYPE           *REQTYPE       `xml:"TYPE"`
 }
 
 // ATTRIBUTEDEFINITIONXHTML ...
@@ -134,7 +134,7 @@ type ATTRIBUTEDEFINITIONXHTML struct {
 	LONGNAMEAttr   string         `xml:"LONG-NAME,attr,omitempty"`
 	ALTERNATIVEID  *ALTERNATIVEID `xml:"ALTERNATIVE-ID"`
 	DEFAULTVALUE   *DEFAULTVALUE  `xml:"DEFAULT-VALUE"`
-	TYPE           *REQIFTYPE     `xml:"TYPE"`
+	TYPE           *REQTYPE       `xml:"TYPE"`
 }
 
 // DEFINITION ...
@@ -357,7 +357,7 @@ type RELATIONGROUP struct {
 	SOURCESPECIFICATION *SOURCESPECIFICATION `xml:"SOURCE-SPECIFICATION"`
 	SPECRELATIONS       *SPECRELATIONS       `xml:"SPEC-RELATIONS"`
 	TARGETSPECIFICATION *TARGETSPECIFICATION `xml:"TARGET-SPECIFICATION"`
-	TYPE                *REQIFTYPE           `xml:"TYPE"`
+	TYPE                *REQTYPE             `xml:"TYPE"`
 }
 
 // SPECATTRIBUTES ...
@@ -525,7 +525,7 @@ type SPECOBJECT struct {
 	LONGNAMEAttr   string         `xml:"LONG-NAME,attr,omitempty"`
 	ALTERNATIVEID  *ALTERNATIVEID `xml:"ALTERNATIVE-ID"`
 	VALUES         *VALUES        `xml:"VALUES"`
-	TYPE           *REQIFTYPE     `xml:"TYPE"`
+	TYPE           *REQTYPE       `xml:"TYPE"`
 }
 
 // SPECOBJECTTYPE ...
@@ -564,7 +564,7 @@ type SPECRELATION struct {
 	VALUES         *VALUES        `xml:"VALUES"`
 	SOURCE         *SOURCE        `xml:"SOURCE"`
 	TARGET         *TARGET        `xml:"TARGET"`
-	TYPE           *REQIFTYPE     `xml:"TYPE"`
+	TYPE           *REQTYPE       `xml:"TYPE"`
 }
 
 // SPECRELATIONTYPE ...
@@ -589,7 +589,7 @@ type SPECIFICATION struct {
 	ALTERNATIVEID  *ALTERNATIVEID `xml:"ALTERNATIVE-ID"`
 	VALUES         *VALUES        `xml:"VALUES"`
 	CHILDREN       *CHILDREN      `xml:"CHILDREN"`
-	TYPE           *REQIFTYPE     `xml:"TYPE"`
+	TYPE           *REQTYPE       `xml:"TYPE"`
 }
 
 // SPECIFICATIONTYPE ...

@@ -290,7 +290,7 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseTwoInstance
 		// commit pointer value specification.TYPE translates to updating the specification.TYPEID
 		specificationDB.TYPEID.Valid = true // allow for a 0 value (nil association)
 		if specification.TYPE != nil {
-			if TYPEId, ok := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEPtr_REQIFTYPEDBID[specification.TYPE]; ok {
+			if TYPEId, ok := backRepo.BackRepoREQTYPE.Map_REQTYPEPtr_REQTYPEDBID[specification.TYPE]; ok {
 				specificationDB.TYPEID.Int64 = int64(TYPEId)
 				specificationDB.TYPEID.Valid = true
 			}
@@ -430,7 +430,7 @@ func (specificationDB *SPECIFICATIONDB) DecodePointers(backRepo *BackRepoStruct,
 	// TYPE field
 	specification.TYPE = nil
 	if specificationDB.TYPEID.Int64 != 0 {
-		specification.TYPE = backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[uint(specificationDB.TYPEID.Int64)]
+		specification.TYPE = backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[uint(specificationDB.TYPEID.Int64)]
 	}
 	return
 }
@@ -728,7 +728,7 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) RestorePhaseTwo() {
 
 		// reindexing TYPE field
 		if specificationDB.TYPEID.Int64 != 0 {
-			specificationDB.TYPEID.Int64 = int64(BackRepoREQIFTYPEid_atBckpTime_newID[uint(specificationDB.TYPEID.Int64)])
+			specificationDB.TYPEID.Int64 = int64(BackRepoREQTYPEid_atBckpTime_newID[uint(specificationDB.TYPEID.Int64)])
 			specificationDB.TYPEID.Valid = true
 		}
 

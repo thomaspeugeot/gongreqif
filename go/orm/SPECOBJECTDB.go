@@ -274,7 +274,7 @@ func (backRepoSPECOBJECT *BackRepoSPECOBJECTStruct) CommitPhaseTwoInstance(backR
 		// commit pointer value specobject.TYPE translates to updating the specobject.TYPEID
 		specobjectDB.TYPEID.Valid = true // allow for a 0 value (nil association)
 		if specobject.TYPE != nil {
-			if TYPEId, ok := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEPtr_REQIFTYPEDBID[specobject.TYPE]; ok {
+			if TYPEId, ok := backRepo.BackRepoREQTYPE.Map_REQTYPEPtr_REQTYPEDBID[specobject.TYPE]; ok {
 				specobjectDB.TYPEID.Int64 = int64(TYPEId)
 				specobjectDB.TYPEID.Valid = true
 			}
@@ -409,7 +409,7 @@ func (specobjectDB *SPECOBJECTDB) DecodePointers(backRepo *BackRepoStruct, speco
 	// TYPE field
 	specobject.TYPE = nil
 	if specobjectDB.TYPEID.Int64 != 0 {
-		specobject.TYPE = backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[uint(specobjectDB.TYPEID.Int64)]
+		specobject.TYPE = backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[uint(specobjectDB.TYPEID.Int64)]
 	}
 	return
 }
@@ -701,7 +701,7 @@ func (backRepoSPECOBJECT *BackRepoSPECOBJECTStruct) RestorePhaseTwo() {
 
 		// reindexing TYPE field
 		if specobjectDB.TYPEID.Int64 != 0 {
-			specobjectDB.TYPEID.Int64 = int64(BackRepoREQIFTYPEid_atBckpTime_newID[uint(specobjectDB.TYPEID.Int64)])
+			specobjectDB.TYPEID.Int64 = int64(BackRepoREQTYPEid_atBckpTime_newID[uint(specobjectDB.TYPEID.Int64)])
 			specobjectDB.TYPEID.Valid = true
 		}
 

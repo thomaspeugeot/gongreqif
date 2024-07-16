@@ -52,7 +52,7 @@ func SerializeStage(stage *StageStruct, filename string) {
 		SerializeExcelize[REQIFCONTENT](stage, f)
 		SerializeExcelize[REQIFHEADER](stage, f)
 		SerializeExcelize[REQIFTOOLEXTENSION](stage, f)
-		SerializeExcelize[REQIFTYPE](stage, f)
+		SerializeExcelize[REQTYPE](stage, f)
 		SerializeExcelize[SOURCE](stage, f)
 		SerializeExcelize[SOURCESPECIFICATION](stage, f)
 		SerializeExcelize[SPECATTRIBUTES](stage, f)

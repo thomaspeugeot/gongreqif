@@ -82,7 +82,7 @@ func NewStackInstance(
 	models.SetOrchestratorOnAfterUpdate[models.REQIFCONTENT](stage)
 	models.SetOrchestratorOnAfterUpdate[models.REQIFHEADER](stage)
 	models.SetOrchestratorOnAfterUpdate[models.REQIFTOOLEXTENSION](stage)
-	models.SetOrchestratorOnAfterUpdate[models.REQIFTYPE](stage)
+	models.SetOrchestratorOnAfterUpdate[models.REQTYPE](stage)
 	models.SetOrchestratorOnAfterUpdate[models.SOURCE](stage)
 	models.SetOrchestratorOnAfterUpdate[models.SOURCESPECIFICATION](stage)
 	models.SetOrchestratorOnAfterUpdate[models.SPECATTRIBUTES](stage)

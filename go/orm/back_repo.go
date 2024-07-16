@@ -98,7 +98,7 @@ type BackRepoStruct struct {
 
 	BackRepoREQIFTOOLEXTENSION BackRepoREQIFTOOLEXTENSIONStruct
 
-	BackRepoREQIFTYPE BackRepoREQIFTYPEStruct
+	BackRepoREQTYPE BackRepoREQTYPEStruct
 
 	BackRepoSOURCE BackRepoSOURCEStruct
 
@@ -222,7 +222,7 @@ func NewBackRepo(stage *models.StageStruct, filename string) (backRepo *BackRepo
 		&REQIFCONTENTDB{},
 		&REQIFHEADERDB{},
 		&REQIFTOOLEXTENSIONDB{},
-		&REQIFTYPEDB{},
+		&REQTYPEDB{},
 		&SOURCEDB{},
 		&SOURCESPECIFICATIONDB{},
 		&SPECATTRIBUTESDB{},
@@ -559,10 +559,10 @@ func NewBackRepo(stage *models.StageStruct, filename string) (backRepo *BackRepo
 		db:    db,
 		stage: stage,
 	}
-	backRepo.BackRepoREQIFTYPE = BackRepoREQIFTYPEStruct{
-		Map_REQIFTYPEDBID_REQIFTYPEPtr: make(map[uint]*models.REQIFTYPE, 0),
-		Map_REQIFTYPEDBID_REQIFTYPEDB:  make(map[uint]*REQIFTYPEDB, 0),
-		Map_REQIFTYPEPtr_REQIFTYPEDBID: make(map[*models.REQIFTYPE]uint, 0),
+	backRepo.BackRepoREQTYPE = BackRepoREQTYPEStruct{
+		Map_REQTYPEDBID_REQTYPEPtr: make(map[uint]*models.REQTYPE, 0),
+		Map_REQTYPEDBID_REQTYPEDB:  make(map[uint]*REQTYPEDB, 0),
+		Map_REQTYPEPtr_REQTYPEDBID: make(map[*models.REQTYPE]uint, 0),
 
 		db:    db,
 		stage: stage,
@@ -829,7 +829,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.StageStruct) {
 	backRepo.BackRepoREQIFCONTENT.CommitPhaseOne(stage)
 	backRepo.BackRepoREQIFHEADER.CommitPhaseOne(stage)
 	backRepo.BackRepoREQIFTOOLEXTENSION.CommitPhaseOne(stage)
-	backRepo.BackRepoREQIFTYPE.CommitPhaseOne(stage)
+	backRepo.BackRepoREQTYPE.CommitPhaseOne(stage)
 	backRepo.BackRepoSOURCE.CommitPhaseOne(stage)
 	backRepo.BackRepoSOURCESPECIFICATION.CommitPhaseOne(stage)
 	backRepo.BackRepoSPECATTRIBUTES.CommitPhaseOne(stage)
@@ -892,7 +892,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.StageStruct) {
 	backRepo.BackRepoREQIFCONTENT.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQIFHEADER.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQIFTOOLEXTENSION.CommitPhaseTwo(backRepo)
-	backRepo.BackRepoREQIFTYPE.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoREQTYPE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoSOURCE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoSOURCESPECIFICATION.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoSPECATTRIBUTES.CommitPhaseTwo(backRepo)
@@ -960,7 +960,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.StageStruct) {
 	backRepo.BackRepoREQIFCONTENT.CheckoutPhaseOne()
 	backRepo.BackRepoREQIFHEADER.CheckoutPhaseOne()
 	backRepo.BackRepoREQIFTOOLEXTENSION.CheckoutPhaseOne()
-	backRepo.BackRepoREQIFTYPE.CheckoutPhaseOne()
+	backRepo.BackRepoREQTYPE.CheckoutPhaseOne()
 	backRepo.BackRepoSOURCE.CheckoutPhaseOne()
 	backRepo.BackRepoSOURCESPECIFICATION.CheckoutPhaseOne()
 	backRepo.BackRepoSPECATTRIBUTES.CheckoutPhaseOne()
@@ -1023,7 +1023,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.StageStruct) {
 	backRepo.BackRepoREQIFCONTENT.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQIFHEADER.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQIFTOOLEXTENSION.CheckoutPhaseTwo(backRepo)
-	backRepo.BackRepoREQIFTYPE.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoREQTYPE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoSOURCE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoSOURCESPECIFICATION.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoSPECATTRIBUTES.CheckoutPhaseTwo(backRepo)
@@ -1091,7 +1091,7 @@ func (backRepo *BackRepoStruct) Backup(stage *models.StageStruct, dirPath string
 	backRepo.BackRepoREQIFCONTENT.Backup(dirPath)
 	backRepo.BackRepoREQIFHEADER.Backup(dirPath)
 	backRepo.BackRepoREQIFTOOLEXTENSION.Backup(dirPath)
-	backRepo.BackRepoREQIFTYPE.Backup(dirPath)
+	backRepo.BackRepoREQTYPE.Backup(dirPath)
 	backRepo.BackRepoSOURCE.Backup(dirPath)
 	backRepo.BackRepoSOURCESPECIFICATION.Backup(dirPath)
 	backRepo.BackRepoSPECATTRIBUTES.Backup(dirPath)
@@ -1162,7 +1162,7 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.StageStruct, dirPath stri
 	backRepo.BackRepoREQIFCONTENT.BackupXL(file)
 	backRepo.BackRepoREQIFHEADER.BackupXL(file)
 	backRepo.BackRepoREQIFTOOLEXTENSION.BackupXL(file)
-	backRepo.BackRepoREQIFTYPE.BackupXL(file)
+	backRepo.BackRepoREQTYPE.BackupXL(file)
 	backRepo.BackRepoSOURCE.BackupXL(file)
 	backRepo.BackRepoSOURCESPECIFICATION.BackupXL(file)
 	backRepo.BackRepoSPECATTRIBUTES.BackupXL(file)
@@ -1247,7 +1247,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.StageStruct, dirPath strin
 	backRepo.BackRepoREQIFCONTENT.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQIFHEADER.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQIFTOOLEXTENSION.RestorePhaseOne(dirPath)
-	backRepo.BackRepoREQIFTYPE.RestorePhaseOne(dirPath)
+	backRepo.BackRepoREQTYPE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoSOURCE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoSOURCESPECIFICATION.RestorePhaseOne(dirPath)
 	backRepo.BackRepoSPECATTRIBUTES.RestorePhaseOne(dirPath)
@@ -1314,7 +1314,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.StageStruct, dirPath strin
 	backRepo.BackRepoREQIFCONTENT.RestorePhaseTwo()
 	backRepo.BackRepoREQIFHEADER.RestorePhaseTwo()
 	backRepo.BackRepoREQIFTOOLEXTENSION.RestorePhaseTwo()
-	backRepo.BackRepoREQIFTYPE.RestorePhaseTwo()
+	backRepo.BackRepoREQTYPE.RestorePhaseTwo()
 	backRepo.BackRepoSOURCE.RestorePhaseTwo()
 	backRepo.BackRepoSOURCESPECIFICATION.RestorePhaseTwo()
 	backRepo.BackRepoSPECATTRIBUTES.RestorePhaseTwo()
@@ -1402,7 +1402,7 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.StageStruct, dirPath str
 	backRepo.BackRepoREQIFCONTENT.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQIFHEADER.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQIFTOOLEXTENSION.RestoreXLPhaseOne(file)
-	backRepo.BackRepoREQIFTYPE.RestoreXLPhaseOne(file)
+	backRepo.BackRepoREQTYPE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoSOURCE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoSOURCESPECIFICATION.RestoreXLPhaseOne(file)
 	backRepo.BackRepoSPECATTRIBUTES.RestoreXLPhaseOne(file)

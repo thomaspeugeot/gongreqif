@@ -873,7 +873,7 @@ func FillUpForm[T models.Gongstruct](
 			}
 		}
 
-	case *models.REQIFTYPE:
+	case *models.REQTYPE:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)

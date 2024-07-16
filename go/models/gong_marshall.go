@@ -1992,28 +1992,28 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 
 	}
 
-	map_REQIFTYPE_Identifiers := make(map[*REQIFTYPE]string)
-	_ = map_REQIFTYPE_Identifiers
+	map_REQTYPE_Identifiers := make(map[*REQTYPE]string)
+	_ = map_REQTYPE_Identifiers
 
-	reqiftypeOrdered := []*REQIFTYPE{}
-	for reqiftype := range stage.REQIFTYPEs {
-		reqiftypeOrdered = append(reqiftypeOrdered, reqiftype)
+	reqtypeOrdered := []*REQTYPE{}
+	for reqtype := range stage.REQTYPEs {
+		reqtypeOrdered = append(reqtypeOrdered, reqtype)
 	}
-	sort.Slice(reqiftypeOrdered[:], func(i, j int) bool {
-		return reqiftypeOrdered[i].Name < reqiftypeOrdered[j].Name
+	sort.Slice(reqtypeOrdered[:], func(i, j int) bool {
+		return reqtypeOrdered[i].Name < reqtypeOrdered[j].Name
 	})
-	if len(reqiftypeOrdered) > 0 {
+	if len(reqtypeOrdered) > 0 {
 		identifiersDecl += "\n"
 	}
-	for idx, reqiftype := range reqiftypeOrdered {
+	for idx, reqtype := range reqtypeOrdered {
 
-		id = generatesIdentifier("REQIFTYPE", idx, reqiftype.Name)
-		map_REQIFTYPE_Identifiers[reqiftype] = id
+		id = generatesIdentifier("REQTYPE", idx, reqtype.Name)
+		map_REQTYPE_Identifiers[reqtype] = id
 
 		decl = IdentifiersDecls
 		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQIFTYPE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", reqiftype.Name)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQTYPE")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", reqtype.Name)
 		identifiersDecl += decl
 
 		initializerStatements += "\n"
@@ -2021,13 +2021,13 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 		setValueField = StringInitStatement
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqiftype.Name))
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqtype.Name))
 		initializerStatements += setValueField
 
 		setValueField = StringInitStatement
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DATATYPEDEFINITIONBOOLEANREF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqiftype.DATATYPEDEFINITIONBOOLEANREF))
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(reqtype.DATATYPEDEFINITIONBOOLEANREF))
 		initializerStatements += setValueField
 
 	}
@@ -3023,7 +3023,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[attributedefinitionboolean.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[attributedefinitionboolean.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -3057,7 +3057,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[attributedefinitiondate.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[attributedefinitiondate.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -3091,7 +3091,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[attributedefinitionenumeration.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[attributedefinitionenumeration.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -3125,7 +3125,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[attributedefinitioninteger.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[attributedefinitioninteger.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -3159,7 +3159,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[attributedefinitionreal.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[attributedefinitionreal.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -3193,7 +3193,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[attributedefinitionstring.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[attributedefinitionstring.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -3227,7 +3227,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[attributedefinitionxhtml.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[attributedefinitionxhtml.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -3765,7 +3765,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[relationgroup.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[relationgroup.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -3901,12 +3901,12 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 		// Initialisation of values
 	}
 
-	for idx, reqiftype := range reqiftypeOrdered {
+	for idx, reqtype := range reqtypeOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("REQIFTYPE", idx, reqiftype.Name)
-		map_REQIFTYPE_Identifiers[reqiftype] = id
+		id = generatesIdentifier("REQTYPE", idx, reqtype.Name)
+		map_REQTYPE_Identifiers[reqtype] = id
 
 		// Initialisation of values
 	}
@@ -4075,7 +4075,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[specification.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[specification.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -4171,7 +4171,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[specobject.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[specobject.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -4265,7 +4265,7 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			setPointerField = PointerFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQIFTYPE_Identifiers[specrelation.TYPE])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQTYPE_Identifiers[specrelation.TYPE])
 			pointersInitializesStatements += setPointerField
 		}
 

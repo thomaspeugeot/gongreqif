@@ -476,12 +476,12 @@ func FillUpNamedFormFromGongstruct[T models.Gongstruct](instance *T, probe *Prob
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
-	case *models.REQIFTYPE:
+	case *models.REQTYPE:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,
-			Label: "REQIFTYPE Form",
+			Label: "REQTYPE Form",
 		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__REQIFTYPEFormCallback(
+		formGroup.OnSave = __gong__New__REQTYPEFormCallback(
 			instancesTyped,
 			probe,
 			formGroup,

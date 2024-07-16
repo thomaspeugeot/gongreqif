@@ -352,7 +352,7 @@ var __gong__map_REQIF = make(map[string]*REQIF)
 var __gong__map_REQIFCONTENT = make(map[string]*REQIFCONTENT)
 var __gong__map_REQIFHEADER = make(map[string]*REQIFHEADER)
 var __gong__map_REQIFTOOLEXTENSION = make(map[string]*REQIFTOOLEXTENSION)
-var __gong__map_REQIFTYPE = make(map[string]*REQIFTYPE)
+var __gong__map_REQTYPE = make(map[string]*REQTYPE)
 var __gong__map_SOURCE = make(map[string]*SOURCE)
 var __gong__map_SOURCESPECIFICATION = make(map[string]*SOURCESPECIFICATION)
 var __gong__map_SPECATTRIBUTES = make(map[string]*SPECATTRIBUTES)
@@ -699,10 +699,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 										instanceREQIFTOOLEXTENSION := (&REQIFTOOLEXTENSION{Name: instanceName}).Stage(stage)
 										instance = any(instanceREQIFTOOLEXTENSION)
 										__gong__map_REQIFTOOLEXTENSION[identifier] = instanceREQIFTOOLEXTENSION
-									case "REQIFTYPE":
-										instanceREQIFTYPE := (&REQIFTYPE{Name: instanceName}).Stage(stage)
-										instance = any(instanceREQIFTYPE)
-										__gong__map_REQIFTYPE[identifier] = instanceREQIFTYPE
+									case "REQTYPE":
+										instanceREQTYPE := (&REQTYPE{Name: instanceName}).Stage(stage)
+										instance = any(instanceREQTYPE)
+										__gong__map_REQTYPE[identifier] = instanceREQTYPE
 									case "SOURCE":
 										instanceSOURCE := (&SOURCE{Name: instanceName}).Stage(stage)
 										instance = any(instanceSOURCE)
@@ -979,7 +979,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 							switch fieldName {
 							// insertion point for date assign code
 							}
-						case "REQIFTYPE":
+						case "REQTYPE":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -1296,7 +1296,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
-					case "REQIFTYPE":
+					case "REQTYPE":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -2228,17 +2228,17 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_REQIFTOOLEXTENSION[identifier].Name = fielValue
 				}
-			case "REQIFTYPE":
+			case "REQTYPE":
 				switch fieldName {
 				// insertion point for field dependant code
 				case "Name":
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFTYPE[identifier].Name = fielValue
+					__gong__map_REQTYPE[identifier].Name = fielValue
 				case "DATATYPEDEFINITIONBOOLEANREF":
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_REQIFTYPE[identifier].DATATYPEDEFINITIONBOOLEANREF = fielValue
+					__gong__map_REQTYPE[identifier].DATATYPEDEFINITIONBOOLEANREF = fielValue
 				}
 			case "SOURCE":
 				switch fieldName {
@@ -2580,7 +2580,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_ATTRIBUTEDEFINITIONBOOLEAN[identifier].DEFAULTVALUE = __gong__map_DEFAULTVALUE[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_ATTRIBUTEDEFINITIONBOOLEAN[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_ATTRIBUTEDEFINITIONBOOLEAN[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "ATTRIBUTEDEFINITIONDATE":
 				switch fieldName {
@@ -2600,7 +2600,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_ATTRIBUTEDEFINITIONDATE[identifier].DEFAULTVALUE = __gong__map_DEFAULTVALUE[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_ATTRIBUTEDEFINITIONDATE[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_ATTRIBUTEDEFINITIONDATE[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "ATTRIBUTEDEFINITIONENUMERATION":
 				switch fieldName {
@@ -2627,7 +2627,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_ATTRIBUTEDEFINITIONENUMERATION[identifier].ALTERNATIVEID = __gong__map_ALTERNATIVEID[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_ATTRIBUTEDEFINITIONENUMERATION[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_ATTRIBUTEDEFINITIONENUMERATION[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "ATTRIBUTEDEFINITIONINTEGER":
 				switch fieldName {
@@ -2647,7 +2647,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_ATTRIBUTEDEFINITIONINTEGER[identifier].DEFAULTVALUE = __gong__map_DEFAULTVALUE[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_ATTRIBUTEDEFINITIONINTEGER[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_ATTRIBUTEDEFINITIONINTEGER[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "ATTRIBUTEDEFINITIONREAL":
 				switch fieldName {
@@ -2667,7 +2667,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_ATTRIBUTEDEFINITIONREAL[identifier].DEFAULTVALUE = __gong__map_DEFAULTVALUE[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_ATTRIBUTEDEFINITIONREAL[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_ATTRIBUTEDEFINITIONREAL[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "ATTRIBUTEDEFINITIONSTRING":
 				switch fieldName {
@@ -2687,7 +2687,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_ATTRIBUTEDEFINITIONSTRING[identifier].DEFAULTVALUE = __gong__map_DEFAULTVALUE[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_ATTRIBUTEDEFINITIONSTRING[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_ATTRIBUTEDEFINITIONSTRING[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "ATTRIBUTEDEFINITIONXHTML":
 				switch fieldName {
@@ -2707,7 +2707,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_ATTRIBUTEDEFINITIONXHTML[identifier].DEFAULTVALUE = __gong__map_DEFAULTVALUE[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_ATTRIBUTEDEFINITIONXHTML[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_ATTRIBUTEDEFINITIONXHTML[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "ATTRIBUTEVALUEBOOLEAN":
 				switch fieldName {
@@ -2905,7 +2905,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_RELATIONGROUP[identifier].TARGETSPECIFICATION = __gong__map_TARGETSPECIFICATION[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_RELATIONGROUP[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_RELATIONGROUP[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "RELATIONGROUPTYPE":
 				switch fieldName {
@@ -2957,7 +2957,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 				switch fieldName {
 				// insertion point for field dependant code
 				}
-			case "REQIFTYPE":
+			case "REQTYPE":
 				switch fieldName {
 				// insertion point for field dependant code
 				}
@@ -3017,7 +3017,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_SPECIFICATION[identifier].CHILDREN = __gong__map_CHILDREN[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_SPECIFICATION[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_SPECIFICATION[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "SPECIFICATIONS":
 				switch fieldName {
@@ -3048,7 +3048,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_SPECOBJECT[identifier].VALUES = __gong__map_VALUES[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_SPECOBJECT[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_SPECOBJECT[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "SPECOBJECTS":
 				switch fieldName {
@@ -3081,7 +3081,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					__gong__map_SPECRELATION[identifier].TARGET = __gong__map_TARGET[targetIdentifier]
 				case "TYPE":
 					targetIdentifier := ident.Name
-					__gong__map_SPECRELATION[identifier].TYPE = __gong__map_REQIFTYPE[targetIdentifier]
+					__gong__map_SPECRELATION[identifier].TYPE = __gong__map_REQTYPE[targetIdentifier]
 				}
 			case "SPECRELATIONGROUPS":
 				switch fieldName {
@@ -3312,7 +3312,7 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					switch fieldName {
 					// insertion point for enum assign code
 					}
-				case "REQIFTYPE":
+				case "REQTYPE":
 					switch fieldName {
 					// insertion point for enum assign code
 					}

@@ -96,8 +96,8 @@ func fillUpTablePointerToGongstruct[T models.PointerToGongstruct](
 		fillUpTable[models.REQIFHEADER](probe)
 	case *models.REQIFTOOLEXTENSION:
 		fillUpTable[models.REQIFTOOLEXTENSION](probe)
-	case *models.REQIFTYPE:
-		fillUpTable[models.REQIFTYPE](probe)
+	case *models.REQTYPE:
+		fillUpTable[models.REQTYPE](probe)
 	case *models.SOURCE:
 		fillUpTable[models.SOURCE](probe)
 	case *models.SOURCESPECIFICATION:

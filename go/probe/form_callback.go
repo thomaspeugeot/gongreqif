@@ -4020,23 +4020,23 @@ func (reqiftoolextensionFormCallback *REQIFTOOLEXTENSIONFormCallback) OnSave() {
 
 	fillUpTree(reqiftoolextensionFormCallback.probe)
 }
-func __gong__New__REQIFTYPEFormCallback(
-	reqiftype *models.REQIFTYPE,
+func __gong__New__REQTYPEFormCallback(
+	reqtype *models.REQTYPE,
 	probe *Probe,
 	formGroup *table.FormGroup,
-) (reqiftypeFormCallback *REQIFTYPEFormCallback) {
-	reqiftypeFormCallback = new(REQIFTYPEFormCallback)
-	reqiftypeFormCallback.probe = probe
-	reqiftypeFormCallback.reqiftype = reqiftype
-	reqiftypeFormCallback.formGroup = formGroup
+) (reqtypeFormCallback *REQTYPEFormCallback) {
+	reqtypeFormCallback = new(REQTYPEFormCallback)
+	reqtypeFormCallback.probe = probe
+	reqtypeFormCallback.reqtype = reqtype
+	reqtypeFormCallback.formGroup = formGroup
 
-	reqiftypeFormCallback.CreationMode = (reqiftype == nil)
+	reqtypeFormCallback.CreationMode = (reqtype == nil)
 
 	return
 }
 
-type REQIFTYPEFormCallback struct {
-	reqiftype *models.REQIFTYPE
+type REQTYPEFormCallback struct {
+	reqtype *models.REQTYPE
 
 	// If the form call is called on the creation of a new instnace
 	CreationMode bool
@@ -4046,58 +4046,58 @@ type REQIFTYPEFormCallback struct {
 	formGroup *table.FormGroup
 }
 
-func (reqiftypeFormCallback *REQIFTYPEFormCallback) OnSave() {
+func (reqtypeFormCallback *REQTYPEFormCallback) OnSave() {
 
-	log.Println("REQIFTYPEFormCallback, OnSave")
+	log.Println("REQTYPEFormCallback, OnSave")
 
 	// checkout formStage to have the form group on the stage synchronized with the
 	// back repo (and front repo)
-	reqiftypeFormCallback.probe.formStage.Checkout()
+	reqtypeFormCallback.probe.formStage.Checkout()
 
-	if reqiftypeFormCallback.reqiftype == nil {
-		reqiftypeFormCallback.reqiftype = new(models.REQIFTYPE).Stage(reqiftypeFormCallback.probe.stageOfInterest)
+	if reqtypeFormCallback.reqtype == nil {
+		reqtypeFormCallback.reqtype = new(models.REQTYPE).Stage(reqtypeFormCallback.probe.stageOfInterest)
 	}
-	reqiftype_ := reqiftypeFormCallback.reqiftype
-	_ = reqiftype_
+	reqtype_ := reqtypeFormCallback.reqtype
+	_ = reqtype_
 
-	for _, formDiv := range reqiftypeFormCallback.formGroup.FormDivs {
+	for _, formDiv := range reqtypeFormCallback.formGroup.FormDivs {
 		switch formDiv.Name {
 		// insertion point per field
 		case "Name":
-			FormDivBasicFieldToField(&(reqiftype_.Name), formDiv)
+			FormDivBasicFieldToField(&(reqtype_.Name), formDiv)
 		case "DATATYPEDEFINITIONBOOLEANREF":
-			FormDivBasicFieldToField(&(reqiftype_.DATATYPEDEFINITIONBOOLEANREF), formDiv)
+			FormDivBasicFieldToField(&(reqtype_.DATATYPEDEFINITIONBOOLEANREF), formDiv)
 		}
 	}
 
 	// manage the suppress operation
-	if reqiftypeFormCallback.formGroup.HasSuppressButtonBeenPressed {
-		reqiftype_.Unstage(reqiftypeFormCallback.probe.stageOfInterest)
+	if reqtypeFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		reqtype_.Unstage(reqtypeFormCallback.probe.stageOfInterest)
 	}
 
-	reqiftypeFormCallback.probe.stageOfInterest.Commit()
-	fillUpTable[models.REQIFTYPE](
-		reqiftypeFormCallback.probe,
+	reqtypeFormCallback.probe.stageOfInterest.Commit()
+	fillUpTable[models.REQTYPE](
+		reqtypeFormCallback.probe,
 	)
-	reqiftypeFormCallback.probe.tableStage.Commit()
+	reqtypeFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
-	if reqiftypeFormCallback.CreationMode || reqiftypeFormCallback.formGroup.HasSuppressButtonBeenPressed {
-		reqiftypeFormCallback.probe.formStage.Reset()
+	if reqtypeFormCallback.CreationMode || reqtypeFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		reqtypeFormCallback.probe.formStage.Reset()
 		newFormGroup := (&table.FormGroup{
 			Name: table.FormGroupDefaultName.ToString(),
-		}).Stage(reqiftypeFormCallback.probe.formStage)
-		newFormGroup.OnSave = __gong__New__REQIFTYPEFormCallback(
+		}).Stage(reqtypeFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__REQTYPEFormCallback(
 			nil,
-			reqiftypeFormCallback.probe,
+			reqtypeFormCallback.probe,
 			newFormGroup,
 		)
-		reqiftype := new(models.REQIFTYPE)
-		FillUpForm(reqiftype, newFormGroup, reqiftypeFormCallback.probe)
-		reqiftypeFormCallback.probe.formStage.Commit()
+		reqtype := new(models.REQTYPE)
+		FillUpForm(reqtype, newFormGroup, reqtypeFormCallback.probe)
+		reqtypeFormCallback.probe.formStage.Commit()
 	}
 
-	fillUpTree(reqiftypeFormCallback.probe)
+	fillUpTree(reqtypeFormCallback.probe)
 }
 func __gong__New__SOURCEFormCallback(
 	source *models.SOURCE,

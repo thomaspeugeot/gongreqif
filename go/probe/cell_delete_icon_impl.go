@@ -106,7 +106,7 @@ func (cellDeleteIconImpl *CellDeleteIconImpl[T]) CellIconUpdated(stage *gongtabl
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
 	case *models.REQIFTOOLEXTENSION:
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
-	case *models.REQIFTYPE:
+	case *models.REQTYPE:
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
 	case *models.SOURCE:
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)

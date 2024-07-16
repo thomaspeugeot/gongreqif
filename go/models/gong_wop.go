@@ -589,13 +589,13 @@ func (from *REQIFTOOLEXTENSION) CopyBasicFields(to *REQIFTOOLEXTENSION) {
 	to.Name = from.Name
 }
 
-type REQIFTYPE_WOP struct {
+type REQTYPE_WOP struct {
 	// insertion point
 	Name string
 	DATATYPEDEFINITIONBOOLEANREF string
 }
 
-func (from *REQIFTYPE) CopyBasicFields(to *REQIFTYPE) {
+func (from *REQTYPE) CopyBasicFields(to *REQTYPE) {
 	// insertion point
 	to.Name = from.Name
 	to.DATATYPEDEFINITIONBOOLEANREF = from.DATATYPEDEFINITIONBOOLEANREF

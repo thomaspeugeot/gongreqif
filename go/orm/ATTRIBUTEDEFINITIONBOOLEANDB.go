@@ -281,7 +281,7 @@ func (backRepoATTRIBUTEDEFINITIONBOOLEAN *BackRepoATTRIBUTEDEFINITIONBOOLEANStru
 		// commit pointer value attributedefinitionboolean.TYPE translates to updating the attributedefinitionboolean.TYPEID
 		attributedefinitionbooleanDB.TYPEID.Valid = true // allow for a 0 value (nil association)
 		if attributedefinitionboolean.TYPE != nil {
-			if TYPEId, ok := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEPtr_REQIFTYPEDBID[attributedefinitionboolean.TYPE]; ok {
+			if TYPEId, ok := backRepo.BackRepoREQTYPE.Map_REQTYPEPtr_REQTYPEDBID[attributedefinitionboolean.TYPE]; ok {
 				attributedefinitionbooleanDB.TYPEID.Int64 = int64(TYPEId)
 				attributedefinitionbooleanDB.TYPEID.Valid = true
 			}
@@ -416,7 +416,7 @@ func (attributedefinitionbooleanDB *ATTRIBUTEDEFINITIONBOOLEANDB) DecodePointers
 	// TYPE field
 	attributedefinitionboolean.TYPE = nil
 	if attributedefinitionbooleanDB.TYPEID.Int64 != 0 {
-		attributedefinitionboolean.TYPE = backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[uint(attributedefinitionbooleanDB.TYPEID.Int64)]
+		attributedefinitionboolean.TYPE = backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[uint(attributedefinitionbooleanDB.TYPEID.Int64)]
 	}
 	return
 }
@@ -720,7 +720,7 @@ func (backRepoATTRIBUTEDEFINITIONBOOLEAN *BackRepoATTRIBUTEDEFINITIONBOOLEANStru
 
 		// reindexing TYPE field
 		if attributedefinitionbooleanDB.TYPEID.Int64 != 0 {
-			attributedefinitionbooleanDB.TYPEID.Int64 = int64(BackRepoREQIFTYPEid_atBckpTime_newID[uint(attributedefinitionbooleanDB.TYPEID.Int64)])
+			attributedefinitionbooleanDB.TYPEID.Int64 = int64(BackRepoREQTYPEid_atBckpTime_newID[uint(attributedefinitionbooleanDB.TYPEID.Int64)])
 			attributedefinitionbooleanDB.TYPEID.Valid = true
 		}
 

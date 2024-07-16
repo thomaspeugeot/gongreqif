@@ -306,7 +306,7 @@ func (backRepoRELATIONGROUP *BackRepoRELATIONGROUPStruct) CommitPhaseTwoInstance
 		// commit pointer value relationgroup.TYPE translates to updating the relationgroup.TYPEID
 		relationgroupDB.TYPEID.Valid = true // allow for a 0 value (nil association)
 		if relationgroup.TYPE != nil {
-			if TYPEId, ok := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEPtr_REQIFTYPEDBID[relationgroup.TYPE]; ok {
+			if TYPEId, ok := backRepo.BackRepoREQTYPE.Map_REQTYPEPtr_REQTYPEDBID[relationgroup.TYPE]; ok {
 				relationgroupDB.TYPEID.Int64 = int64(TYPEId)
 				relationgroupDB.TYPEID.Valid = true
 			}
@@ -451,7 +451,7 @@ func (relationgroupDB *RELATIONGROUPDB) DecodePointers(backRepo *BackRepoStruct,
 	// TYPE field
 	relationgroup.TYPE = nil
 	if relationgroupDB.TYPEID.Int64 != 0 {
-		relationgroup.TYPE = backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[uint(relationgroupDB.TYPEID.Int64)]
+		relationgroup.TYPE = backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[uint(relationgroupDB.TYPEID.Int64)]
 	}
 	return
 }
@@ -755,7 +755,7 @@ func (backRepoRELATIONGROUP *BackRepoRELATIONGROUPStruct) RestorePhaseTwo() {
 
 		// reindexing TYPE field
 		if relationgroupDB.TYPEID.Int64 != 0 {
-			relationgroupDB.TYPEID.Int64 = int64(BackRepoREQIFTYPEid_atBckpTime_newID[uint(relationgroupDB.TYPEID.Int64)])
+			relationgroupDB.TYPEID.Int64 = int64(BackRepoREQTYPEid_atBckpTime_newID[uint(relationgroupDB.TYPEID.Int64)])
 			relationgroupDB.TYPEID.Valid = true
 		}
 

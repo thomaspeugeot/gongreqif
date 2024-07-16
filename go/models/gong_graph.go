@@ -119,8 +119,8 @@ func IsStaged[Type Gongstruct](stage *StageStruct, instance *Type) (ok bool) {
 	case *REQIFTOOLEXTENSION:
 		ok = stage.IsStagedREQIFTOOLEXTENSION(target)
 
-	case *REQIFTYPE:
-		ok = stage.IsStagedREQIFTYPE(target)
+	case *REQTYPE:
+		ok = stage.IsStagedREQTYPE(target)
 
 	case *SOURCE:
 		ok = stage.IsStagedSOURCE(target)
@@ -461,9 +461,9 @@ func (stage *StageStruct) IsStagedREQIFTOOLEXTENSION(reqiftoolextension *REQIFTO
 	return
 }
 
-func (stage *StageStruct) IsStagedREQIFTYPE(reqiftype *REQIFTYPE) (ok bool) {
+func (stage *StageStruct) IsStagedREQTYPE(reqtype *REQTYPE) (ok bool) {
 
-	_, ok = stage.REQIFTYPEs[reqiftype]
+	_, ok = stage.REQTYPEs[reqtype]
 
 	return
 }
@@ -744,8 +744,8 @@ func StageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 	case *REQIFTOOLEXTENSION:
 		stage.StageBranchREQIFTOOLEXTENSION(target)
 
-	case *REQIFTYPE:
-		stage.StageBranchREQIFTYPE(target)
+	case *REQTYPE:
+		stage.StageBranchREQTYPE(target)
 
 	case *SOURCE:
 		stage.StageBranchSOURCE(target)
@@ -1590,14 +1590,14 @@ func (stage *StageStruct) StageBranchREQIFTOOLEXTENSION(reqiftoolextension *REQI
 
 }
 
-func (stage *StageStruct) StageBranchREQIFTYPE(reqiftype *REQIFTYPE) {
+func (stage *StageStruct) StageBranchREQTYPE(reqtype *REQTYPE) {
 
 	// check if instance is already staged
-	if IsStaged(stage, reqiftype) {
+	if IsStaged(stage, reqtype) {
 		return
 	}
 
-	reqiftype.Stage(stage)
+	reqtype.Stage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
 
@@ -2215,8 +2215,8 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 		toT := CopyBranchREQIFTOOLEXTENSION(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
-	case *REQIFTYPE:
-		toT := CopyBranchREQIFTYPE(mapOrigCopy, fromT)
+	case *REQTYPE:
+		toT := CopyBranchREQTYPE(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *SOURCE:
@@ -2353,7 +2353,7 @@ func CopyBranchATTRIBUTEDEFINITIONBOOLEAN(mapOrigCopy map[any]any, attributedefi
 		attributedefinitionbooleanTo.DEFAULTVALUE = CopyBranchDEFAULTVALUE(mapOrigCopy, attributedefinitionbooleanFrom.DEFAULTVALUE)
 	}
 	if attributedefinitionbooleanFrom.TYPE != nil {
-		attributedefinitionbooleanTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, attributedefinitionbooleanFrom.TYPE)
+		attributedefinitionbooleanTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, attributedefinitionbooleanFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -2381,7 +2381,7 @@ func CopyBranchATTRIBUTEDEFINITIONDATE(mapOrigCopy map[any]any, attributedefinit
 		attributedefinitiondateTo.DEFAULTVALUE = CopyBranchDEFAULTVALUE(mapOrigCopy, attributedefinitiondateFrom.DEFAULTVALUE)
 	}
 	if attributedefinitiondateFrom.TYPE != nil {
-		attributedefinitiondateTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, attributedefinitiondateFrom.TYPE)
+		attributedefinitiondateTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, attributedefinitiondateFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -2409,7 +2409,7 @@ func CopyBranchATTRIBUTEDEFINITIONENUMERATION(mapOrigCopy map[any]any, attribute
 		attributedefinitionenumerationTo.ALTERNATIVEID = CopyBranchALTERNATIVEID(mapOrigCopy, attributedefinitionenumerationFrom.ALTERNATIVEID)
 	}
 	if attributedefinitionenumerationFrom.TYPE != nil {
-		attributedefinitionenumerationTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, attributedefinitionenumerationFrom.TYPE)
+		attributedefinitionenumerationTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, attributedefinitionenumerationFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -2437,7 +2437,7 @@ func CopyBranchATTRIBUTEDEFINITIONINTEGER(mapOrigCopy map[any]any, attributedefi
 		attributedefinitionintegerTo.DEFAULTVALUE = CopyBranchDEFAULTVALUE(mapOrigCopy, attributedefinitionintegerFrom.DEFAULTVALUE)
 	}
 	if attributedefinitionintegerFrom.TYPE != nil {
-		attributedefinitionintegerTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, attributedefinitionintegerFrom.TYPE)
+		attributedefinitionintegerTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, attributedefinitionintegerFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -2465,7 +2465,7 @@ func CopyBranchATTRIBUTEDEFINITIONREAL(mapOrigCopy map[any]any, attributedefinit
 		attributedefinitionrealTo.DEFAULTVALUE = CopyBranchDEFAULTVALUE(mapOrigCopy, attributedefinitionrealFrom.DEFAULTVALUE)
 	}
 	if attributedefinitionrealFrom.TYPE != nil {
-		attributedefinitionrealTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, attributedefinitionrealFrom.TYPE)
+		attributedefinitionrealTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, attributedefinitionrealFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -2493,7 +2493,7 @@ func CopyBranchATTRIBUTEDEFINITIONSTRING(mapOrigCopy map[any]any, attributedefin
 		attributedefinitionstringTo.DEFAULTVALUE = CopyBranchDEFAULTVALUE(mapOrigCopy, attributedefinitionstringFrom.DEFAULTVALUE)
 	}
 	if attributedefinitionstringFrom.TYPE != nil {
-		attributedefinitionstringTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, attributedefinitionstringFrom.TYPE)
+		attributedefinitionstringTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, attributedefinitionstringFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -2521,7 +2521,7 @@ func CopyBranchATTRIBUTEDEFINITIONXHTML(mapOrigCopy map[any]any, attributedefini
 		attributedefinitionxhtmlTo.DEFAULTVALUE = CopyBranchDEFAULTVALUE(mapOrigCopy, attributedefinitionxhtmlFrom.DEFAULTVALUE)
 	}
 	if attributedefinitionxhtmlFrom.TYPE != nil {
-		attributedefinitionxhtmlTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, attributedefinitionxhtmlFrom.TYPE)
+		attributedefinitionxhtmlTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, attributedefinitionxhtmlFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -3104,7 +3104,7 @@ func CopyBranchRELATIONGROUP(mapOrigCopy map[any]any, relationgroupFrom *RELATIO
 		relationgroupTo.TARGETSPECIFICATION = CopyBranchTARGETSPECIFICATION(mapOrigCopy, relationgroupFrom.TARGETSPECIFICATION)
 	}
 	if relationgroupFrom.TYPE != nil {
-		relationgroupTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, relationgroupFrom.TYPE)
+		relationgroupTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, relationgroupFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -3237,17 +3237,17 @@ func CopyBranchREQIFTOOLEXTENSION(mapOrigCopy map[any]any, reqiftoolextensionFro
 	return
 }
 
-func CopyBranchREQIFTYPE(mapOrigCopy map[any]any, reqiftypeFrom *REQIFTYPE) (reqiftypeTo *REQIFTYPE) {
+func CopyBranchREQTYPE(mapOrigCopy map[any]any, reqtypeFrom *REQTYPE) (reqtypeTo *REQTYPE) {
 
-	// reqiftypeFrom has already been copied
-	if _reqiftypeTo, ok := mapOrigCopy[reqiftypeFrom]; ok {
-		reqiftypeTo = _reqiftypeTo.(*REQIFTYPE)
+	// reqtypeFrom has already been copied
+	if _reqtypeTo, ok := mapOrigCopy[reqtypeFrom]; ok {
+		reqtypeTo = _reqtypeTo.(*REQTYPE)
 		return
 	}
 
-	reqiftypeTo = new(REQIFTYPE)
-	mapOrigCopy[reqiftypeFrom] = reqiftypeTo
-	reqiftypeFrom.CopyBasicFields(reqiftypeTo)
+	reqtypeTo = new(REQTYPE)
+	mapOrigCopy[reqtypeFrom] = reqtypeTo
+	reqtypeFrom.CopyBasicFields(reqtypeTo)
 
 	//insertion point for the staging of instances referenced by pointers
 
@@ -3388,7 +3388,7 @@ func CopyBranchSPECIFICATION(mapOrigCopy map[any]any, specificationFrom *SPECIFI
 		specificationTo.CHILDREN = CopyBranchCHILDREN(mapOrigCopy, specificationFrom.CHILDREN)
 	}
 	if specificationFrom.TYPE != nil {
-		specificationTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, specificationFrom.TYPE)
+		specificationTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, specificationFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -3485,7 +3485,7 @@ func CopyBranchSPECOBJECT(mapOrigCopy map[any]any, specobjectFrom *SPECOBJECT) (
 		specobjectTo.VALUES = CopyBranchVALUES(mapOrigCopy, specobjectFrom.VALUES)
 	}
 	if specobjectFrom.TYPE != nil {
-		specobjectTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, specobjectFrom.TYPE)
+		specobjectTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, specobjectFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -3566,7 +3566,7 @@ func CopyBranchSPECRELATION(mapOrigCopy map[any]any, specrelationFrom *SPECRELAT
 		specrelationTo.TARGET = CopyBranchTARGET(mapOrigCopy, specrelationFrom.TARGET)
 	}
 	if specrelationFrom.TYPE != nil {
-		specrelationTo.TYPE = CopyBranchREQIFTYPE(mapOrigCopy, specrelationFrom.TYPE)
+		specrelationTo.TYPE = CopyBranchREQTYPE(mapOrigCopy, specrelationFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -3913,8 +3913,8 @@ func UnstageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 	case *REQIFTOOLEXTENSION:
 		stage.UnstageBranchREQIFTOOLEXTENSION(target)
 
-	case *REQIFTYPE:
-		stage.UnstageBranchREQIFTYPE(target)
+	case *REQTYPE:
+		stage.UnstageBranchREQTYPE(target)
 
 	case *SOURCE:
 		stage.UnstageBranchSOURCE(target)
@@ -4759,14 +4759,14 @@ func (stage *StageStruct) UnstageBranchREQIFTOOLEXTENSION(reqiftoolextension *RE
 
 }
 
-func (stage *StageStruct) UnstageBranchREQIFTYPE(reqiftype *REQIFTYPE) {
+func (stage *StageStruct) UnstageBranchREQTYPE(reqtype *REQTYPE) {
 
 	// check if instance is already staged
-	if !IsStaged(stage, reqiftype) {
+	if !IsStaged(stage, reqtype) {
 		return
 	}
 
-	reqiftype.Unstage(stage)
+	reqtype.Unstage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
 

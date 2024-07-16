@@ -437,15 +437,15 @@ type StageStruct struct {
 	OnAfterREQIFTOOLEXTENSIONDeleteCallback OnAfterDeleteInterface[REQIFTOOLEXTENSION]
 	OnAfterREQIFTOOLEXTENSIONReadCallback   OnAfterReadInterface[REQIFTOOLEXTENSION]
 
-	REQIFTYPEs           map[*REQIFTYPE]any
-	REQIFTYPEs_mapString map[string]*REQIFTYPE
+	REQTYPEs           map[*REQTYPE]any
+	REQTYPEs_mapString map[string]*REQTYPE
 
 	// insertion point for slice of pointers maps
 
-	OnAfterREQIFTYPECreateCallback OnAfterCreateInterface[REQIFTYPE]
-	OnAfterREQIFTYPEUpdateCallback OnAfterUpdateInterface[REQIFTYPE]
-	OnAfterREQIFTYPEDeleteCallback OnAfterDeleteInterface[REQIFTYPE]
-	OnAfterREQIFTYPEReadCallback   OnAfterReadInterface[REQIFTYPE]
+	OnAfterREQTYPECreateCallback OnAfterCreateInterface[REQTYPE]
+	OnAfterREQTYPEUpdateCallback OnAfterUpdateInterface[REQTYPE]
+	OnAfterREQTYPEDeleteCallback OnAfterDeleteInterface[REQTYPE]
+	OnAfterREQTYPEReadCallback   OnAfterReadInterface[REQTYPE]
 
 	SOURCEs           map[*SOURCE]any
 	SOURCEs_mapString map[string]*SOURCE
@@ -827,8 +827,8 @@ type BackRepoInterface interface {
 	CheckoutREQIFHEADER(reqifheader *REQIFHEADER)
 	CommitREQIFTOOLEXTENSION(reqiftoolextension *REQIFTOOLEXTENSION)
 	CheckoutREQIFTOOLEXTENSION(reqiftoolextension *REQIFTOOLEXTENSION)
-	CommitREQIFTYPE(reqiftype *REQIFTYPE)
-	CheckoutREQIFTYPE(reqiftype *REQIFTYPE)
+	CommitREQTYPE(reqtype *REQTYPE)
+	CheckoutREQTYPE(reqtype *REQTYPE)
 	CommitSOURCE(source *SOURCE)
 	CheckoutSOURCE(source *SOURCE)
 	CommitSOURCESPECIFICATION(sourcespecification *SOURCESPECIFICATION)
@@ -994,8 +994,8 @@ func NewStage(path string) (stage *StageStruct) {
 		REQIFTOOLEXTENSIONs:           make(map[*REQIFTOOLEXTENSION]any),
 		REQIFTOOLEXTENSIONs_mapString: make(map[string]*REQIFTOOLEXTENSION),
 
-		REQIFTYPEs:           make(map[*REQIFTYPE]any),
-		REQIFTYPEs_mapString: make(map[string]*REQIFTYPE),
+		REQTYPEs:           make(map[*REQTYPE]any),
+		REQTYPEs_mapString: make(map[string]*REQTYPE),
 
 		SOURCEs:           make(map[*SOURCE]any),
 		SOURCEs_mapString: make(map[string]*SOURCE),
@@ -1134,7 +1134,7 @@ func (stage *StageStruct) Commit() {
 	stage.Map_GongStructName_InstancesNb["REQIFCONTENT"] = len(stage.REQIFCONTENTs)
 	stage.Map_GongStructName_InstancesNb["REQIFHEADER"] = len(stage.REQIFHEADERs)
 	stage.Map_GongStructName_InstancesNb["REQIFTOOLEXTENSION"] = len(stage.REQIFTOOLEXTENSIONs)
-	stage.Map_GongStructName_InstancesNb["REQIFTYPE"] = len(stage.REQIFTYPEs)
+	stage.Map_GongStructName_InstancesNb["REQTYPE"] = len(stage.REQTYPEs)
 	stage.Map_GongStructName_InstancesNb["SOURCE"] = len(stage.SOURCEs)
 	stage.Map_GongStructName_InstancesNb["SOURCESPECIFICATION"] = len(stage.SOURCESPECIFICATIONs)
 	stage.Map_GongStructName_InstancesNb["SPECATTRIBUTES"] = len(stage.SPECATTRIBUTESs)
@@ -1205,7 +1205,7 @@ func (stage *StageStruct) Checkout() {
 	stage.Map_GongStructName_InstancesNb["REQIFCONTENT"] = len(stage.REQIFCONTENTs)
 	stage.Map_GongStructName_InstancesNb["REQIFHEADER"] = len(stage.REQIFHEADERs)
 	stage.Map_GongStructName_InstancesNb["REQIFTOOLEXTENSION"] = len(stage.REQIFTOOLEXTENSIONs)
-	stage.Map_GongStructName_InstancesNb["REQIFTYPE"] = len(stage.REQIFTYPEs)
+	stage.Map_GongStructName_InstancesNb["REQTYPE"] = len(stage.REQTYPEs)
 	stage.Map_GongStructName_InstancesNb["SOURCE"] = len(stage.SOURCEs)
 	stage.Map_GongStructName_InstancesNb["SOURCESPECIFICATION"] = len(stage.SOURCESPECIFICATIONs)
 	stage.Map_GongStructName_InstancesNb["SPECATTRIBUTES"] = len(stage.SPECATTRIBUTESs)
@@ -3160,54 +3160,54 @@ func (reqiftoolextension *REQIFTOOLEXTENSION) GetName() (res string) {
 	return reqiftoolextension.Name
 }
 
-// Stage puts reqiftype to the model stage
-func (reqiftype *REQIFTYPE) Stage(stage *StageStruct) *REQIFTYPE {
-	stage.REQIFTYPEs[reqiftype] = __member
-	stage.REQIFTYPEs_mapString[reqiftype.Name] = reqiftype
+// Stage puts reqtype to the model stage
+func (reqtype *REQTYPE) Stage(stage *StageStruct) *REQTYPE {
+	stage.REQTYPEs[reqtype] = __member
+	stage.REQTYPEs_mapString[reqtype.Name] = reqtype
 
-	return reqiftype
+	return reqtype
 }
 
-// Unstage removes reqiftype off the model stage
-func (reqiftype *REQIFTYPE) Unstage(stage *StageStruct) *REQIFTYPE {
-	delete(stage.REQIFTYPEs, reqiftype)
-	delete(stage.REQIFTYPEs_mapString, reqiftype.Name)
-	return reqiftype
+// Unstage removes reqtype off the model stage
+func (reqtype *REQTYPE) Unstage(stage *StageStruct) *REQTYPE {
+	delete(stage.REQTYPEs, reqtype)
+	delete(stage.REQTYPEs_mapString, reqtype.Name)
+	return reqtype
 }
 
-// UnstageVoid removes reqiftype off the model stage
-func (reqiftype *REQIFTYPE) UnstageVoid(stage *StageStruct) {
-	delete(stage.REQIFTYPEs, reqiftype)
-	delete(stage.REQIFTYPEs_mapString, reqiftype.Name)
+// UnstageVoid removes reqtype off the model stage
+func (reqtype *REQTYPE) UnstageVoid(stage *StageStruct) {
+	delete(stage.REQTYPEs, reqtype)
+	delete(stage.REQTYPEs_mapString, reqtype.Name)
 }
 
-// commit reqiftype to the back repo (if it is already staged)
-func (reqiftype *REQIFTYPE) Commit(stage *StageStruct) *REQIFTYPE {
-	if _, ok := stage.REQIFTYPEs[reqiftype]; ok {
+// commit reqtype to the back repo (if it is already staged)
+func (reqtype *REQTYPE) Commit(stage *StageStruct) *REQTYPE {
+	if _, ok := stage.REQTYPEs[reqtype]; ok {
 		if stage.BackRepo != nil {
-			stage.BackRepo.CommitREQIFTYPE(reqiftype)
+			stage.BackRepo.CommitREQTYPE(reqtype)
 		}
 	}
-	return reqiftype
+	return reqtype
 }
 
-func (reqiftype *REQIFTYPE) CommitVoid(stage *StageStruct) {
-	reqiftype.Commit(stage)
+func (reqtype *REQTYPE) CommitVoid(stage *StageStruct) {
+	reqtype.Commit(stage)
 }
 
-// Checkout reqiftype to the back repo (if it is already staged)
-func (reqiftype *REQIFTYPE) Checkout(stage *StageStruct) *REQIFTYPE {
-	if _, ok := stage.REQIFTYPEs[reqiftype]; ok {
+// Checkout reqtype to the back repo (if it is already staged)
+func (reqtype *REQTYPE) Checkout(stage *StageStruct) *REQTYPE {
+	if _, ok := stage.REQTYPEs[reqtype]; ok {
 		if stage.BackRepo != nil {
-			stage.BackRepo.CheckoutREQIFTYPE(reqiftype)
+			stage.BackRepo.CheckoutREQTYPE(reqtype)
 		}
 	}
-	return reqiftype
+	return reqtype
 }
 
 // for satisfaction of GongStruct interface
-func (reqiftype *REQIFTYPE) GetName() (res string) {
-	return reqiftype.Name
+func (reqtype *REQTYPE) GetName() (res string) {
+	return reqtype.Name
 }
 
 // Stage puts source to the model stage
@@ -4350,7 +4350,7 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMREQIFCONTENT(REQIFCONTENT *REQIFCONTENT)
 	CreateORMREQIFHEADER(REQIFHEADER *REQIFHEADER)
 	CreateORMREQIFTOOLEXTENSION(REQIFTOOLEXTENSION *REQIFTOOLEXTENSION)
-	CreateORMREQIFTYPE(REQIFTYPE *REQIFTYPE)
+	CreateORMREQTYPE(REQTYPE *REQTYPE)
 	CreateORMSOURCE(SOURCE *SOURCE)
 	CreateORMSOURCESPECIFICATION(SOURCESPECIFICATION *SOURCESPECIFICATION)
 	CreateORMSPECATTRIBUTES(SPECATTRIBUTES *SPECATTRIBUTES)
@@ -4414,7 +4414,7 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMREQIFCONTENT(REQIFCONTENT *REQIFCONTENT)
 	DeleteORMREQIFHEADER(REQIFHEADER *REQIFHEADER)
 	DeleteORMREQIFTOOLEXTENSION(REQIFTOOLEXTENSION *REQIFTOOLEXTENSION)
-	DeleteORMREQIFTYPE(REQIFTYPE *REQIFTYPE)
+	DeleteORMREQTYPE(REQTYPE *REQTYPE)
 	DeleteORMSOURCE(SOURCE *SOURCE)
 	DeleteORMSOURCESPECIFICATION(SOURCESPECIFICATION *SOURCESPECIFICATION)
 	DeleteORMSPECATTRIBUTES(SPECATTRIBUTES *SPECATTRIBUTES)
@@ -4554,8 +4554,8 @@ func (stage *StageStruct) Reset() { // insertion point for array reset
 	stage.REQIFTOOLEXTENSIONs = make(map[*REQIFTOOLEXTENSION]any)
 	stage.REQIFTOOLEXTENSIONs_mapString = make(map[string]*REQIFTOOLEXTENSION)
 
-	stage.REQIFTYPEs = make(map[*REQIFTYPE]any)
-	stage.REQIFTYPEs_mapString = make(map[string]*REQIFTYPE)
+	stage.REQTYPEs = make(map[*REQTYPE]any)
+	stage.REQTYPEs_mapString = make(map[string]*REQTYPE)
 
 	stage.SOURCEs = make(map[*SOURCE]any)
 	stage.SOURCEs_mapString = make(map[string]*SOURCE)
@@ -4740,8 +4740,8 @@ func (stage *StageStruct) Nil() { // insertion point for array nil
 	stage.REQIFTOOLEXTENSIONs = nil
 	stage.REQIFTOOLEXTENSIONs_mapString = nil
 
-	stage.REQIFTYPEs = nil
-	stage.REQIFTYPEs_mapString = nil
+	stage.REQTYPEs = nil
+	stage.REQTYPEs_mapString = nil
 
 	stage.SOURCEs = nil
 	stage.SOURCEs_mapString = nil
@@ -4964,8 +4964,8 @@ func (stage *StageStruct) Unstage() { // insertion point for array nil
 		reqiftoolextension.Unstage(stage)
 	}
 
-	for reqiftype := range stage.REQIFTYPEs {
-		reqiftype.Unstage(stage)
+	for reqtype := range stage.REQTYPEs {
+		reqtype.Unstage(stage)
 	}
 
 	for source := range stage.SOURCEs {
@@ -5064,7 +5064,7 @@ func (stage *StageStruct) Unstage() { // insertion point for array nil
 // - full refactoring of Gongstruct identifiers / fields
 type Gongstruct interface {
 	// insertion point for generic types
-	ALTERNATIVEID | ATTRIBUTEDEFINITIONBOOLEAN | ATTRIBUTEDEFINITIONDATE | ATTRIBUTEDEFINITIONENUMERATION | ATTRIBUTEDEFINITIONINTEGER | ATTRIBUTEDEFINITIONREAL | ATTRIBUTEDEFINITIONSTRING | ATTRIBUTEDEFINITIONXHTML | ATTRIBUTEVALUEBOOLEAN | ATTRIBUTEVALUEDATE | ATTRIBUTEVALUEENUMERATION | ATTRIBUTEVALUEINTEGER | ATTRIBUTEVALUEREAL | ATTRIBUTEVALUESTRING | ATTRIBUTEVALUEXHTML | CHILDREN | CORECONTENT | DATATYPEDEFINITIONBOOLEAN | DATATYPEDEFINITIONDATE | DATATYPEDEFINITIONENUMERATION | DATATYPEDEFINITIONINTEGER | DATATYPEDEFINITIONREAL | DATATYPEDEFINITIONSTRING | DATATYPEDEFINITIONXHTML | DATATYPES | DEFAULTVALUE | DEFINITION | EDITABLEATTS | EMBEDDEDVALUE | ENUMVALUE | OBJECT | PROPERTIES | RELATIONGROUP | RELATIONGROUPTYPE | REQIF | REQIFCONTENT | REQIFHEADER | REQIFTOOLEXTENSION | REQIFTYPE | SOURCE | SOURCESPECIFICATION | SPECATTRIBUTES | SPECHIERARCHY | SPECIFICATION | SPECIFICATIONS | SPECIFICATIONTYPE | SPECIFIEDVALUES | SPECOBJECT | SPECOBJECTS | SPECOBJECTTYPE | SPECRELATION | SPECRELATIONGROUPS | SPECRELATIONS | SPECRELATIONTYPE | SPECTYPES | TARGET | TARGETSPECIFICATION | THEHEADER | TOOLEXTENSIONS | VALUES | XHTMLCONTENT
+	ALTERNATIVEID | ATTRIBUTEDEFINITIONBOOLEAN | ATTRIBUTEDEFINITIONDATE | ATTRIBUTEDEFINITIONENUMERATION | ATTRIBUTEDEFINITIONINTEGER | ATTRIBUTEDEFINITIONREAL | ATTRIBUTEDEFINITIONSTRING | ATTRIBUTEDEFINITIONXHTML | ATTRIBUTEVALUEBOOLEAN | ATTRIBUTEVALUEDATE | ATTRIBUTEVALUEENUMERATION | ATTRIBUTEVALUEINTEGER | ATTRIBUTEVALUEREAL | ATTRIBUTEVALUESTRING | ATTRIBUTEVALUEXHTML | CHILDREN | CORECONTENT | DATATYPEDEFINITIONBOOLEAN | DATATYPEDEFINITIONDATE | DATATYPEDEFINITIONENUMERATION | DATATYPEDEFINITIONINTEGER | DATATYPEDEFINITIONREAL | DATATYPEDEFINITIONSTRING | DATATYPEDEFINITIONXHTML | DATATYPES | DEFAULTVALUE | DEFINITION | EDITABLEATTS | EMBEDDEDVALUE | ENUMVALUE | OBJECT | PROPERTIES | RELATIONGROUP | RELATIONGROUPTYPE | REQIF | REQIFCONTENT | REQIFHEADER | REQIFTOOLEXTENSION | REQTYPE | SOURCE | SOURCESPECIFICATION | SPECATTRIBUTES | SPECHIERARCHY | SPECIFICATION | SPECIFICATIONS | SPECIFICATIONTYPE | SPECIFIEDVALUES | SPECOBJECT | SPECOBJECTS | SPECOBJECTTYPE | SPECRELATION | SPECRELATIONGROUPS | SPECRELATIONS | SPECRELATIONTYPE | SPECTYPES | TARGET | TARGETSPECIFICATION | THEHEADER | TOOLEXTENSIONS | VALUES | XHTMLCONTENT
 }
 
 type GongtructBasicField interface {
@@ -5077,7 +5077,7 @@ type GongtructBasicField interface {
 // - full refactoring of Gongstruct identifiers / fields
 type PointerToGongstruct interface {
 	// insertion point for generic types
-	*ALTERNATIVEID | *ATTRIBUTEDEFINITIONBOOLEAN | *ATTRIBUTEDEFINITIONDATE | *ATTRIBUTEDEFINITIONENUMERATION | *ATTRIBUTEDEFINITIONINTEGER | *ATTRIBUTEDEFINITIONREAL | *ATTRIBUTEDEFINITIONSTRING | *ATTRIBUTEDEFINITIONXHTML | *ATTRIBUTEVALUEBOOLEAN | *ATTRIBUTEVALUEDATE | *ATTRIBUTEVALUEENUMERATION | *ATTRIBUTEVALUEINTEGER | *ATTRIBUTEVALUEREAL | *ATTRIBUTEVALUESTRING | *ATTRIBUTEVALUEXHTML | *CHILDREN | *CORECONTENT | *DATATYPEDEFINITIONBOOLEAN | *DATATYPEDEFINITIONDATE | *DATATYPEDEFINITIONENUMERATION | *DATATYPEDEFINITIONINTEGER | *DATATYPEDEFINITIONREAL | *DATATYPEDEFINITIONSTRING | *DATATYPEDEFINITIONXHTML | *DATATYPES | *DEFAULTVALUE | *DEFINITION | *EDITABLEATTS | *EMBEDDEDVALUE | *ENUMVALUE | *OBJECT | *PROPERTIES | *RELATIONGROUP | *RELATIONGROUPTYPE | *REQIF | *REQIFCONTENT | *REQIFHEADER | *REQIFTOOLEXTENSION | *REQIFTYPE | *SOURCE | *SOURCESPECIFICATION | *SPECATTRIBUTES | *SPECHIERARCHY | *SPECIFICATION | *SPECIFICATIONS | *SPECIFICATIONTYPE | *SPECIFIEDVALUES | *SPECOBJECT | *SPECOBJECTS | *SPECOBJECTTYPE | *SPECRELATION | *SPECRELATIONGROUPS | *SPECRELATIONS | *SPECRELATIONTYPE | *SPECTYPES | *TARGET | *TARGETSPECIFICATION | *THEHEADER | *TOOLEXTENSIONS | *VALUES | *XHTMLCONTENT
+	*ALTERNATIVEID | *ATTRIBUTEDEFINITIONBOOLEAN | *ATTRIBUTEDEFINITIONDATE | *ATTRIBUTEDEFINITIONENUMERATION | *ATTRIBUTEDEFINITIONINTEGER | *ATTRIBUTEDEFINITIONREAL | *ATTRIBUTEDEFINITIONSTRING | *ATTRIBUTEDEFINITIONXHTML | *ATTRIBUTEVALUEBOOLEAN | *ATTRIBUTEVALUEDATE | *ATTRIBUTEVALUEENUMERATION | *ATTRIBUTEVALUEINTEGER | *ATTRIBUTEVALUEREAL | *ATTRIBUTEVALUESTRING | *ATTRIBUTEVALUEXHTML | *CHILDREN | *CORECONTENT | *DATATYPEDEFINITIONBOOLEAN | *DATATYPEDEFINITIONDATE | *DATATYPEDEFINITIONENUMERATION | *DATATYPEDEFINITIONINTEGER | *DATATYPEDEFINITIONREAL | *DATATYPEDEFINITIONSTRING | *DATATYPEDEFINITIONXHTML | *DATATYPES | *DEFAULTVALUE | *DEFINITION | *EDITABLEATTS | *EMBEDDEDVALUE | *ENUMVALUE | *OBJECT | *PROPERTIES | *RELATIONGROUP | *RELATIONGROUPTYPE | *REQIF | *REQIFCONTENT | *REQIFHEADER | *REQIFTOOLEXTENSION | *REQTYPE | *SOURCE | *SOURCESPECIFICATION | *SPECATTRIBUTES | *SPECHIERARCHY | *SPECIFICATION | *SPECIFICATIONS | *SPECIFICATIONTYPE | *SPECIFIEDVALUES | *SPECOBJECT | *SPECOBJECTS | *SPECOBJECTTYPE | *SPECRELATION | *SPECRELATIONGROUPS | *SPECRELATIONS | *SPECRELATIONTYPE | *SPECTYPES | *TARGET | *TARGETSPECIFICATION | *THEHEADER | *TOOLEXTENSIONS | *VALUES | *XHTMLCONTENT
 	GetName() string
 	CommitVoid(*StageStruct)
 	UnstageVoid(stage *StageStruct)
@@ -5144,7 +5144,7 @@ type GongstructSet interface {
 		map[*REQIFCONTENT]any |
 		map[*REQIFHEADER]any |
 		map[*REQIFTOOLEXTENSION]any |
-		map[*REQIFTYPE]any |
+		map[*REQTYPE]any |
 		map[*SOURCE]any |
 		map[*SOURCESPECIFICATION]any |
 		map[*SPECATTRIBUTES]any |
@@ -5211,7 +5211,7 @@ type GongstructMapString interface {
 		map[string]*REQIFCONTENT |
 		map[string]*REQIFHEADER |
 		map[string]*REQIFTOOLEXTENSION |
-		map[string]*REQIFTYPE |
+		map[string]*REQTYPE |
 		map[string]*SOURCE |
 		map[string]*SOURCESPECIFICATION |
 		map[string]*SPECATTRIBUTES |
@@ -5320,8 +5320,8 @@ func GongGetSet[Type GongstructSet](stage *StageStruct) *Type {
 		return any(&stage.REQIFHEADERs).(*Type)
 	case map[*REQIFTOOLEXTENSION]any:
 		return any(&stage.REQIFTOOLEXTENSIONs).(*Type)
-	case map[*REQIFTYPE]any:
-		return any(&stage.REQIFTYPEs).(*Type)
+	case map[*REQTYPE]any:
+		return any(&stage.REQTYPEs).(*Type)
 	case map[*SOURCE]any:
 		return any(&stage.SOURCEs).(*Type)
 	case map[*SOURCESPECIFICATION]any:
@@ -5454,8 +5454,8 @@ func GongGetMap[Type GongstructMapString](stage *StageStruct) *Type {
 		return any(&stage.REQIFHEADERs_mapString).(*Type)
 	case map[string]*REQIFTOOLEXTENSION:
 		return any(&stage.REQIFTOOLEXTENSIONs_mapString).(*Type)
-	case map[string]*REQIFTYPE:
-		return any(&stage.REQIFTYPEs_mapString).(*Type)
+	case map[string]*REQTYPE:
+		return any(&stage.REQTYPEs_mapString).(*Type)
 	case map[string]*SOURCE:
 		return any(&stage.SOURCEs_mapString).(*Type)
 	case map[string]*SOURCESPECIFICATION:
@@ -5588,8 +5588,8 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *StageStruct) *map[*Type]a
 		return any(&stage.REQIFHEADERs).(*map[*Type]any)
 	case REQIFTOOLEXTENSION:
 		return any(&stage.REQIFTOOLEXTENSIONs).(*map[*Type]any)
-	case REQIFTYPE:
-		return any(&stage.REQIFTYPEs).(*map[*Type]any)
+	case REQTYPE:
+		return any(&stage.REQTYPEs).(*map[*Type]any)
 	case SOURCE:
 		return any(&stage.SOURCEs).(*map[*Type]any)
 	case SOURCESPECIFICATION:
@@ -5722,8 +5722,8 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.REQIFHEADERs).(*map[Type]any)
 	case *REQIFTOOLEXTENSION:
 		return any(&stage.REQIFTOOLEXTENSIONs).(*map[Type]any)
-	case *REQIFTYPE:
-		return any(&stage.REQIFTYPEs).(*map[Type]any)
+	case *REQTYPE:
+		return any(&stage.REQTYPEs).(*map[Type]any)
 	case *SOURCE:
 		return any(&stage.SOURCEs).(*map[Type]any)
 	case *SOURCESPECIFICATION:
@@ -5856,8 +5856,8 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *StageStruct) *map[string]
 		return any(&stage.REQIFHEADERs_mapString).(*map[string]*Type)
 	case REQIFTOOLEXTENSION:
 		return any(&stage.REQIFTOOLEXTENSIONs_mapString).(*map[string]*Type)
-	case REQIFTYPE:
-		return any(&stage.REQIFTYPEs_mapString).(*map[string]*Type)
+	case REQTYPE:
+		return any(&stage.REQTYPEs_mapString).(*map[string]*Type)
 	case SOURCE:
 		return any(&stage.SOURCEs_mapString).(*map[string]*Type)
 	case SOURCESPECIFICATION:
@@ -5927,8 +5927,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVEID: &ALTERNATIVEID{Name: "ALTERNATIVEID"},
 			// field is initialized with an instance of DEFAULTVALUE with the name of the field
 			DEFAULTVALUE: &DEFAULTVALUE{Name: "DEFAULTVALUE"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case ATTRIBUTEDEFINITIONDATE:
 		return any(&ATTRIBUTEDEFINITIONDATE{
@@ -5937,8 +5937,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVEID: &ALTERNATIVEID{Name: "ALTERNATIVEID"},
 			// field is initialized with an instance of DEFAULTVALUE with the name of the field
 			DEFAULTVALUE: &DEFAULTVALUE{Name: "DEFAULTVALUE"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case ATTRIBUTEDEFINITIONENUMERATION:
 		return any(&ATTRIBUTEDEFINITIONENUMERATION{
@@ -5947,8 +5947,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			DEFAULTVALUE: &DEFAULTVALUE{Name: "DEFAULTVALUE"},
 			// field is initialized with an instance of ALTERNATIVEID with the name of the field
 			ALTERNATIVEID: &ALTERNATIVEID{Name: "ALTERNATIVEID"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case ATTRIBUTEDEFINITIONINTEGER:
 		return any(&ATTRIBUTEDEFINITIONINTEGER{
@@ -5957,8 +5957,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVEID: &ALTERNATIVEID{Name: "ALTERNATIVEID"},
 			// field is initialized with an instance of DEFAULTVALUE with the name of the field
 			DEFAULTVALUE: &DEFAULTVALUE{Name: "DEFAULTVALUE"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case ATTRIBUTEDEFINITIONREAL:
 		return any(&ATTRIBUTEDEFINITIONREAL{
@@ -5967,8 +5967,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVEID: &ALTERNATIVEID{Name: "ALTERNATIVEID"},
 			// field is initialized with an instance of DEFAULTVALUE with the name of the field
 			DEFAULTVALUE: &DEFAULTVALUE{Name: "DEFAULTVALUE"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case ATTRIBUTEDEFINITIONSTRING:
 		return any(&ATTRIBUTEDEFINITIONSTRING{
@@ -5977,8 +5977,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVEID: &ALTERNATIVEID{Name: "ALTERNATIVEID"},
 			// field is initialized with an instance of DEFAULTVALUE with the name of the field
 			DEFAULTVALUE: &DEFAULTVALUE{Name: "DEFAULTVALUE"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case ATTRIBUTEDEFINITIONXHTML:
 		return any(&ATTRIBUTEDEFINITIONXHTML{
@@ -5987,8 +5987,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVEID: &ALTERNATIVEID{Name: "ALTERNATIVEID"},
 			// field is initialized with an instance of DEFAULTVALUE with the name of the field
 			DEFAULTVALUE: &DEFAULTVALUE{Name: "DEFAULTVALUE"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case ATTRIBUTEVALUEBOOLEAN:
 		return any(&ATTRIBUTEVALUEBOOLEAN{
@@ -6159,8 +6159,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			SPECRELATIONS: &SPECRELATIONS{Name: "SPECRELATIONS"},
 			// field is initialized with an instance of TARGETSPECIFICATION with the name of the field
 			TARGETSPECIFICATION: &TARGETSPECIFICATION{Name: "TARGETSPECIFICATION"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case RELATIONGROUPTYPE:
 		return any(&RELATIONGROUPTYPE{
@@ -6202,8 +6202,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 		return any(&REQIFTOOLEXTENSION{
 			// Initialisation of associations
 		}).(*Type)
-	case REQIFTYPE:
-		return any(&REQIFTYPE{
+	case REQTYPE:
+		return any(&REQTYPE{
 			// Initialisation of associations
 		}).(*Type)
 	case SOURCE:
@@ -6253,8 +6253,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			VALUES: &VALUES{Name: "VALUES"},
 			// field is initialized with an instance of CHILDREN with the name of the field
 			CHILDREN: &CHILDREN{Name: "CHILDREN"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case SPECIFICATIONS:
 		return any(&SPECIFICATIONS{
@@ -6283,8 +6283,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVEID: &ALTERNATIVEID{Name: "ALTERNATIVEID"},
 			// field is initialized with an instance of VALUES with the name of the field
 			VALUES: &VALUES{Name: "VALUES"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case SPECOBJECTS:
 		return any(&SPECOBJECTS{
@@ -6311,8 +6311,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			SOURCE: &SOURCE{Name: "SOURCE"},
 			// field is initialized with an instance of TARGET with the name of the field
 			TARGET: &TARGET{Name: "TARGET"},
-			// field is initialized with an instance of REQIFTYPE with the name of the field
-			TYPE: &REQIFTYPE{Name: "TYPE"},
+			// field is initialized with an instance of REQTYPE with the name of the field
+			TYPE: &REQTYPE{Name: "TYPE"},
 		}).(*Type)
 	case SPECRELATIONGROUPS:
 		return any(&SPECRELATIONGROUPS{
@@ -6434,19 +6434,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*ATTRIBUTEDEFINITIONBOOLEAN)
+			res := make(map[*REQTYPE][]*ATTRIBUTEDEFINITIONBOOLEAN)
 			for attributedefinitionboolean := range stage.ATTRIBUTEDEFINITIONBOOLEANs {
 				if attributedefinitionboolean.TYPE != nil {
-					reqiftype_ := attributedefinitionboolean.TYPE
+					reqtype_ := attributedefinitionboolean.TYPE
 					var attributedefinitionbooleans []*ATTRIBUTEDEFINITIONBOOLEAN
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						attributedefinitionbooleans = res[reqiftype_]
+						attributedefinitionbooleans = res[reqtype_]
 					} else {
 						attributedefinitionbooleans = make([]*ATTRIBUTEDEFINITIONBOOLEAN, 0)
 					}
 					attributedefinitionbooleans = append(attributedefinitionbooleans, attributedefinitionboolean)
-					res[reqiftype_] = attributedefinitionbooleans
+					res[reqtype_] = attributedefinitionbooleans
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -6490,19 +6490,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*ATTRIBUTEDEFINITIONDATE)
+			res := make(map[*REQTYPE][]*ATTRIBUTEDEFINITIONDATE)
 			for attributedefinitiondate := range stage.ATTRIBUTEDEFINITIONDATEs {
 				if attributedefinitiondate.TYPE != nil {
-					reqiftype_ := attributedefinitiondate.TYPE
+					reqtype_ := attributedefinitiondate.TYPE
 					var attributedefinitiondates []*ATTRIBUTEDEFINITIONDATE
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						attributedefinitiondates = res[reqiftype_]
+						attributedefinitiondates = res[reqtype_]
 					} else {
 						attributedefinitiondates = make([]*ATTRIBUTEDEFINITIONDATE, 0)
 					}
 					attributedefinitiondates = append(attributedefinitiondates, attributedefinitiondate)
-					res[reqiftype_] = attributedefinitiondates
+					res[reqtype_] = attributedefinitiondates
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -6546,19 +6546,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*ATTRIBUTEDEFINITIONENUMERATION)
+			res := make(map[*REQTYPE][]*ATTRIBUTEDEFINITIONENUMERATION)
 			for attributedefinitionenumeration := range stage.ATTRIBUTEDEFINITIONENUMERATIONs {
 				if attributedefinitionenumeration.TYPE != nil {
-					reqiftype_ := attributedefinitionenumeration.TYPE
+					reqtype_ := attributedefinitionenumeration.TYPE
 					var attributedefinitionenumerations []*ATTRIBUTEDEFINITIONENUMERATION
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						attributedefinitionenumerations = res[reqiftype_]
+						attributedefinitionenumerations = res[reqtype_]
 					} else {
 						attributedefinitionenumerations = make([]*ATTRIBUTEDEFINITIONENUMERATION, 0)
 					}
 					attributedefinitionenumerations = append(attributedefinitionenumerations, attributedefinitionenumeration)
-					res[reqiftype_] = attributedefinitionenumerations
+					res[reqtype_] = attributedefinitionenumerations
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -6602,19 +6602,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*ATTRIBUTEDEFINITIONINTEGER)
+			res := make(map[*REQTYPE][]*ATTRIBUTEDEFINITIONINTEGER)
 			for attributedefinitioninteger := range stage.ATTRIBUTEDEFINITIONINTEGERs {
 				if attributedefinitioninteger.TYPE != nil {
-					reqiftype_ := attributedefinitioninteger.TYPE
+					reqtype_ := attributedefinitioninteger.TYPE
 					var attributedefinitionintegers []*ATTRIBUTEDEFINITIONINTEGER
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						attributedefinitionintegers = res[reqiftype_]
+						attributedefinitionintegers = res[reqtype_]
 					} else {
 						attributedefinitionintegers = make([]*ATTRIBUTEDEFINITIONINTEGER, 0)
 					}
 					attributedefinitionintegers = append(attributedefinitionintegers, attributedefinitioninteger)
-					res[reqiftype_] = attributedefinitionintegers
+					res[reqtype_] = attributedefinitionintegers
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -6658,19 +6658,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*ATTRIBUTEDEFINITIONREAL)
+			res := make(map[*REQTYPE][]*ATTRIBUTEDEFINITIONREAL)
 			for attributedefinitionreal := range stage.ATTRIBUTEDEFINITIONREALs {
 				if attributedefinitionreal.TYPE != nil {
-					reqiftype_ := attributedefinitionreal.TYPE
+					reqtype_ := attributedefinitionreal.TYPE
 					var attributedefinitionreals []*ATTRIBUTEDEFINITIONREAL
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						attributedefinitionreals = res[reqiftype_]
+						attributedefinitionreals = res[reqtype_]
 					} else {
 						attributedefinitionreals = make([]*ATTRIBUTEDEFINITIONREAL, 0)
 					}
 					attributedefinitionreals = append(attributedefinitionreals, attributedefinitionreal)
-					res[reqiftype_] = attributedefinitionreals
+					res[reqtype_] = attributedefinitionreals
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -6714,19 +6714,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*ATTRIBUTEDEFINITIONSTRING)
+			res := make(map[*REQTYPE][]*ATTRIBUTEDEFINITIONSTRING)
 			for attributedefinitionstring := range stage.ATTRIBUTEDEFINITIONSTRINGs {
 				if attributedefinitionstring.TYPE != nil {
-					reqiftype_ := attributedefinitionstring.TYPE
+					reqtype_ := attributedefinitionstring.TYPE
 					var attributedefinitionstrings []*ATTRIBUTEDEFINITIONSTRING
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						attributedefinitionstrings = res[reqiftype_]
+						attributedefinitionstrings = res[reqtype_]
 					} else {
 						attributedefinitionstrings = make([]*ATTRIBUTEDEFINITIONSTRING, 0)
 					}
 					attributedefinitionstrings = append(attributedefinitionstrings, attributedefinitionstring)
-					res[reqiftype_] = attributedefinitionstrings
+					res[reqtype_] = attributedefinitionstrings
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -6770,19 +6770,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*ATTRIBUTEDEFINITIONXHTML)
+			res := make(map[*REQTYPE][]*ATTRIBUTEDEFINITIONXHTML)
 			for attributedefinitionxhtml := range stage.ATTRIBUTEDEFINITIONXHTMLs {
 				if attributedefinitionxhtml.TYPE != nil {
-					reqiftype_ := attributedefinitionxhtml.TYPE
+					reqtype_ := attributedefinitionxhtml.TYPE
 					var attributedefinitionxhtmls []*ATTRIBUTEDEFINITIONXHTML
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						attributedefinitionxhtmls = res[reqiftype_]
+						attributedefinitionxhtmls = res[reqtype_]
 					} else {
 						attributedefinitionxhtmls = make([]*ATTRIBUTEDEFINITIONXHTML, 0)
 					}
 					attributedefinitionxhtmls = append(attributedefinitionxhtmls, attributedefinitionxhtml)
-					res[reqiftype_] = attributedefinitionxhtmls
+					res[reqtype_] = attributedefinitionxhtmls
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -7371,19 +7371,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*RELATIONGROUP)
+			res := make(map[*REQTYPE][]*RELATIONGROUP)
 			for relationgroup := range stage.RELATIONGROUPs {
 				if relationgroup.TYPE != nil {
-					reqiftype_ := relationgroup.TYPE
+					reqtype_ := relationgroup.TYPE
 					var relationgroups []*RELATIONGROUP
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						relationgroups = res[reqiftype_]
+						relationgroups = res[reqtype_]
 					} else {
 						relationgroups = make([]*RELATIONGROUP, 0)
 					}
 					relationgroups = append(relationgroups, relationgroup)
-					res[reqiftype_] = relationgroups
+					res[reqtype_] = relationgroups
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -7583,8 +7583,8 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 		switch fieldname {
 		// insertion point for per direct association field
 		}
-	// reverse maps of direct associations of REQIFTYPE
-	case REQIFTYPE:
+	// reverse maps of direct associations of REQTYPE
+	case REQTYPE:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -7732,19 +7732,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*SPECIFICATION)
+			res := make(map[*REQTYPE][]*SPECIFICATION)
 			for specification := range stage.SPECIFICATIONs {
 				if specification.TYPE != nil {
-					reqiftype_ := specification.TYPE
+					reqtype_ := specification.TYPE
 					var specifications []*SPECIFICATION
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						specifications = res[reqiftype_]
+						specifications = res[reqtype_]
 					} else {
 						specifications = make([]*SPECIFICATION, 0)
 					}
 					specifications = append(specifications, specification)
-					res[reqiftype_] = specifications
+					res[reqtype_] = specifications
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -7837,19 +7837,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*SPECOBJECT)
+			res := make(map[*REQTYPE][]*SPECOBJECT)
 			for specobject := range stage.SPECOBJECTs {
 				if specobject.TYPE != nil {
-					reqiftype_ := specobject.TYPE
+					reqtype_ := specobject.TYPE
 					var specobjects []*SPECOBJECT
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						specobjects = res[reqiftype_]
+						specobjects = res[reqtype_]
 					} else {
 						specobjects = make([]*SPECOBJECT, 0)
 					}
 					specobjects = append(specobjects, specobject)
-					res[reqiftype_] = specobjects
+					res[reqtype_] = specobjects
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -7971,19 +7971,19 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		case "TYPE":
-			res := make(map[*REQIFTYPE][]*SPECRELATION)
+			res := make(map[*REQTYPE][]*SPECRELATION)
 			for specrelation := range stage.SPECRELATIONs {
 				if specrelation.TYPE != nil {
-					reqiftype_ := specrelation.TYPE
+					reqtype_ := specrelation.TYPE
 					var specrelations []*SPECRELATION
-					_, ok := res[reqiftype_]
+					_, ok := res[reqtype_]
 					if ok {
-						specrelations = res[reqiftype_]
+						specrelations = res[reqtype_]
 					} else {
 						specrelations = make([]*SPECRELATION, 0)
 					}
 					specrelations = append(specrelations, specrelation)
-					res[reqiftype_] = specrelations
+					res[reqtype_] = specrelations
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -8359,8 +8359,8 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
-	// reverse maps of direct associations of REQIFTYPE
-	case REQIFTYPE:
+	// reverse maps of direct associations of REQTYPE
+	case REQTYPE:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -8690,8 +8690,8 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "REQIFHEADER"
 	case REQIFTOOLEXTENSION:
 		res = "REQIFTOOLEXTENSION"
-	case REQIFTYPE:
-		res = "REQIFTYPE"
+	case REQTYPE:
+		res = "REQTYPE"
 	case SOURCE:
 		res = "SOURCE"
 	case SOURCESPECIFICATION:
@@ -8824,8 +8824,8 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "REQIFHEADER"
 	case *REQIFTOOLEXTENSION:
 		res = "REQIFTOOLEXTENSION"
-	case *REQIFTYPE:
-		res = "REQIFTYPE"
+	case *REQTYPE:
+		res = "REQTYPE"
 	case *SOURCE:
 		res = "SOURCE"
 	case *SOURCESPECIFICATION:
@@ -8957,7 +8957,7 @@ func GetFields[Type Gongstruct]() (res []string) {
 		res = []string{"Name", "IDENTIFIERAttr", "COMMENT", "CREATIONTIME", "REPOSITORYID", "REQIFTOOLID", "REQIFVERSION", "SOURCETOOLID", "TITLE"}
 	case REQIFTOOLEXTENSION:
 		res = []string{"Name"}
-	case REQIFTYPE:
+	case REQTYPE:
 		res = []string{"Name", "DATATYPEDEFINITIONBOOLEANREF"}
 	case SOURCE:
 		res = []string{"Name", "SPECOBJECTREF"}
@@ -9189,7 +9189,7 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "TOOLEXTENSIONS"
 		rf.Fieldname = "REQIFTOOLEXTENSION"
 		res = append(res, rf)
-	case REQIFTYPE:
+	case REQTYPE:
 		var rf ReverseField
 		_ = rf
 	case SOURCE:
@@ -9363,7 +9363,7 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 		res = []string{"Name", "IDENTIFIERAttr", "COMMENT", "CREATIONTIME", "REPOSITORYID", "REQIFTOOLID", "REQIFVERSION", "SOURCETOOLID", "TITLE"}
 	case *REQIFTOOLEXTENSION:
 		res = []string{"Name"}
-	case *REQIFTYPE:
+	case *REQTYPE:
 		res = []string{"Name", "DATATYPEDEFINITIONBOOLEANREF"}
 	case *SOURCE:
 		res = []string{"Name", "SPECOBJECTREF"}
@@ -10139,7 +10139,7 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 		case "Name":
 			res = inferedInstance.Name
 		}
-	case *REQIFTYPE:
+	case *REQTYPE:
 		switch fieldName {
 		// string value of fields
 		case "Name":
@@ -11283,7 +11283,7 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 		case "Name":
 			res = inferedInstance.Name
 		}
-	case REQIFTYPE:
+	case REQTYPE:
 		switch fieldName {
 		// string value of fields
 		case "Name":

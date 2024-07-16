@@ -14,16 +14,16 @@ import (
 )
 
 // declaration in order to justify use of the models import
-var __REQIFTYPE__dummysDeclaration__ models.REQIFTYPE
-var __REQIFTYPE_time__dummyDeclaration time.Duration
+var __REQTYPE__dummysDeclaration__ models.REQTYPE
+var __REQTYPE_time__dummyDeclaration time.Duration
 
-var mutexREQIFTYPE sync.Mutex
+var mutexREQTYPE sync.Mutex
 
-// An REQIFTYPEID parameter model.
+// An REQTYPEID parameter model.
 //
 // This is used for operations that want the ID of an order in the path
-// swagger:parameters getREQIFTYPE updateREQIFTYPE deleteREQIFTYPE
-type REQIFTYPEID struct {
+// swagger:parameters getREQTYPE updateREQTYPE deleteREQTYPE
+type REQTYPEID struct {
 	// The ID of the order
 	//
 	// in: path
@@ -31,29 +31,29 @@ type REQIFTYPEID struct {
 	ID int64
 }
 
-// REQIFTYPEInput is a schema that can validate the user’s
+// REQTYPEInput is a schema that can validate the user’s
 // input to prevent us from getting invalid data
-// swagger:parameters postREQIFTYPE updateREQIFTYPE
-type REQIFTYPEInput struct {
-	// The REQIFTYPE to submit or modify
+// swagger:parameters postREQTYPE updateREQTYPE
+type REQTYPEInput struct {
+	// The REQTYPE to submit or modify
 	// in: body
-	REQIFTYPE *orm.REQIFTYPEAPI
+	REQTYPE *orm.REQTYPEAPI
 }
 
-// GetREQIFTYPEs
+// GetREQTYPEs
 //
-// swagger:route GET /reqiftypes reqiftypes getREQIFTYPEs
+// swagger:route GET /reqtypes reqtypes getREQTYPEs
 //
-// # Get all reqiftypes
+// # Get all reqtypes
 //
 // Responses:
 // default: genericError
 //
-//	200: reqiftypeDBResponse
-func (controller *Controller) GetREQIFTYPEs(c *gin.Context) {
+//	200: reqtypeDBResponse
+func (controller *Controller) GetREQTYPEs(c *gin.Context) {
 
 	// source slice
-	var reqiftypeDBs []orm.REQIFTYPEDB
+	var reqtypeDBs []orm.REQTYPEDB
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -61,16 +61,16 @@ func (controller *Controller) GetREQIFTYPEs(c *gin.Context) {
 		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetREQIFTYPEs", "GONG__StackPath", stackPath)
+			// log.Println("GetREQTYPEs", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFTYPE.GetDB()
+	db := backRepo.BackRepoREQTYPE.GetDB()
 
-	query := db.Find(&reqiftypeDBs)
+	query := db.Find(&reqtypeDBs)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -81,29 +81,29 @@ func (controller *Controller) GetREQIFTYPEs(c *gin.Context) {
 	}
 
 	// slice that will be transmitted to the front
-	reqiftypeAPIs := make([]orm.REQIFTYPEAPI, 0)
+	reqtypeAPIs := make([]orm.REQTYPEAPI, 0)
 
-	// for each reqiftype, update fields from the database nullable fields
-	for idx := range reqiftypeDBs {
-		reqiftypeDB := &reqiftypeDBs[idx]
-		_ = reqiftypeDB
-		var reqiftypeAPI orm.REQIFTYPEAPI
+	// for each reqtype, update fields from the database nullable fields
+	for idx := range reqtypeDBs {
+		reqtypeDB := &reqtypeDBs[idx]
+		_ = reqtypeDB
+		var reqtypeAPI orm.REQTYPEAPI
 
 		// insertion point for updating fields
-		reqiftypeAPI.ID = reqiftypeDB.ID
-		reqiftypeDB.CopyBasicFieldsToREQIFTYPE_WOP(&reqiftypeAPI.REQIFTYPE_WOP)
-		reqiftypeAPI.REQIFTYPEPointersEncoding = reqiftypeDB.REQIFTYPEPointersEncoding
-		reqiftypeAPIs = append(reqiftypeAPIs, reqiftypeAPI)
+		reqtypeAPI.ID = reqtypeDB.ID
+		reqtypeDB.CopyBasicFieldsToREQTYPE_WOP(&reqtypeAPI.REQTYPE_WOP)
+		reqtypeAPI.REQTYPEPointersEncoding = reqtypeDB.REQTYPEPointersEncoding
+		reqtypeAPIs = append(reqtypeAPIs, reqtypeAPI)
 	}
 
-	c.JSON(http.StatusOK, reqiftypeAPIs)
+	c.JSON(http.StatusOK, reqtypeAPIs)
 }
 
-// PostREQIFTYPE
+// PostREQTYPE
 //
-// swagger:route POST /reqiftypes reqiftypes postREQIFTYPE
+// swagger:route POST /reqtypes reqtypes postREQTYPE
 //
-// Creates a reqiftype
+// Creates a reqtype
 //
 //	Consumes:
 //	- application/json
@@ -113,10 +113,10 @@ func (controller *Controller) GetREQIFTYPEs(c *gin.Context) {
 //
 //	Responses:
 //	  200: nodeDBResponse
-func (controller *Controller) PostREQIFTYPE(c *gin.Context) {
+func (controller *Controller) PostREQTYPE(c *gin.Context) {
 
-	mutexREQIFTYPE.Lock()
-	defer mutexREQIFTYPE.Unlock()
+	mutexREQTYPE.Lock()
+	defer mutexREQTYPE.Unlock()
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -124,17 +124,17 @@ func (controller *Controller) PostREQIFTYPE(c *gin.Context) {
 		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("PostREQIFTYPEs", "GONG__StackPath", stackPath)
+			// log.Println("PostREQTYPEs", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFTYPE.GetDB()
+	db := backRepo.BackRepoREQTYPE.GetDB()
 
 	// Validate input
-	var input orm.REQIFTYPEAPI
+	var input orm.REQTYPEAPI
 
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
@@ -146,12 +146,12 @@ func (controller *Controller) PostREQIFTYPE(c *gin.Context) {
 		return
 	}
 
-	// Create reqiftype
-	reqiftypeDB := orm.REQIFTYPEDB{}
-	reqiftypeDB.REQIFTYPEPointersEncoding = input.REQIFTYPEPointersEncoding
-	reqiftypeDB.CopyBasicFieldsFromREQIFTYPE_WOP(&input.REQIFTYPE_WOP)
+	// Create reqtype
+	reqtypeDB := orm.REQTYPEDB{}
+	reqtypeDB.REQTYPEPointersEncoding = input.REQTYPEPointersEncoding
+	reqtypeDB.CopyBasicFieldsFromREQTYPE_WOP(&input.REQTYPE_WOP)
 
-	query := db.Create(&reqiftypeDB)
+	query := db.Create(&reqtypeDB)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -162,31 +162,31 @@ func (controller *Controller) PostREQIFTYPE(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	backRepo.BackRepoREQIFTYPE.CheckoutPhaseOneInstance(&reqiftypeDB)
-	reqiftype := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[reqiftypeDB.ID]
+	backRepo.BackRepoREQTYPE.CheckoutPhaseOneInstance(&reqtypeDB)
+	reqtype := backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[reqtypeDB.ID]
 
-	if reqiftype != nil {
-		models.AfterCreateFromFront(backRepo.GetStage(), reqiftype)
+	if reqtype != nil {
+		models.AfterCreateFromFront(backRepo.GetStage(), reqtype)
 	}
 
 	// a POST is equivalent to a back repo commit increase
 	// (this will be improved with implementation of unit of work design pattern)
 	backRepo.IncrementPushFromFrontNb()
 
-	c.JSON(http.StatusOK, reqiftypeDB)
+	c.JSON(http.StatusOK, reqtypeDB)
 }
 
-// GetREQIFTYPE
+// GetREQTYPE
 //
-// swagger:route GET /reqiftypes/{ID} reqiftypes getREQIFTYPE
+// swagger:route GET /reqtypes/{ID} reqtypes getREQTYPE
 //
-// Gets the details for a reqiftype.
+// Gets the details for a reqtype.
 //
 // Responses:
 // default: genericError
 //
-//	200: reqiftypeDBResponse
-func (controller *Controller) GetREQIFTYPE(c *gin.Context) {
+//	200: reqtypeDBResponse
+func (controller *Controller) GetREQTYPE(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -194,18 +194,18 @@ func (controller *Controller) GetREQIFTYPE(c *gin.Context) {
 		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetREQIFTYPE", "GONG__StackPath", stackPath)
+			// log.Println("GetREQTYPE", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFTYPE.GetDB()
+	db := backRepo.BackRepoREQTYPE.GetDB()
 
-	// Get reqiftypeDB in DB
-	var reqiftypeDB orm.REQIFTYPEDB
-	if err := db.First(&reqiftypeDB, c.Param("id")).Error; err != nil {
+	// Get reqtypeDB in DB
+	var reqtypeDB orm.REQTYPEDB
+	if err := db.First(&reqtypeDB, c.Param("id")).Error; err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -214,28 +214,28 @@ func (controller *Controller) GetREQIFTYPE(c *gin.Context) {
 		return
 	}
 
-	var reqiftypeAPI orm.REQIFTYPEAPI
-	reqiftypeAPI.ID = reqiftypeDB.ID
-	reqiftypeAPI.REQIFTYPEPointersEncoding = reqiftypeDB.REQIFTYPEPointersEncoding
-	reqiftypeDB.CopyBasicFieldsToREQIFTYPE_WOP(&reqiftypeAPI.REQIFTYPE_WOP)
+	var reqtypeAPI orm.REQTYPEAPI
+	reqtypeAPI.ID = reqtypeDB.ID
+	reqtypeAPI.REQTYPEPointersEncoding = reqtypeDB.REQTYPEPointersEncoding
+	reqtypeDB.CopyBasicFieldsToREQTYPE_WOP(&reqtypeAPI.REQTYPE_WOP)
 
-	c.JSON(http.StatusOK, reqiftypeAPI)
+	c.JSON(http.StatusOK, reqtypeAPI)
 }
 
-// UpdateREQIFTYPE
+// UpdateREQTYPE
 //
-// swagger:route PATCH /reqiftypes/{ID} reqiftypes updateREQIFTYPE
+// swagger:route PATCH /reqtypes/{ID} reqtypes updateREQTYPE
 //
-// # Update a reqiftype
+// # Update a reqtype
 //
 // Responses:
 // default: genericError
 //
-//	200: reqiftypeDBResponse
-func (controller *Controller) UpdateREQIFTYPE(c *gin.Context) {
+//	200: reqtypeDBResponse
+func (controller *Controller) UpdateREQTYPE(c *gin.Context) {
 
-	mutexREQIFTYPE.Lock()
-	defer mutexREQIFTYPE.Unlock()
+	mutexREQTYPE.Lock()
+	defer mutexREQTYPE.Unlock()
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -243,17 +243,17 @@ func (controller *Controller) UpdateREQIFTYPE(c *gin.Context) {
 		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("UpdateREQIFTYPE", "GONG__StackPath", stackPath)
+			// log.Println("UpdateREQTYPE", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFTYPE.GetDB()
+	db := backRepo.BackRepoREQTYPE.GetDB()
 
 	// Validate input
-	var input orm.REQIFTYPEAPI
+	var input orm.REQTYPEAPI
 	if err := c.ShouldBindJSON(&input); err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -261,10 +261,10 @@ func (controller *Controller) UpdateREQIFTYPE(c *gin.Context) {
 	}
 
 	// Get model if exist
-	var reqiftypeDB orm.REQIFTYPEDB
+	var reqtypeDB orm.REQTYPEDB
 
-	// fetch the reqiftype
-	query := db.First(&reqiftypeDB, c.Param("id"))
+	// fetch the reqtype
+	query := db.First(&reqtypeDB, c.Param("id"))
 
 	if query.Error != nil {
 		var returnError GenericError
@@ -276,10 +276,10 @@ func (controller *Controller) UpdateREQIFTYPE(c *gin.Context) {
 	}
 
 	// update
-	reqiftypeDB.CopyBasicFieldsFromREQIFTYPE_WOP(&input.REQIFTYPE_WOP)
-	reqiftypeDB.REQIFTYPEPointersEncoding = input.REQIFTYPEPointersEncoding
+	reqtypeDB.CopyBasicFieldsFromREQTYPE_WOP(&input.REQTYPE_WOP)
+	reqtypeDB.REQTYPEPointersEncoding = input.REQTYPEPointersEncoding
 
-	query = db.Model(&reqiftypeDB).Updates(reqiftypeDB)
+	query = db.Model(&reqtypeDB).Updates(reqtypeDB)
 	if query.Error != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -290,16 +290,16 @@ func (controller *Controller) UpdateREQIFTYPE(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	reqiftypeNew := new(models.REQIFTYPE)
-	reqiftypeDB.CopyBasicFieldsToREQIFTYPE(reqiftypeNew)
+	reqtypeNew := new(models.REQTYPE)
+	reqtypeDB.CopyBasicFieldsToREQTYPE(reqtypeNew)
 
 	// redeem pointers
-	reqiftypeDB.DecodePointers(backRepo, reqiftypeNew)
+	reqtypeDB.DecodePointers(backRepo, reqtypeNew)
 
 	// get stage instance from DB instance, and call callback function
-	reqiftypeOld := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[reqiftypeDB.ID]
-	if reqiftypeOld != nil {
-		models.AfterUpdateFromFront(backRepo.GetStage(), reqiftypeOld, reqiftypeNew)
+	reqtypeOld := backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[reqtypeDB.ID]
+	if reqtypeOld != nil {
+		models.AfterUpdateFromFront(backRepo.GetStage(), reqtypeOld, reqtypeNew)
 	}
 
 	// an UPDATE generates a back repo commit increase
@@ -308,23 +308,23 @@ func (controller *Controller) UpdateREQIFTYPE(c *gin.Context) {
 	// generates a checkout
 	backRepo.IncrementPushFromFrontNb()
 
-	// return status OK with the marshalling of the the reqiftypeDB
-	c.JSON(http.StatusOK, reqiftypeDB)
+	// return status OK with the marshalling of the the reqtypeDB
+	c.JSON(http.StatusOK, reqtypeDB)
 }
 
-// DeleteREQIFTYPE
+// DeleteREQTYPE
 //
-// swagger:route DELETE /reqiftypes/{ID} reqiftypes deleteREQIFTYPE
+// swagger:route DELETE /reqtypes/{ID} reqtypes deleteREQTYPE
 //
-// # Delete a reqiftype
+// # Delete a reqtype
 //
 // default: genericError
 //
-//	200: reqiftypeDBResponse
-func (controller *Controller) DeleteREQIFTYPE(c *gin.Context) {
+//	200: reqtypeDBResponse
+func (controller *Controller) DeleteREQTYPE(c *gin.Context) {
 
-	mutexREQIFTYPE.Lock()
-	defer mutexREQIFTYPE.Unlock()
+	mutexREQTYPE.Lock()
+	defer mutexREQTYPE.Unlock()
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -332,18 +332,18 @@ func (controller *Controller) DeleteREQIFTYPE(c *gin.Context) {
 		value := _values["GONG__StackPath"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("DeleteREQIFTYPE", "GONG__StackPath", stackPath)
+			// log.Println("DeleteREQTYPE", "GONG__StackPath", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		log.Panic("Stack github.com/thomaspeugeot/gongreqif/go/models, Unkown stack", stackPath)
 	}
-	db := backRepo.BackRepoREQIFTYPE.GetDB()
+	db := backRepo.BackRepoREQTYPE.GetDB()
 
 	// Get model if exist
-	var reqiftypeDB orm.REQIFTYPEDB
-	if err := db.First(&reqiftypeDB, c.Param("id")).Error; err != nil {
+	var reqtypeDB orm.REQTYPEDB
+	if err := db.First(&reqtypeDB, c.Param("id")).Error; err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,16 +353,16 @@ func (controller *Controller) DeleteREQIFTYPE(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&reqiftypeDB)
+	db.Unscoped().Delete(&reqtypeDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
-	reqiftypeDeleted := new(models.REQIFTYPE)
-	reqiftypeDB.CopyBasicFieldsToREQIFTYPE(reqiftypeDeleted)
+	reqtypeDeleted := new(models.REQTYPE)
+	reqtypeDB.CopyBasicFieldsToREQTYPE(reqtypeDeleted)
 
 	// get stage instance from DB instance, and call callback function
-	reqiftypeStaged := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[reqiftypeDB.ID]
-	if reqiftypeStaged != nil {
-		models.AfterDeleteFromFront(backRepo.GetStage(), reqiftypeStaged, reqiftypeDeleted)
+	reqtypeStaged := backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[reqtypeDB.ID]
+	if reqtypeStaged != nil {
+		models.AfterDeleteFromFront(backRepo.GetStage(), reqtypeStaged, reqtypeDeleted)
 	}
 
 	// a DELETE generates a back repo commit increase

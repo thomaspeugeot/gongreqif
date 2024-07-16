@@ -80,7 +80,7 @@ type BackRepoData struct {
 
 	REQIFTOOLEXTENSIONAPIs []*REQIFTOOLEXTENSIONAPI
 
-	REQIFTYPEAPIs []*REQIFTYPEAPI
+	REQTYPEAPIs []*REQTYPEAPI
 
 	SOURCEAPIs []*SOURCEAPI
 
@@ -509,14 +509,14 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		backRepoData.REQIFTOOLEXTENSIONAPIs = append(backRepoData.REQIFTOOLEXTENSIONAPIs, &reqiftoolextensionAPI)
 	}
 
-	for _, reqiftypeDB := range backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEDB {
+	for _, reqtypeDB := range backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEDB {
 
-		var reqiftypeAPI REQIFTYPEAPI
-		reqiftypeAPI.ID = reqiftypeDB.ID
-		reqiftypeAPI.REQIFTYPEPointersEncoding = reqiftypeDB.REQIFTYPEPointersEncoding
-		reqiftypeDB.CopyBasicFieldsToREQIFTYPE_WOP(&reqiftypeAPI.REQIFTYPE_WOP)
+		var reqtypeAPI REQTYPEAPI
+		reqtypeAPI.ID = reqtypeDB.ID
+		reqtypeAPI.REQTYPEPointersEncoding = reqtypeDB.REQTYPEPointersEncoding
+		reqtypeDB.CopyBasicFieldsToREQTYPE_WOP(&reqtypeAPI.REQTYPE_WOP)
 
-		backRepoData.REQIFTYPEAPIs = append(backRepoData.REQIFTYPEAPIs, &reqiftypeAPI)
+		backRepoData.REQTYPEAPIs = append(backRepoData.REQTYPEAPIs, &reqtypeAPI)
 	}
 
 	for _, sourceDB := range backRepo.BackRepoSOURCE.Map_SOURCEDBID_SOURCEDB {

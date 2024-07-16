@@ -442,13 +442,13 @@ func fillUpTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
-		case "REQIFTYPE":
+		case "REQTYPE":
 			nodeGongstruct.Name = name
-			set := *models.GetGongstructInstancesSet[models.REQIFTYPE](probe.stageOfInterest)
-			for _reqiftype := range set {
-				nodeInstance := (&tree.Node{Name: _reqiftype.GetName()}).Stage(probe.treeStage)
+			set := *models.GetGongstructInstancesSet[models.REQTYPE](probe.stageOfInterest)
+			for _reqtype := range set {
+				nodeInstance := (&tree.Node{Name: _reqtype.GetName()}).Stage(probe.treeStage)
 				nodeInstance.IsNodeClickable = true
-				nodeInstance.Impl = NewInstanceNodeCallback(_reqiftype, "REQIFTYPE", probe)
+				nodeInstance.Impl = NewInstanceNodeCallback(_reqtype, "REQTYPE", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}

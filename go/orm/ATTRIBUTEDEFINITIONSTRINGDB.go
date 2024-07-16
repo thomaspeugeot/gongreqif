@@ -281,7 +281,7 @@ func (backRepoATTRIBUTEDEFINITIONSTRING *BackRepoATTRIBUTEDEFINITIONSTRINGStruct
 		// commit pointer value attributedefinitionstring.TYPE translates to updating the attributedefinitionstring.TYPEID
 		attributedefinitionstringDB.TYPEID.Valid = true // allow for a 0 value (nil association)
 		if attributedefinitionstring.TYPE != nil {
-			if TYPEId, ok := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEPtr_REQIFTYPEDBID[attributedefinitionstring.TYPE]; ok {
+			if TYPEId, ok := backRepo.BackRepoREQTYPE.Map_REQTYPEPtr_REQTYPEDBID[attributedefinitionstring.TYPE]; ok {
 				attributedefinitionstringDB.TYPEID.Int64 = int64(TYPEId)
 				attributedefinitionstringDB.TYPEID.Valid = true
 			}
@@ -416,7 +416,7 @@ func (attributedefinitionstringDB *ATTRIBUTEDEFINITIONSTRINGDB) DecodePointers(b
 	// TYPE field
 	attributedefinitionstring.TYPE = nil
 	if attributedefinitionstringDB.TYPEID.Int64 != 0 {
-		attributedefinitionstring.TYPE = backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[uint(attributedefinitionstringDB.TYPEID.Int64)]
+		attributedefinitionstring.TYPE = backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[uint(attributedefinitionstringDB.TYPEID.Int64)]
 	}
 	return
 }
@@ -720,7 +720,7 @@ func (backRepoATTRIBUTEDEFINITIONSTRING *BackRepoATTRIBUTEDEFINITIONSTRINGStruct
 
 		// reindexing TYPE field
 		if attributedefinitionstringDB.TYPEID.Int64 != 0 {
-			attributedefinitionstringDB.TYPEID.Int64 = int64(BackRepoREQIFTYPEid_atBckpTime_newID[uint(attributedefinitionstringDB.TYPEID.Int64)])
+			attributedefinitionstringDB.TYPEID.Int64 = int64(BackRepoREQTYPEid_atBckpTime_newID[uint(attributedefinitionstringDB.TYPEID.Int64)])
 			attributedefinitionstringDB.TYPEID.Valid = true
 		}
 

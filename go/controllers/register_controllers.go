@@ -313,12 +313,12 @@ func registerControllers(r *gin.Engine) {
 		v1.PUT("/v1/reqiftoolextensions/:id", GetController().UpdateREQIFTOOLEXTENSION)
 		v1.DELETE("/v1/reqiftoolextensions/:id", GetController().DeleteREQIFTOOLEXTENSION)
 
-		v1.GET("/v1/reqiftypes", GetController().GetREQIFTYPEs)
-		v1.GET("/v1/reqiftypes/:id", GetController().GetREQIFTYPE)
-		v1.POST("/v1/reqiftypes", GetController().PostREQIFTYPE)
-		v1.PATCH("/v1/reqiftypes/:id", GetController().UpdateREQIFTYPE)
-		v1.PUT("/v1/reqiftypes/:id", GetController().UpdateREQIFTYPE)
-		v1.DELETE("/v1/reqiftypes/:id", GetController().DeleteREQIFTYPE)
+		v1.GET("/v1/reqtypes", GetController().GetREQTYPEs)
+		v1.GET("/v1/reqtypes/:id", GetController().GetREQTYPE)
+		v1.POST("/v1/reqtypes", GetController().PostREQTYPE)
+		v1.PATCH("/v1/reqtypes/:id", GetController().UpdateREQTYPE)
+		v1.PUT("/v1/reqtypes/:id", GetController().UpdateREQTYPE)
+		v1.DELETE("/v1/reqtypes/:id", GetController().DeleteREQTYPE)
 
 		v1.GET("/v1/sources", GetController().GetSOURCEs)
 		v1.GET("/v1/sources/:id", GetController().GetSOURCE)

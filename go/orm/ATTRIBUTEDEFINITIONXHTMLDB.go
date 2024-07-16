@@ -281,7 +281,7 @@ func (backRepoATTRIBUTEDEFINITIONXHTML *BackRepoATTRIBUTEDEFINITIONXHTMLStruct) 
 		// commit pointer value attributedefinitionxhtml.TYPE translates to updating the attributedefinitionxhtml.TYPEID
 		attributedefinitionxhtmlDB.TYPEID.Valid = true // allow for a 0 value (nil association)
 		if attributedefinitionxhtml.TYPE != nil {
-			if TYPEId, ok := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEPtr_REQIFTYPEDBID[attributedefinitionxhtml.TYPE]; ok {
+			if TYPEId, ok := backRepo.BackRepoREQTYPE.Map_REQTYPEPtr_REQTYPEDBID[attributedefinitionxhtml.TYPE]; ok {
 				attributedefinitionxhtmlDB.TYPEID.Int64 = int64(TYPEId)
 				attributedefinitionxhtmlDB.TYPEID.Valid = true
 			}
@@ -416,7 +416,7 @@ func (attributedefinitionxhtmlDB *ATTRIBUTEDEFINITIONXHTMLDB) DecodePointers(bac
 	// TYPE field
 	attributedefinitionxhtml.TYPE = nil
 	if attributedefinitionxhtmlDB.TYPEID.Int64 != 0 {
-		attributedefinitionxhtml.TYPE = backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[uint(attributedefinitionxhtmlDB.TYPEID.Int64)]
+		attributedefinitionxhtml.TYPE = backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[uint(attributedefinitionxhtmlDB.TYPEID.Int64)]
 	}
 	return
 }
@@ -720,7 +720,7 @@ func (backRepoATTRIBUTEDEFINITIONXHTML *BackRepoATTRIBUTEDEFINITIONXHTMLStruct) 
 
 		// reindexing TYPE field
 		if attributedefinitionxhtmlDB.TYPEID.Int64 != 0 {
-			attributedefinitionxhtmlDB.TYPEID.Int64 = int64(BackRepoREQIFTYPEid_atBckpTime_newID[uint(attributedefinitionxhtmlDB.TYPEID.Int64)])
+			attributedefinitionxhtmlDB.TYPEID.Int64 = int64(BackRepoREQTYPEid_atBckpTime_newID[uint(attributedefinitionxhtmlDB.TYPEID.Int64)])
 			attributedefinitionxhtmlDB.TYPEID.Valid = true
 		}
 

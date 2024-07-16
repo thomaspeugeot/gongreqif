@@ -158,9 +158,9 @@ func AfterCreateFromFront[Type Gongstruct](stage *StageStruct, instance *Type) {
 		if stage.OnAfterREQIFTOOLEXTENSIONCreateCallback != nil {
 			stage.OnAfterREQIFTOOLEXTENSIONCreateCallback.OnAfterCreate(stage, target)
 		}
-	case *REQIFTYPE:
-		if stage.OnAfterREQIFTYPECreateCallback != nil {
-			stage.OnAfterREQIFTYPECreateCallback.OnAfterCreate(stage, target)
+	case *REQTYPE:
+		if stage.OnAfterREQTYPECreateCallback != nil {
+			stage.OnAfterREQTYPECreateCallback.OnAfterCreate(stage, target)
 		}
 	case *SOURCE:
 		if stage.OnAfterSOURCECreateCallback != nil {
@@ -450,10 +450,10 @@ func AfterUpdateFromFront[Type Gongstruct](stage *StageStruct, old, new *Type) {
 		if stage.OnAfterREQIFTOOLEXTENSIONUpdateCallback != nil {
 			stage.OnAfterREQIFTOOLEXTENSIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
-	case *REQIFTYPE:
-		newTarget := any(new).(*REQIFTYPE)
-		if stage.OnAfterREQIFTYPEUpdateCallback != nil {
-			stage.OnAfterREQIFTYPEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+	case *REQTYPE:
+		newTarget := any(new).(*REQTYPE)
+		if stage.OnAfterREQTYPEUpdateCallback != nil {
+			stage.OnAfterREQTYPEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
 	case *SOURCE:
 		newTarget := any(new).(*SOURCE)
@@ -765,10 +765,10 @@ func AfterDeleteFromFront[Type Gongstruct](stage *StageStruct, staged, front *Ty
 			staged := any(staged).(*REQIFTOOLEXTENSION)
 			stage.OnAfterREQIFTOOLEXTENSIONDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
-	case *REQIFTYPE:
-		if stage.OnAfterREQIFTYPEDeleteCallback != nil {
-			staged := any(staged).(*REQIFTYPE)
-			stage.OnAfterREQIFTYPEDeleteCallback.OnAfterDelete(stage, staged, front)
+	case *REQTYPE:
+		if stage.OnAfterREQTYPEDeleteCallback != nil {
+			staged := any(staged).(*REQTYPE)
+			stage.OnAfterREQTYPEDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
 	case *SOURCE:
 		if stage.OnAfterSOURCEDeleteCallback != nil {
@@ -1042,9 +1042,9 @@ func AfterReadFromFront[Type Gongstruct](stage *StageStruct, instance *Type) {
 		if stage.OnAfterREQIFTOOLEXTENSIONReadCallback != nil {
 			stage.OnAfterREQIFTOOLEXTENSIONReadCallback.OnAfterRead(stage, target)
 		}
-	case *REQIFTYPE:
-		if stage.OnAfterREQIFTYPEReadCallback != nil {
-			stage.OnAfterREQIFTYPEReadCallback.OnAfterRead(stage, target)
+	case *REQTYPE:
+		if stage.OnAfterREQTYPEReadCallback != nil {
+			stage.OnAfterREQTYPEReadCallback.OnAfterRead(stage, target)
 		}
 	case *SOURCE:
 		if stage.OnAfterSOURCEReadCallback != nil {
@@ -1259,8 +1259,8 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *StageStruct, callba
 	case *REQIFTOOLEXTENSION:
 		stage.OnAfterREQIFTOOLEXTENSIONUpdateCallback = any(callback).(OnAfterUpdateInterface[REQIFTOOLEXTENSION])
 	
-	case *REQIFTYPE:
-		stage.OnAfterREQIFTYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[REQIFTYPE])
+	case *REQTYPE:
+		stage.OnAfterREQTYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[REQTYPE])
 	
 	case *SOURCE:
 		stage.OnAfterSOURCEUpdateCallback = any(callback).(OnAfterUpdateInterface[SOURCE])
@@ -1449,8 +1449,8 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *StageStruct, callba
 	case *REQIFTOOLEXTENSION:
 		stage.OnAfterREQIFTOOLEXTENSIONCreateCallback = any(callback).(OnAfterCreateInterface[REQIFTOOLEXTENSION])
 	
-	case *REQIFTYPE:
-		stage.OnAfterREQIFTYPECreateCallback = any(callback).(OnAfterCreateInterface[REQIFTYPE])
+	case *REQTYPE:
+		stage.OnAfterREQTYPECreateCallback = any(callback).(OnAfterCreateInterface[REQTYPE])
 	
 	case *SOURCE:
 		stage.OnAfterSOURCECreateCallback = any(callback).(OnAfterCreateInterface[SOURCE])
@@ -1639,8 +1639,8 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *StageStruct, callba
 	case *REQIFTOOLEXTENSION:
 		stage.OnAfterREQIFTOOLEXTENSIONDeleteCallback = any(callback).(OnAfterDeleteInterface[REQIFTOOLEXTENSION])
 	
-	case *REQIFTYPE:
-		stage.OnAfterREQIFTYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[REQIFTYPE])
+	case *REQTYPE:
+		stage.OnAfterREQTYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[REQTYPE])
 	
 	case *SOURCE:
 		stage.OnAfterSOURCEDeleteCallback = any(callback).(OnAfterDeleteInterface[SOURCE])
@@ -1829,8 +1829,8 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *StageStruct, callback
 	case *REQIFTOOLEXTENSION:
 		stage.OnAfterREQIFTOOLEXTENSIONReadCallback = any(callback).(OnAfterReadInterface[REQIFTOOLEXTENSION])
 	
-	case *REQIFTYPE:
-		stage.OnAfterREQIFTYPEReadCallback = any(callback).(OnAfterReadInterface[REQIFTYPE])
+	case *REQTYPE:
+		stage.OnAfterREQTYPEReadCallback = any(callback).(OnAfterReadInterface[REQTYPE])
 	
 	case *SOURCE:
 		stage.OnAfterSOURCEReadCallback = any(callback).(OnAfterReadInterface[SOURCE])

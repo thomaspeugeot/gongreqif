@@ -306,7 +306,7 @@ func (backRepoSPECRELATION *BackRepoSPECRELATIONStruct) CommitPhaseTwoInstance(b
 		// commit pointer value specrelation.TYPE translates to updating the specrelation.TYPEID
 		specrelationDB.TYPEID.Valid = true // allow for a 0 value (nil association)
 		if specrelation.TYPE != nil {
-			if TYPEId, ok := backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEPtr_REQIFTYPEDBID[specrelation.TYPE]; ok {
+			if TYPEId, ok := backRepo.BackRepoREQTYPE.Map_REQTYPEPtr_REQTYPEDBID[specrelation.TYPE]; ok {
 				specrelationDB.TYPEID.Int64 = int64(TYPEId)
 				specrelationDB.TYPEID.Valid = true
 			}
@@ -451,7 +451,7 @@ func (specrelationDB *SPECRELATIONDB) DecodePointers(backRepo *BackRepoStruct, s
 	// TYPE field
 	specrelation.TYPE = nil
 	if specrelationDB.TYPEID.Int64 != 0 {
-		specrelation.TYPE = backRepo.BackRepoREQIFTYPE.Map_REQIFTYPEDBID_REQIFTYPEPtr[uint(specrelationDB.TYPEID.Int64)]
+		specrelation.TYPE = backRepo.BackRepoREQTYPE.Map_REQTYPEDBID_REQTYPEPtr[uint(specrelationDB.TYPEID.Int64)]
 	}
 	return
 }
@@ -755,7 +755,7 @@ func (backRepoSPECRELATION *BackRepoSPECRELATIONStruct) RestorePhaseTwo() {
 
 		// reindexing TYPE field
 		if specrelationDB.TYPEID.Int64 != 0 {
-			specrelationDB.TYPEID.Int64 = int64(BackRepoREQIFTYPEid_atBckpTime_newID[uint(specrelationDB.TYPEID.Int64)])
+			specrelationDB.TYPEID.Int64 = int64(BackRepoREQTYPEid_atBckpTime_newID[uint(specrelationDB.TYPEID.Int64)])
 			specrelationDB.TYPEID.Valid = true
 		}
 

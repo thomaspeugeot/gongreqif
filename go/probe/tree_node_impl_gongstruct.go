@@ -166,8 +166,8 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "REQIFTOOLEXTENSION" {
 		fillUpTable[models.REQIFTOOLEXTENSION](nodeImplGongstruct.probe)
 	}
-	if nodeImplGongstruct.gongStruct.GetName() == "REQIFTYPE" {
-		fillUpTable[models.REQIFTYPE](nodeImplGongstruct.probe)
+	if nodeImplGongstruct.gongStruct.GetName() == "REQTYPE" {
+		fillUpTable[models.REQTYPE](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SOURCE" {
 		fillUpTable[models.SOURCE](nodeImplGongstruct.probe)

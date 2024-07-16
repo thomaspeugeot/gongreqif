@@ -7,11 +7,7 @@ import (
 )
 
 // REQIF ...
-type REQIF struct {
-	XMLName        xml.Name `xml:"REQ-IF"`
-	HEADER *THEHEADER `xml:"THE-HEADER"`
-	CORECONTENT*CORECONTENT `xml:"CORE-CONTENT"`
-}
+type REQIF *REQIF
 
 // LOCALREF ...
 type LOCALREF string
@@ -555,5 +551,5 @@ type REQIFTOOLEXTENSION struct {
 // XHTMLCONTENT ...
 type XHTMLCONTENT struct {
 	XMLName             xml.Name `xml:"XHTML-CONTENT"`
-
+	XhtmlBlkStructClass *XhtmlBlkStructClass
 }

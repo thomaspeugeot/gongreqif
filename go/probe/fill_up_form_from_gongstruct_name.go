@@ -520,19 +520,19 @@ func FillUpFormFromGongstructName(
 		reqiftoolextension := new(models.REQIFTOOLEXTENSION)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(reqiftoolextension, formGroup, probe)
-	case "REQIFTYPE":
+	case "REQTYPE":
 		formGroup := (&form.FormGroup{
 			Name:  form.FormGroupDefaultName.ToString(),
-			Label: prefix + "REQIFTYPE Form",
+			Label: prefix + "REQTYPE Form",
 		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__REQIFTYPEFormCallback(
+		formGroup.OnSave = __gong__New__REQTYPEFormCallback(
 			nil,
 			probe,
 			formGroup,
 		)
-		reqiftype := new(models.REQIFTYPE)
+		reqtype := new(models.REQTYPE)
 		formGroup.HasSuppressButton = !isNewInstance
-		FillUpForm(reqiftype, formGroup, probe)
+		FillUpForm(reqtype, formGroup, probe)
 	case "SOURCE":
 		formGroup := (&form.FormGroup{
 			Name:  form.FormGroupDefaultName.ToString(),
