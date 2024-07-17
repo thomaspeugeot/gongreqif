@@ -1,7 +1,13 @@
 {
 	"version": "2.0.0",
 	"tasks": [
-        {
+		{
+			"type": "shell",
+			"group": "build",
+			"label": "gowsdl people.wsdl",
+			"command": "gowsdl -d go -p schema -o schema.go reqif.wsdl"
+		},
+		{
 			"label": "02 - run gongreqif",
 			"type": "shell",
 			"options": {
@@ -11,7 +17,7 @@
 			"args": [
 				"run",
 				"main.go",
-                "readfile.go"
+				"readfile.go"
 			],
 			"group": "build"
 		},

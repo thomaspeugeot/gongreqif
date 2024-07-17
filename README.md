@@ -31,3 +31,25 @@ time gongc go/models
 ### with gowsdl
 
 gowsdl -d go -p schema -o schema.go reqif.wsdl
+
+Things are doing great but for attibutes, it does not work.
+
+```xml
+        <SPEC-OBJECT
+            IDENTIFIER="_xen_QMkhEee8KsfWrp9EJQ"
+            LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+            LONG-NAME="Requirement-1">
+```
+
+Is there something in the XSD that says it is an attribute and not an element ?
+
+Yes it does
+
+```xsd
+    <xsd:attribute name="DESC" type="xsd:string" use="optional"/>
+    <xsd:attribute name="IDENTIFIER" type="xsd:ID" use="required"/>
+    <xsd:attribute name="LAST-CHANGE" type="xsd:dateTime" use="required"/>
+    <xsd:attribute name="LONG-NAME" type="xsd:string" use="optional"/>
+```
+
+We have to go back to xmlplaygground
