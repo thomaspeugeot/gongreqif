@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQ_IF xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+  reqif.xsd:IDENTIFIER="zoulou">
+  <THE-HEADER>
+    <REQ-IF-HEADER>
+      <REPOSITORY-ID>524d2a940b0233d5</REPOSITORY-ID>
+      <REQ-IF-TOOL-ID>IBM Rational DOORS</REQ-IF-TOOL-ID>
+      <REQ-IF-VERSION>1.0</REQ-IF-VERSION>
+      <SOURCE-TOOL-ID>IBM Rational DOORS</SOURCE-TOOL-ID>
+      <TITLE>IBM Rational DOORS, 25 April 2017</TITLE>
+    </REQ-IF-HEADER>
+  </THE-HEADER>
+  <CORE-CONTENT>
+    <REQ-IF-CONTENT>
+      <DATATYPES>
+        <DATATYPE-DEFINITION-ENUMERATION reqif.xsd:LONG-NAME="IE Object Type">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPECIFIED-VALUES>
+            <ENUM-VALUE reqif.xsd:LONG-NAME="Capability">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <PROPERTIES>
+                <EMBEDDED-VALUE></EMBEDDED-VALUE>
+              </PROPERTIES>
+            </ENUM-VALUE>
+          </SPECIFIED-VALUES>
+        </DATATYPE-DEFINITION-ENUMERATION>
+        <DATATYPE-DEFINITION-XHTML reqif.xsd:LONG-NAME="String">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+        </DATATYPE-DEFINITION-XHTML>
+      </DATATYPES>
+      <SPEC-TYPES>
+        <SPEC-OBJECT-TYPE reqif.xsd:LONG-NAME="Requirement Type">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:LONG-NAME="IE Object Type">
+              <DEFAULT-VALUE></DEFAULT-VALUE>
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <TYPE>
+                <DATATYPE-DEFINITION-ENUMERATION-REF>_ahyOEMk3Eee5A_N9aQFa1w</DATATYPE-DEFINITION-ENUMERATION-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-ENUMERATION>
+            <ATTRIBUTE-DEFINITION-XHTML reqif.xsd:LONG-NAME="IE PUID">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <DEFAULT-VALUE></DEFAULT-VALUE>
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_i6FNMMkgEee8KsfWrp9EJQ</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+          </SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPECIFICATION-TYPE reqif.xsd:LONG-NAME="Module Type">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-XHTML reqif.xsd:LONG-NAME="ReqIF.Name">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <DEFAULT-VALUE></DEFAULT-VALUE>
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_i6FNMMkgEee8KsfWrp9EJQ</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+          </SPEC-ATTRIBUTES>
+        </SPECIFICATION-TYPE>
+      </SPEC-TYPES>
+      <SPEC-OBJECTS>
+        <SPEC-OBJECT reqif.xsd:LONG-NAME="Requirement-1">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <VALUES>
+            <ATTRIBUTE-VALUE-ENUMERATION>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>_0VDX0Mk3Eee5A_N9aQFa1w</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+              </DEFINITION>
+              <VALUES>
+                <ENUM-VALUE-REF>_gXZ9oMk3Eee5A_N9aQFa1w</ENUM-VALUE-REF>
+              </VALUES>
+            </ATTRIBUTE-VALUE-ENUMERATION>
+            <ATTRIBUTE-VALUE-XHTML>
+              <THE-VALUE></THE-VALUE>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_cf7-0MkhEee8KsfWrp9EJQ</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_LaeSsMkhEee8KsfWrp9EJQ</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+      </SPEC-OBJECTS>
+      <SPEC-RELATIONS></SPEC-RELATIONS>
+      <SPECIFICATIONS>
+        <SPECIFICATION reqif.xsd:LONG-NAME="Test">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <VALUES></VALUES>
+          <CHILDREN>
+            <SPEC-HIERARCHY reqif.xsd:LONG-NAME="Requirement-1">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <CHILDREN></CHILDREN>
+              <EDITABLE-ATTS></EDITABLE-ATTS>
+              <OBJECT>
+                <SPEC-OBJECT-REF>_xen_QMkhEee8KsfWrp9EJQ</SPEC-OBJECT-REF>
+              </OBJECT>
+            </SPEC-HIERARCHY>
+          </CHILDREN>
+          <TYPE>
+            <SPECIFICATION-TYPE-REF>_NAXScMkhEee8KsfWrp9EJQ</SPECIFICATION-TYPE-REF>
+          </TYPE>
+        </SPECIFICATION>
+      </SPECIFICATIONS>
+      <SPEC-RELATION-GROUPS></SPEC-RELATION-GROUPS>
+    </REQ-IF-CONTENT>
+  </CORE-CONTENT>
+  <TOOL-EXTENSIONS></TOOL-EXTENSIONS>
+</REQ_IF>

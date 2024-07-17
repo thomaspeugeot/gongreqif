@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 	"time"
 
@@ -63,6 +64,32 @@ func main() {
 	reqifModel.Name = time.Now().Format(time.DateTime)
 
 	stack.Stage.Commit()
+
+	reqif.IDENTIFIER = "zoulou"
+
+	// Marshal the People instance to XML
+	xmlData, err := xml.MarshalIndent(reqif, "", "  ")
+	if err != nil {
+		fmt.Println("Error marshalling to XML:", err)
+		return
+	}
+
+	// Print the resulting XML
+	fmt.Println(xml.Header + string(xmlData))
+
+	// Optionally, write the XML to a file
+	file, err := os.Create("../../../reqif-out.xml")
+	if err != nil {
+		fmt.Println("Error creating file:", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.Write([]byte(xml.Header + string(xmlData)))
+	if err != nil {
+		fmt.Println("Error writing to file:", err)
+		return
+	}
 
 	log.Printf("Server ready serve on localhost:" + strconv.Itoa(*port))
 	err = r.Run(":" + strconv.Itoa(*port))
