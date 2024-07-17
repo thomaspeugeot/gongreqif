@@ -17,3 +17,27 @@ func (from *REQIF) CopyBasicFields(to *REQIF) {
 	to.Name = from.Name
 }
 
+type REQ_IF_HEADER_WOP struct {
+	// insertion point
+	Name string
+	COMMENT string
+	CREATION_TIME time.Time
+	REPOSITORY_ID string
+	REQ_IF_TOOL_ID string
+	REQ_IF_VERSION string
+	SOURCE_TOOL_ID string
+	TITLE string
+}
+
+func (from *REQ_IF_HEADER) CopyBasicFields(to *REQ_IF_HEADER) {
+	// insertion point
+	to.Name = from.Name
+	to.COMMENT = from.COMMENT
+	to.CREATION_TIME = from.CREATION_TIME
+	to.REPOSITORY_ID = from.REPOSITORY_ID
+	to.REQ_IF_TOOL_ID = from.REQ_IF_TOOL_ID
+	to.REQ_IF_VERSION = from.REQ_IF_VERSION
+	to.SOURCE_TOOL_ID = from.SOURCE_TOOL_ID
+	to.TITLE = from.TITLE
+}
+

@@ -54,6 +54,13 @@ func registerControllers(r *gin.Engine) {
 		v1.PUT("/v1/reqifs/:id", GetController().UpdateREQIF)
 		v1.DELETE("/v1/reqifs/:id", GetController().DeleteREQIF)
 
+		v1.GET("/v1/req_if_headers", GetController().GetREQ_IF_HEADERs)
+		v1.GET("/v1/req_if_headers/:id", GetController().GetREQ_IF_HEADER)
+		v1.POST("/v1/req_if_headers", GetController().PostREQ_IF_HEADER)
+		v1.PATCH("/v1/req_if_headers/:id", GetController().UpdateREQ_IF_HEADER)
+		v1.PUT("/v1/req_if_headers/:id", GetController().UpdateREQ_IF_HEADER)
+		v1.DELETE("/v1/req_if_headers/:id", GetController().DeleteREQ_IF_HEADER)
+
 		v1.GET("/v1/commitfrombacknb", GetController().GetLastCommitFromBackNb)
 		v1.GET("/v1/pushfromfrontnb", GetController().GetLastPushFromFrontNb)
 

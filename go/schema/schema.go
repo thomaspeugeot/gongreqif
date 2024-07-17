@@ -13,7 +13,8 @@ import (
 var _ time.Time
 var _ xml.Name
 
-type AnyType struct {
+type AnyType struct { 
+    Name string
 	InnerXML string `xml:",innerxml"`
 }
 
@@ -81,156 +82,205 @@ type URIorSafeCURIE string
 
 type URIorSafeCURIEs []URIorSafeCURIE
 
-type Xhtml_address_type struct {
+type Xhtml_address_type struct { 
+    Name string
 }
 
-type Xhtml_blockquote_type struct {
+type Xhtml_blockquote_type struct { 
+    Name string
 }
 
-type Xhtml_pre_type struct {
+type Xhtml_pre_type struct { 
+    Name string
 }
 
-type Xhtml_heading_type struct {
+type Xhtml_heading_type struct { 
+    Name string
 }
 
-type Xhtml_h1_type struct {
+type Xhtml_h1_type struct { 
+    Name string
 }
 
-type Xhtml_h2_type struct {
+type Xhtml_h2_type struct { 
+    Name string
 }
 
-type Xhtml_h3_type struct {
+type Xhtml_h3_type struct { 
+    Name string
 }
 
-type Xhtml_h4_type struct {
+type Xhtml_h4_type struct { 
+    Name string
 }
 
-type Xhtml_h5_type struct {
+type Xhtml_h5_type struct { 
+    Name string
 }
 
-type Xhtml_h6_type struct {
+type Xhtml_h6_type struct { 
+    Name string
 }
 
-type Xhtml_div_type struct {
+type Xhtml_div_type struct { 
+    Name string
 }
 
-type Xhtml_p_type struct {
+type Xhtml_p_type struct { 
+    Name string
 }
 
-type Xhtml_abbr_type struct {
+type Xhtml_abbr_type struct { 
+    Name string
 }
 
-type Xhtml_acronym_type struct {
+type Xhtml_acronym_type struct { 
+    Name string
 }
 
-type Xhtml_cite_type struct {
+type Xhtml_cite_type struct { 
+    Name string
 }
 
-type Xhtml_code_type struct {
+type Xhtml_code_type struct { 
+    Name string
 }
 
-type Xhtml_dfn_type struct {
+type Xhtml_dfn_type struct { 
+    Name string
 }
 
-type Xhtml_em_type struct {
+type Xhtml_em_type struct { 
+    Name string
 }
 
-type Xhtml_kbd_type struct {
+type Xhtml_kbd_type struct { 
+    Name string
 }
 
-type Xhtml_samp_type struct {
+type Xhtml_samp_type struct { 
+    Name string
 }
 
-type Xhtml_strong_type struct {
+type Xhtml_strong_type struct { 
+    Name string
 }
 
-type Xhtml_var_type struct {
+type Xhtml_var_type struct { 
+    Name string
 }
 
-type Xhtml_q_type struct {
+type Xhtml_q_type struct { 
+    Name string
 }
 
-type Xhtml_br_type struct {
+type Xhtml_br_type struct { 
+    Name string
 }
 
-type Xhtml_span_type struct {
+type Xhtml_span_type struct { 
+    Name string
 }
 
-type Xhtml_a_type struct {
+type Xhtml_a_type struct { 
+    Name string
 }
 
-type Xhtml_dt_type struct {
+type Xhtml_dt_type struct { 
+    Name string
 }
 
-type Xhtml_dd_type struct {
+type Xhtml_dd_type struct { 
+    Name string
 }
 
-type Xhtml_dl_type struct {
+type Xhtml_dl_type struct { 
+    Name string
 }
 
-type Xhtml_li_type struct {
+type Xhtml_li_type struct { 
+    Name string
 }
 
-type Xhtml_ol_type struct {
+type Xhtml_ol_type struct { 
+    Name string
 }
 
-type Xhtml_ul_type struct {
+type Xhtml_ul_type struct { 
+    Name string
 }
 
-type Xhtml_edit_type struct {
+type Xhtml_edit_type struct { 
+    Name string
 }
 
-type Xhtml_hr_type struct {
+type Xhtml_hr_type struct { 
+    Name string
 }
 
-type Xhtml_InlPres_type struct {
+type Xhtml_InlPres_type struct { 
+    Name string
 }
 
-type Xhtml_param_type struct {
+type Xhtml_param_type struct { 
+    Name string
 }
 
-type Xhtml_object_type struct {
+type Xhtml_object_type struct { 
+    Name string
 }
 
-type Xhtml_td_type struct {
+type Xhtml_td_type struct { 
+    Name string
 }
 
-type Xhtml_th_type struct {
+type Xhtml_th_type struct { 
+    Name string
 }
 
-type Xhtml_tr_type struct {
+type Xhtml_tr_type struct { 
+    Name string
 }
 
-type Xhtml_col_type struct {
+type Xhtml_col_type struct { 
+    Name string
 }
 
-type Xhtml_colgroup_type struct {
+type Xhtml_colgroup_type struct { 
+    Name string
 }
 
-type Xhtml_tbody_type struct {
+type Xhtml_tbody_type struct { 
+    Name string
 }
 
-type Xhtml_tfoot_type struct {
+type Xhtml_tfoot_type struct { 
+    Name string
 }
 
-type Xhtml_thead_type struct {
+type Xhtml_thead_type struct { 
+    Name string
 }
 
-type Xhtml_caption_type struct {
+type Xhtml_caption_type struct { 
+    Name string
 }
 
-type Xhtml_table_type struct {
+type Xhtml_table_type struct { 
+    Name string
 }
 
 type LOCAL_REF IDREF
 
 type GLOBAL_REF string
 
-type ALTERNATIVE_ID struct {
+type ALTERNATIVE_ID struct { 
+    Name string
 	IDENTIFIER string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 }
 
-type ATTRIBUTE_DEFINITION_BOOLEAN struct {
+type ATTRIBUTE_DEFINITION_BOOLEAN struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -254,7 +304,8 @@ type ATTRIBUTE_DEFINITION_BOOLEAN struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type ATTRIBUTE_DEFINITION_DATE struct {
+type ATTRIBUTE_DEFINITION_DATE struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -278,7 +329,8 @@ type ATTRIBUTE_DEFINITION_DATE struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type ATTRIBUTE_DEFINITION_ENUMERATION struct {
+type ATTRIBUTE_DEFINITION_ENUMERATION struct { 
+    Name string
 	DEFAULT_VALUE struct {
 		ATTRIBUTE_VALUE_ENUMERATION *ATTRIBUTE_VALUE_ENUMERATION `xml:"ATTRIBUTE-VALUE-ENUMERATION,omitempty" json:"ATTRIBUTE-VALUE-ENUMERATION,omitempty"`
 	} `xml:"DEFAULT-VALUE,omitempty" json:"DEFAULT-VALUE,omitempty"`
@@ -304,7 +356,8 @@ type ATTRIBUTE_DEFINITION_ENUMERATION struct {
 	MULTI_VALUED bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd MULTI-VALUED,attr,omitempty" json:"MULTI-VALUED,omitempty"`
 }
 
-type ATTRIBUTE_DEFINITION_INTEGER struct {
+type ATTRIBUTE_DEFINITION_INTEGER struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -328,7 +381,8 @@ type ATTRIBUTE_DEFINITION_INTEGER struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type ATTRIBUTE_DEFINITION_REAL struct {
+type ATTRIBUTE_DEFINITION_REAL struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -352,7 +406,8 @@ type ATTRIBUTE_DEFINITION_REAL struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type ATTRIBUTE_DEFINITION_STRING struct {
+type ATTRIBUTE_DEFINITION_STRING struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -376,7 +431,8 @@ type ATTRIBUTE_DEFINITION_STRING struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type ATTRIBUTE_DEFINITION_XHTML struct {
+type ATTRIBUTE_DEFINITION_XHTML struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -400,7 +456,8 @@ type ATTRIBUTE_DEFINITION_XHTML struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type ATTRIBUTE_VALUE_BOOLEAN struct {
+type ATTRIBUTE_VALUE_BOOLEAN struct { 
+    Name string
 	DEFINITION struct {
 		ATTRIBUTE_DEFINITION_BOOLEAN_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty" json:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
@@ -408,7 +465,8 @@ type ATTRIBUTE_VALUE_BOOLEAN struct {
 	THE_VALUE bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
 }
 
-type ATTRIBUTE_VALUE_DATE struct {
+type ATTRIBUTE_VALUE_DATE struct { 
+    Name string
 	DEFINITION struct {
 		ATTRIBUTE_DEFINITION_DATE_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty" json:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
@@ -416,7 +474,8 @@ type ATTRIBUTE_VALUE_DATE struct {
 	THE_VALUE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
 }
 
-type ATTRIBUTE_VALUE_ENUMERATION struct {
+type ATTRIBUTE_VALUE_ENUMERATION struct { 
+    Name string
 	DEFINITION struct {
 		ATTRIBUTE_DEFINITION_ENUMERATION_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty" json:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
@@ -426,7 +485,8 @@ type ATTRIBUTE_VALUE_ENUMERATION struct {
 	} `xml:"VALUES,omitempty" json:"VALUES,omitempty"`
 }
 
-type ATTRIBUTE_VALUE_INTEGER struct {
+type ATTRIBUTE_VALUE_INTEGER struct { 
+    Name string
 	DEFINITION struct {
 		ATTRIBUTE_DEFINITION_INTEGER_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty" json:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
@@ -434,7 +494,8 @@ type ATTRIBUTE_VALUE_INTEGER struct {
 	THE_VALUE int32 `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
 }
 
-type ATTRIBUTE_VALUE_REAL struct {
+type ATTRIBUTE_VALUE_REAL struct { 
+    Name string
 	DEFINITION struct {
 		ATTRIBUTE_DEFINITION_REAL_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty" json:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
@@ -442,7 +503,8 @@ type ATTRIBUTE_VALUE_REAL struct {
 	THE_VALUE float64 `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
 }
 
-type ATTRIBUTE_VALUE_STRING struct {
+type ATTRIBUTE_VALUE_STRING struct { 
+    Name string
 	DEFINITION struct {
 		ATTRIBUTE_DEFINITION_STRING_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty" json:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
@@ -450,7 +512,8 @@ type ATTRIBUTE_VALUE_STRING struct {
 	THE_VALUE string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
 }
 
-type ATTRIBUTE_VALUE_XHTML struct {
+type ATTRIBUTE_VALUE_XHTML struct { 
+    Name string
 	THE_VALUE *XHTML_CONTENT `xml:"THE-VALUE,omitempty" json:"THE-VALUE,omitempty"`
 
 	THE_ORIGINAL_VALUE *XHTML_CONTENT `xml:"THE-ORIGINAL-VALUE,omitempty" json:"THE-ORIGINAL-VALUE,omitempty"`
@@ -462,7 +525,8 @@ type ATTRIBUTE_VALUE_XHTML struct {
 	IS_SIMPLIFIED bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-SIMPLIFIED,attr,omitempty" json:"IS-SIMPLIFIED,omitempty"`
 }
 
-type DATATYPE_DEFINITION_BOOLEAN struct {
+type DATATYPE_DEFINITION_BOOLEAN struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -476,7 +540,8 @@ type DATATYPE_DEFINITION_BOOLEAN struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type DATATYPE_DEFINITION_DATE struct {
+type DATATYPE_DEFINITION_DATE struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -490,7 +555,8 @@ type DATATYPE_DEFINITION_DATE struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type DATATYPE_DEFINITION_ENUMERATION struct {
+type DATATYPE_DEFINITION_ENUMERATION struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -508,7 +574,8 @@ type DATATYPE_DEFINITION_ENUMERATION struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type DATATYPE_DEFINITION_INTEGER struct {
+type DATATYPE_DEFINITION_INTEGER struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -526,7 +593,8 @@ type DATATYPE_DEFINITION_INTEGER struct {
 	MIN int32 `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd MIN,attr,omitempty" json:"MIN,omitempty"`
 }
 
-type DATATYPE_DEFINITION_REAL struct {
+type DATATYPE_DEFINITION_REAL struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -546,7 +614,8 @@ type DATATYPE_DEFINITION_REAL struct {
 	MIN float64 `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd MIN,attr,omitempty" json:"MIN,omitempty"`
 }
 
-type DATATYPE_DEFINITION_STRING struct {
+type DATATYPE_DEFINITION_STRING struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -562,7 +631,8 @@ type DATATYPE_DEFINITION_STRING struct {
 	MAX_LENGTH int32 `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd MAX-LENGTH,attr,omitempty" json:"MAX-LENGTH,omitempty"`
 }
 
-type DATATYPE_DEFINITION_XHTML struct {
+type DATATYPE_DEFINITION_XHTML struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -576,13 +646,15 @@ type DATATYPE_DEFINITION_XHTML struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type EMBEDDED_VALUE struct {
+type EMBEDDED_VALUE struct { 
+    Name string
 	KEY int32 `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd KEY,attr,omitempty" json:"KEY,omitempty"`
 
 	OTHER_CONTENT string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd OTHER-CONTENT,attr,omitempty" json:"OTHER-CONTENT,omitempty"`
 }
 
-type ENUM_VALUE struct {
+type ENUM_VALUE struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -600,7 +672,8 @@ type ENUM_VALUE struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type RELATION_GROUP struct {
+type RELATION_GROUP struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -630,7 +703,8 @@ type RELATION_GROUP struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type RELATION_GROUP_TYPE struct {
+type RELATION_GROUP_TYPE struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -660,7 +734,8 @@ type RELATION_GROUP_TYPE struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type REQ_IF struct {
+type REQ_IF struct { 
+    Name string
 	THE_HEADER struct {
 		REQ_IF_HEADER *REQ_IF_HEADER `xml:"REQ-IF-HEADER,omitempty" json:"REQ-IF-HEADER,omitempty"`
 	} `xml:"THE-HEADER,omitempty" json:"THE-HEADER,omitempty"`
@@ -676,7 +751,8 @@ type REQ_IF struct {
 	Lang string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd lang,attr,omitempty" json:"lang,omitempty"`
 }
 
-type REQ_IF_CONTENT struct {
+type REQ_IF_CONTENT struct { 
+    Name string
 	DATATYPES struct {
 		DATATYPE_DEFINITION_BOOLEAN *DATATYPE_DEFINITION_BOOLEAN `xml:"DATATYPE-DEFINITION-BOOLEAN,omitempty" json:"DATATYPE-DEFINITION-BOOLEAN,omitempty"`
 
@@ -720,7 +796,8 @@ type REQ_IF_CONTENT struct {
 	} `xml:"SPEC-RELATION-GROUPS,omitempty" json:"SPEC-RELATION-GROUPS,omitempty"`
 }
 
-type REQ_IF_HEADER struct {
+type REQ_IF_HEADER struct { 
+    Name string
 	COMMENT string `xml:"COMMENT,omitempty" json:"COMMENT,omitempty"`
 
 	CREATION_TIME soap.XSDDateTime `xml:"CREATION-TIME,omitempty" json:"CREATION-TIME,omitempty"`
@@ -738,7 +815,8 @@ type REQ_IF_HEADER struct {
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 }
 
-type SPEC_HIERARCHY struct {
+type SPEC_HIERARCHY struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -780,7 +858,8 @@ type SPEC_HIERARCHY struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type SPEC_OBJECT struct {
+type SPEC_OBJECT struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -814,7 +893,8 @@ type SPEC_OBJECT struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type SPEC_OBJECT_TYPE struct {
+type SPEC_OBJECT_TYPE struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -844,7 +924,8 @@ type SPEC_OBJECT_TYPE struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type SPEC_RELATION struct {
+type SPEC_RELATION struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -886,7 +967,8 @@ type SPEC_RELATION struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type SPEC_RELATION_TYPE struct {
+type SPEC_RELATION_TYPE struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -916,7 +998,8 @@ type SPEC_RELATION_TYPE struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type SPECIFICATION struct {
+type SPECIFICATION struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -954,7 +1037,8 @@ type SPECIFICATION struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type SPECIFICATION_TYPE struct {
+type SPECIFICATION_TYPE struct { 
+    Name string
 	ALTERNATIVE_ID struct {
 		ALTERNATIVE_ID *ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
@@ -984,11 +1068,13 @@ type SPECIFICATION_TYPE struct {
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
 
-type REQ_IF_TOOL_EXTENSION struct {
+type REQ_IF_TOOL_EXTENSION struct { 
+    Name string
 	Items []string `xml:",any" json:"items,omitempty"`
 }
 
-type XHTML_CONTENT struct {
+type XHTML_CONTENT struct { 
+    Name string
 }
 
 type PeoplePortType interface {
@@ -997,7 +1083,8 @@ type PeoplePortType interface {
 	GetPeopleContext(ctx context.Context, request *EmptyString) (*EmptyString, error)
 }
 
-type peoplePortType struct {
+type peoplePortType struct { 
+    Name string
 	client *soap.Client
 }
 

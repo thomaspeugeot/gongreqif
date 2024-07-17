@@ -55,6 +55,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "REQIF" {
 		fillUpTable[models.REQIF](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "REQ_IF_HEADER" {
+		fillUpTable[models.REQ_IF_HEADER](nodeImplGongstruct.probe)
+	}
 
 	// set color for node and reset all other nodes color
 	for node := range *gongtree_models.GetGongstructInstancesSet[gongtree_models.Node](gongtreeStage) {

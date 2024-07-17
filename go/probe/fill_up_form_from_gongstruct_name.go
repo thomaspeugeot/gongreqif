@@ -39,6 +39,19 @@ func FillUpFormFromGongstructName(
 		reqif := new(models.REQIF)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(reqif, formGroup, probe)
+	case "REQ_IF_HEADER":
+		formGroup := (&form.FormGroup{
+			Name:  form.FormGroupDefaultName.ToString(),
+			Label: prefix + "REQ_IF_HEADER Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__REQ_IF_HEADERFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		req_if_header := new(models.REQ_IF_HEADER)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(req_if_header, formGroup, probe)
 	}
 	formStage.Commit()
 }

@@ -63,6 +63,8 @@ func (reqifFormCallback *REQIFFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(reqif_.Name), formDiv)
+		case "REQ_IF_HEADER":
+			FormDivSelectFieldToField(&(reqif_.REQ_IF_HEADER), reqifFormCallback.probe.stageOfInterest, formDiv)
 		}
 	}
 
@@ -94,4 +96,95 @@ func (reqifFormCallback *REQIFFormCallback) OnSave() {
 	}
 
 	fillUpTree(reqifFormCallback.probe)
+}
+func __gong__New__REQ_IF_HEADERFormCallback(
+	req_if_header *models.REQ_IF_HEADER,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (req_if_headerFormCallback *REQ_IF_HEADERFormCallback) {
+	req_if_headerFormCallback = new(REQ_IF_HEADERFormCallback)
+	req_if_headerFormCallback.probe = probe
+	req_if_headerFormCallback.req_if_header = req_if_header
+	req_if_headerFormCallback.formGroup = formGroup
+
+	req_if_headerFormCallback.CreationMode = (req_if_header == nil)
+
+	return
+}
+
+type REQ_IF_HEADERFormCallback struct {
+	req_if_header *models.REQ_IF_HEADER
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (req_if_headerFormCallback *REQ_IF_HEADERFormCallback) OnSave() {
+
+	log.Println("REQ_IF_HEADERFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	req_if_headerFormCallback.probe.formStage.Checkout()
+
+	if req_if_headerFormCallback.req_if_header == nil {
+		req_if_headerFormCallback.req_if_header = new(models.REQ_IF_HEADER).Stage(req_if_headerFormCallback.probe.stageOfInterest)
+	}
+	req_if_header_ := req_if_headerFormCallback.req_if_header
+	_ = req_if_header_
+
+	for _, formDiv := range req_if_headerFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(req_if_header_.Name), formDiv)
+		case "COMMENT":
+			FormDivBasicFieldToField(&(req_if_header_.COMMENT), formDiv)
+		case "CREATION_TIME":
+			FormDivBasicFieldToField(&(req_if_header_.CREATION_TIME), formDiv)
+		case "REPOSITORY_ID":
+			FormDivBasicFieldToField(&(req_if_header_.REPOSITORY_ID), formDiv)
+		case "REQ_IF_TOOL_ID":
+			FormDivBasicFieldToField(&(req_if_header_.REQ_IF_TOOL_ID), formDiv)
+		case "REQ_IF_VERSION":
+			FormDivBasicFieldToField(&(req_if_header_.REQ_IF_VERSION), formDiv)
+		case "SOURCE_TOOL_ID":
+			FormDivBasicFieldToField(&(req_if_header_.SOURCE_TOOL_ID), formDiv)
+		case "TITLE":
+			FormDivBasicFieldToField(&(req_if_header_.TITLE), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if req_if_headerFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		req_if_header_.Unstage(req_if_headerFormCallback.probe.stageOfInterest)
+	}
+
+	req_if_headerFormCallback.probe.stageOfInterest.Commit()
+	fillUpTable[models.REQ_IF_HEADER](
+		req_if_headerFormCallback.probe,
+	)
+	req_if_headerFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if req_if_headerFormCallback.CreationMode || req_if_headerFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		req_if_headerFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: table.FormGroupDefaultName.ToString(),
+		}).Stage(req_if_headerFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__REQ_IF_HEADERFormCallback(
+			nil,
+			req_if_headerFormCallback.probe,
+			newFormGroup,
+		)
+		req_if_header := new(models.REQ_IF_HEADER)
+		FillUpForm(req_if_header, newFormGroup, req_if_headerFormCallback.probe)
+		req_if_headerFormCallback.probe.formStage.Commit()
+	}
+
+	fillUpTree(req_if_headerFormCallback.probe)
 }

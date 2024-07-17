@@ -72,6 +72,16 @@ func fillUpTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "REQ_IF_HEADER":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.REQ_IF_HEADER](probe.stageOfInterest)
+			for _req_if_header := range set {
+				nodeInstance := (&tree.Node{Name: _req_if_header.GetName()}).Stage(probe.treeStage)
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_req_if_header, "REQ_IF_HEADER", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		}
 
 		nodeGongstruct.IsNodeClickable = true

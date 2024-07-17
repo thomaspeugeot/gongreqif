@@ -46,6 +46,10 @@ type REQIFAPI struct {
 // reverse pointers of slice of poitners to Struct
 type REQIFPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
+
+	// field REQ_IF_HEADER is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	REQ_IF_HEADERID sql.NullInt64
 }
 
 // REQIFDB describes a reqif in the database
@@ -211,6 +215,18 @@ func (backRepoREQIF *BackRepoREQIFStruct) CommitPhaseTwoInstance(backRepo *BackR
 		reqifDB.CopyBasicFieldsFromREQIF(reqif)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value reqif.REQ_IF_HEADER translates to updating the reqif.REQ_IF_HEADERID
+		reqifDB.REQ_IF_HEADERID.Valid = true // allow for a 0 value (nil association)
+		if reqif.REQ_IF_HEADER != nil {
+			if REQ_IF_HEADERId, ok := backRepo.BackRepoREQ_IF_HEADER.Map_REQ_IF_HEADERPtr_REQ_IF_HEADERDBID[reqif.REQ_IF_HEADER]; ok {
+				reqifDB.REQ_IF_HEADERID.Int64 = int64(REQ_IF_HEADERId)
+				reqifDB.REQ_IF_HEADERID.Valid = true
+			}
+		} else {
+			reqifDB.REQ_IF_HEADERID.Int64 = 0
+			reqifDB.REQ_IF_HEADERID.Valid = true
+		}
+
 		query := backRepoREQIF.db.Save(&reqifDB)
 		if query.Error != nil {
 			log.Fatalln(query.Error)
@@ -324,6 +340,11 @@ func (backRepoREQIF *BackRepoREQIFStruct) CheckoutPhaseTwoInstance(backRepo *Bac
 func (reqifDB *REQIFDB) DecodePointers(backRepo *BackRepoStruct, reqif *models.REQIF) {
 
 	// insertion point for checkout of pointer encoding
+	// REQ_IF_HEADER field
+	reqif.REQ_IF_HEADER = nil
+	if reqifDB.REQ_IF_HEADERID.Int64 != 0 {
+		reqif.REQ_IF_HEADER = backRepo.BackRepoREQ_IF_HEADER.Map_REQ_IF_HEADERDBID_REQ_IF_HEADERPtr[uint(reqifDB.REQ_IF_HEADERID.Int64)]
+	}
 	return
 }
 
@@ -552,6 +573,12 @@ func (backRepoREQIF *BackRepoREQIFStruct) RestorePhaseTwo() {
 		_ = reqifDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing REQ_IF_HEADER field
+		if reqifDB.REQ_IF_HEADERID.Int64 != 0 {
+			reqifDB.REQ_IF_HEADERID.Int64 = int64(BackRepoREQ_IF_HEADERid_atBckpTime_newID[uint(reqifDB.REQ_IF_HEADERID.Int64)])
+			reqifDB.REQ_IF_HEADERID.Valid = true
+		}
+
 		// update databse with new index encoding
 		query := backRepoREQIF.db.Model(reqifDB).Updates(*reqifDB)
 		if query.Error != nil {

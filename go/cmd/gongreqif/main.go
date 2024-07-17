@@ -57,7 +57,8 @@ func main() {
 		return
 	}
 
-	var _ gongreqif_models.REQIF
+	reqifModel := new(gongreqif_models.REQIF).Stage(stack.Stage)
+	reqifModel.Walk(&reqif, stack.Stage)
 
 	stack.Stage.Commit()
 
