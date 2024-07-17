@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <THE-HEADER>
     <REQ-IF-HEADER
-      IDENTIFIER="_8da68f26-585c-4193-b6ca-a07cedff2a5c">
+      reqif.xsd:IDENTIFIER="_8da68f26-585c-4193-b6ca-a07cedff2a5c">
       <CREATION-TIME>2017-04-25T15:44:26.000+02:00</CREATION-TIME>
       <REPOSITORY-ID>524d2a940b0233d5</REPOSITORY-ID>
       <REQ-IF-TOOL-ID>IBM Rational DOORS</REQ-IF-TOOL-ID>
@@ -16,42 +16,42 @@
     <REQ-IF-CONTENT>
       <DATATYPES>
         <DATATYPE-DEFINITION-XHTML
-          IDENTIFIER="_i6FNMMkgEee8KsfWrp9EJQ"
-          LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+          reqif.xsd:IDENTIFIER="_i6FNMMkgEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
           reqif.xsd:LONG-NAME="String" />
         <DATATYPE-DEFINITION-ENUMERATION
-          IDENTIFIER="_ahyOEMk3Eee5A_N9aQFa1w"
-          LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+          reqif.xsd:IDENTIFIER="_ahyOEMk3Eee5A_N9aQFa1w"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
           reqif.xsd:LONG-NAME="IE Object Type">
           <SPECIFIED-VALUES>
             <ENUM-VALUE
-              IDENTIFIER="_gXZ9oMk3Eee5A_N9aQFa1w"
-              LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+              reqif.xsd:IDENTIFIER="_gXZ9oMk3Eee5A_N9aQFa1w"
+              reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
               reqif.xsd:LONG-NAME="Requirement">
               <PROPERTIES>
                 <EMBEDDED-VALUE
-                  KEY="0"
-                  OTHER-CONTENT="Navy" />
+                  reqif.xsd:KEY="0"
+                  reqif.xsd:OTHER-CONTENT="Navy" />
               </PROPERTIES>
             </ENUM-VALUE>
             <ENUM-VALUE
-              IDENTIFIER="_hGeDEMk3Eee5A_N9aQFa1w"
-              LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+              reqif.xsd:IDENTIFIER="_hGeDEMk3Eee5A_N9aQFa1w"
+              reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
               reqif.xsd:LONG-NAME="Function">
               <PROPERTIES>
                 <EMBEDDED-VALUE
-                  KEY="1"
-                  OTHER-CONTENT="Purple" />
+                  reqif.xsd:KEY="1"
+                  reqif.xsd:OTHER-CONTENT="Purple" />
               </PROPERTIES>
             </ENUM-VALUE>
             <ENUM-VALUE
-              IDENTIFIER="_hZP1IMk3Eee5A_N9aQFa1w"
-              LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+              reqif.xsd:IDENTIFIER="_hZP1IMk3Eee5A_N9aQFa1w"
+              reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
               reqif.xsd:LONG-NAME="Capability">
               <PROPERTIES>
                 <EMBEDDED-VALUE
-                  KEY="2"
-                  OTHER-CONTENT="Sea_Green" />
+                  reqif.xsd:KEY="2"
+                  reqif.xsd:OTHER-CONTENT="Sea_Green" />
               </PROPERTIES>
             </ENUM-VALUE>
           </SPECIFIED-VALUES>
@@ -59,34 +59,34 @@
       </DATATYPES>
       <SPEC-TYPES>
         <SPEC-OBJECT-TYPE
-          IDENTIFIER="_LaeSsMkhEee8KsfWrp9EJQ"
-          LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+          reqif.xsd:IDENTIFIER="_LaeSsMkhEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
           reqif.xsd:LONG-NAME="Requirement Type">
           <SPEC-ATTRIBUTES>
             <ATTRIBUTE-DEFINITION-XHTML
-              IDENTIFIER="_cf7-0MkhEee8KsfWrp9EJQ"
-              LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+              reqif.xsd:IDENTIFIER="_cf7-0MkhEee8KsfWrp9EJQ"
+              reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
               reqif.xsd:LONG-NAME="ReqIF.Text"
-              IS-EDITABLE="true">
+              reqif.xsd:IS-EDITABLE="true">
               <TYPE>
                 <DATATYPE-DEFINITION-XHTML-REF>_i6FNMMkgEee8KsfWrp9EJQ</DATATYPE-DEFINITION-XHTML-REF>
               </TYPE>
             </ATTRIBUTE-DEFINITION-XHTML>
             <ATTRIBUTE-DEFINITION-XHTML
-              IDENTIFIER="_25YvEMkyEee5A_N9aQFa1w"
-              LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+              reqif.xsd:IDENTIFIER="_25YvEMkyEee5A_N9aQFa1w"
+              reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
               reqif.xsd:LONG-NAME="IE PUID"
-              IS-EDITABLE="true">
+              reqif.xsd:IS-EDITABLE="true">
               <TYPE>
                 <DATATYPE-DEFINITION-XHTML-REF>_i6FNMMkgEee8KsfWrp9EJQ</DATATYPE-DEFINITION-XHTML-REF>
               </TYPE>
             </ATTRIBUTE-DEFINITION-XHTML>
             <ATTRIBUTE-DEFINITION-ENUMERATION
-              IDENTIFIER="_0VDX0Mk3Eee5A_N9aQFa1w"
-              LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+              reqif.xsd:IDENTIFIER="_0VDX0Mk3Eee5A_N9aQFa1w"
+              reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
               reqif.xsd:LONG-NAME="IE Object Type"
-              IS-EDITABLE="true"
-              MULTI-VALUED="false">
+              reqif.xsd:IS-EDITABLE="true"
+              reqif.xsd:MULTI-VALUED="false">
               <TYPE>
                 <DATATYPE-DEFINITION-ENUMERATION-REF>_ahyOEMk3Eee5A_N9aQFa1w</DATATYPE-DEFINITION-ENUMERATION-REF>
               </TYPE>
@@ -94,15 +94,15 @@
           </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
         <SPECIFICATION-TYPE
-          IDENTIFIER="_NAXScMkhEee8KsfWrp9EJQ"
-          LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+          reqif.xsd:IDENTIFIER="_NAXScMkhEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
           reqif.xsd:LONG-NAME="Module Type">
           <SPEC-ATTRIBUTES>
             <ATTRIBUTE-DEFINITION-XHTML
-              IDENTIFIER="_jLB90MkhEee8KsfWrp9EJQ"
-              LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+              reqif.xsd:IDENTIFIER="_jLB90MkhEee8KsfWrp9EJQ"
+              reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
               reqif.xsd:LONG-NAME="ReqIF.Name"
-              IS-EDITABLE="true">
+              reqif.xsd:IS-EDITABLE="true">
               <TYPE>
                 <DATATYPE-DEFINITION-XHTML-REF>_i6FNMMkgEee8KsfWrp9EJQ</DATATYPE-DEFINITION-XHTML-REF>
               </TYPE>
@@ -111,8 +111,8 @@
         </SPECIFICATION-TYPE>
       </SPEC-TYPES>
       <SPEC-OBJECTS>
-        <SPEC-OBJECT IDENTIFIER="_xen_QMkhEee8KsfWrp9EJQ"
-          LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Requirement-1">
+        <SPEC-OBJECT reqif.xsd:IDENTIFIER="_xen_QMkhEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Requirement-1">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <DEFINITION>
@@ -147,8 +147,8 @@
       <SPEC-RELATIONS />
       <SPECIFICATIONS>
         <SPECIFICATION
-          IDENTIFIER="_dESzoMkiEee8KsfWrp9EJQ"
-          LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+          reqif.xsd:IDENTIFIER="_dESzoMkiEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
           reqif.xsd:LONG-NAME="MODULE-1">
           <VALUES />
           <TYPE>
@@ -156,10 +156,10 @@
           </TYPE>
           <CHILDREN>
             <SPEC-HIERARCHY
-              IDENTIFIER="_Ob6YgMkjEee8KsfWrp9EJQ"
-              LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
+              reqif.xsd:IDENTIFIER="_Ob6YgMkjEee8KsfWrp9EJQ"
+              reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00"
               reqif.xsd:LONG-NAME="Requirement-1"
-              IS-EDITABLE="true">
+              reqif.xsd:IS-EDITABLE="true">
               <OBJECT>
                 <SPEC-OBJECT-REF>_xen_QMkhEee8KsfWrp9EJQ</SPEC-OBJECT-REF>
               </OBJECT>
