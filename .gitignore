@@ -1,3 +1,4 @@
 node_modules
 go/cmd/gongreqif/__debug_bin*
 go/cmd/gongreqif/gongreqif*
+.DS_Store

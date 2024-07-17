@@ -10,6 +10,8 @@ import (
 	gongreqif_models "github.com/thomaspeugeot/gongreqif/go/models"
 	gongreqif_stack "github.com/thomaspeugeot/gongreqif/go/stack"
 	gongreqif_static "github.com/thomaspeugeot/gongreqif/go/static"
+
+	"github.com/thomaspeugeot/gongreqif/go/schema"
 )
 
 var (
@@ -48,20 +50,16 @@ func main() {
 		return
 	}
 
-	var reqif gongreqif_models.REQIF
+	var reqif schema.REQ_IF
 	err = xml.Unmarshal(data, &reqif)
 	if err != nil {
 		fmt.Println("Error parsing XML:", err)
 		return
 	}
 
-	gongreqif_models.StageBranch(stack.Stage, &reqif)
+	var _ gongreqif_models.REQIF
 
 	stack.Stage.Commit()
-
-	// Access and process parsed data
-	fmt.Println("ReqIF Header:")
-	fmt.Printf("  Identifier: %s\n", reqif.HEADER.REQIFHEADER.IDENTIFIERAttr)
 
 	log.Printf("Server ready serve on localhost:" + strconv.Itoa(*port))
 	err = r.Run(":" + strconv.Itoa(*port))

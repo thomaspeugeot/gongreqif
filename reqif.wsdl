@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="PeopleService"
+    targetNamespace="http://example.com/people"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://example.com/people"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:lib="people">
+
+    <!-- Types -->
+    <types>
+        <xs:schema targetNamespace="people"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+            <xs:import namespace="people" schemaLocation="dtc-11-04-05.xsd" />
+        </xs:schema>
+    </types>
+
+    <!-- Messages -->
+    <message name="GetPeopleRequest">
+        <part name="parameters" element="tns:GetPeople" />
+    </message>
+
+    <message name="GetPeopleResponse">
+        <part name="parameters" element="tns:people" />
+    </message>
+
+    <!-- Port Type -->
+    <portType name="PeoplePortType">
+        <operation name="GetPeople">
+            <input message="tns:GetPeopleRequest" />
+            <output message="tns:GetPeopleResponse" />
+        </operation>
+    </portType>
+
+    <!-- Binding -->
+    <binding name="PeopleSoapBinding" type="tns:PeoplePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <operation name="GetPeople">
+            <soap:operation soapAction="http://example.com/people/GetPeople" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Service -->
+    <service name="PeopleService">
+        <port name="PeoplePort" binding="tns:PeopleSoapBinding">
+            <soap:address location="http://example.com/people" />
+        </port>
+    </service>
+
+</definitions>
