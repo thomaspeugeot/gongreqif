@@ -8,7 +8,7 @@ import (
 type GongstructDB interface {
 	// insertion point for generic types
 	// "int" is present to handle the case when no struct is present
-	int | REQIFDB | REQ_IF_HEADERDB
+	int | REQIFDB | REQ_IF_CONTENTDB | REQ_IF_HEADERDB
 }
 
 func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
@@ -21,6 +21,10 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 	case *models.REQIF:
 		reqifInstance := any(concreteInstance).(*models.REQIF)
 		ret2 := backRepo.BackRepoREQIF.GetREQIFDBFromREQIFPtr(reqifInstance)
+		ret = any(ret2).(*T2)
+	case *models.REQ_IF_CONTENT:
+		req_if_contentInstance := any(concreteInstance).(*models.REQ_IF_CONTENT)
+		ret2 := backRepo.BackRepoREQ_IF_CONTENT.GetREQ_IF_CONTENTDBFromREQ_IF_CONTENTPtr(req_if_contentInstance)
 		ret = any(ret2).(*T2)
 	case *models.REQ_IF_HEADER:
 		req_if_headerInstance := any(concreteInstance).(*models.REQ_IF_HEADER)
@@ -44,6 +48,11 @@ func GetID[T models.Gongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.REQ_IF_CONTENT:
+		tmp := GetInstanceDBFromInstance[models.REQ_IF_CONTENT, REQ_IF_CONTENTDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	case *models.REQ_IF_HEADER:
 		tmp := GetInstanceDBFromInstance[models.REQ_IF_HEADER, REQ_IF_HEADERDB](
 			stage, backRepo, inst,
@@ -64,6 +73,11 @@ func GetIDPointer[T models.PointerToGongstruct](
 	// insertion point for per struct backup
 	case *models.REQIF:
 		tmp := GetInstanceDBFromInstance[models.REQIF, REQIFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.REQ_IF_CONTENT:
+		tmp := GetInstanceDBFromInstance[models.REQ_IF_CONTENT, REQ_IF_CONTENTDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)

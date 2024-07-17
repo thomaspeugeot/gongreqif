@@ -55,6 +55,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "REQIF" {
 		fillUpTable[models.REQIF](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "REQ_IF_CONTENT" {
+		fillUpTable[models.REQ_IF_CONTENT](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "REQ_IF_HEADER" {
 		fillUpTable[models.REQ_IF_HEADER](nodeImplGongstruct.probe)
 	}

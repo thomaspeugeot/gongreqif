@@ -59,6 +59,16 @@ type StageStruct struct {
 	OnAfterREQIFDeleteCallback OnAfterDeleteInterface[REQIF]
 	OnAfterREQIFReadCallback   OnAfterReadInterface[REQIF]
 
+	REQ_IF_CONTENTs           map[*REQ_IF_CONTENT]any
+	REQ_IF_CONTENTs_mapString map[string]*REQ_IF_CONTENT
+
+	// insertion point for slice of pointers maps
+
+	OnAfterREQ_IF_CONTENTCreateCallback OnAfterCreateInterface[REQ_IF_CONTENT]
+	OnAfterREQ_IF_CONTENTUpdateCallback OnAfterUpdateInterface[REQ_IF_CONTENT]
+	OnAfterREQ_IF_CONTENTDeleteCallback OnAfterDeleteInterface[REQ_IF_CONTENT]
+	OnAfterREQ_IF_CONTENTReadCallback   OnAfterReadInterface[REQ_IF_CONTENT]
+
 	REQ_IF_HEADERs           map[*REQ_IF_HEADER]any
 	REQ_IF_HEADERs_mapString map[string]*REQ_IF_HEADER
 
@@ -139,6 +149,8 @@ type BackRepoInterface interface {
 	// insertion point for Commit and Checkout signatures
 	CommitREQIF(reqif *REQIF)
 	CheckoutREQIF(reqif *REQIF)
+	CommitREQ_IF_CONTENT(req_if_content *REQ_IF_CONTENT)
+	CheckoutREQ_IF_CONTENT(req_if_content *REQ_IF_CONTENT)
 	CommitREQ_IF_HEADER(req_if_header *REQ_IF_HEADER)
 	CheckoutREQ_IF_HEADER(req_if_header *REQ_IF_HEADER)
 	GetLastCommitFromBackNb() uint
@@ -150,6 +162,9 @@ func NewStage(path string) (stage *StageStruct) {
 	stage = &StageStruct{ // insertion point for array initiatialisation
 		REQIFs:           make(map[*REQIF]any),
 		REQIFs_mapString: make(map[string]*REQIF),
+
+		REQ_IF_CONTENTs:           make(map[*REQ_IF_CONTENT]any),
+		REQ_IF_CONTENTs_mapString: make(map[string]*REQ_IF_CONTENT),
 
 		REQ_IF_HEADERs:           make(map[*REQ_IF_HEADER]any),
 		REQ_IF_HEADERs_mapString: make(map[string]*REQ_IF_HEADER),
@@ -188,6 +203,7 @@ func (stage *StageStruct) Commit() {
 
 	// insertion point for computing the map of number of instances per gongstruct
 	stage.Map_GongStructName_InstancesNb["REQIF"] = len(stage.REQIFs)
+	stage.Map_GongStructName_InstancesNb["REQ_IF_CONTENT"] = len(stage.REQ_IF_CONTENTs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF_HEADER"] = len(stage.REQ_IF_HEADERs)
 
 }
@@ -200,6 +216,7 @@ func (stage *StageStruct) Checkout() {
 	stage.ComputeReverseMaps()
 	// insertion point for computing the map of number of instances per gongstruct
 	stage.Map_GongStructName_InstancesNb["REQIF"] = len(stage.REQIFs)
+	stage.Map_GongStructName_InstancesNb["REQ_IF_CONTENT"] = len(stage.REQ_IF_CONTENTs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF_HEADER"] = len(stage.REQ_IF_HEADERs)
 
 }
@@ -283,6 +300,56 @@ func (reqif *REQIF) GetName() (res string) {
 	return reqif.Name
 }
 
+// Stage puts req_if_content to the model stage
+func (req_if_content *REQ_IF_CONTENT) Stage(stage *StageStruct) *REQ_IF_CONTENT {
+	stage.REQ_IF_CONTENTs[req_if_content] = __member
+	stage.REQ_IF_CONTENTs_mapString[req_if_content.Name] = req_if_content
+
+	return req_if_content
+}
+
+// Unstage removes req_if_content off the model stage
+func (req_if_content *REQ_IF_CONTENT) Unstage(stage *StageStruct) *REQ_IF_CONTENT {
+	delete(stage.REQ_IF_CONTENTs, req_if_content)
+	delete(stage.REQ_IF_CONTENTs_mapString, req_if_content.Name)
+	return req_if_content
+}
+
+// UnstageVoid removes req_if_content off the model stage
+func (req_if_content *REQ_IF_CONTENT) UnstageVoid(stage *StageStruct) {
+	delete(stage.REQ_IF_CONTENTs, req_if_content)
+	delete(stage.REQ_IF_CONTENTs_mapString, req_if_content.Name)
+}
+
+// commit req_if_content to the back repo (if it is already staged)
+func (req_if_content *REQ_IF_CONTENT) Commit(stage *StageStruct) *REQ_IF_CONTENT {
+	if _, ok := stage.REQ_IF_CONTENTs[req_if_content]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitREQ_IF_CONTENT(req_if_content)
+		}
+	}
+	return req_if_content
+}
+
+func (req_if_content *REQ_IF_CONTENT) CommitVoid(stage *StageStruct) {
+	req_if_content.Commit(stage)
+}
+
+// Checkout req_if_content to the back repo (if it is already staged)
+func (req_if_content *REQ_IF_CONTENT) Checkout(stage *StageStruct) *REQ_IF_CONTENT {
+	if _, ok := stage.REQ_IF_CONTENTs[req_if_content]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutREQ_IF_CONTENT(req_if_content)
+		}
+	}
+	return req_if_content
+}
+
+// for satisfaction of GongStruct interface
+func (req_if_content *REQ_IF_CONTENT) GetName() (res string) {
+	return req_if_content.Name
+}
+
 // Stage puts req_if_header to the model stage
 func (req_if_header *REQ_IF_HEADER) Stage(stage *StageStruct) *REQ_IF_HEADER {
 	stage.REQ_IF_HEADERs[req_if_header] = __member
@@ -336,17 +403,22 @@ func (req_if_header *REQ_IF_HEADER) GetName() (res string) {
 // swagger:ignore
 type AllModelsStructCreateInterface interface { // insertion point for Callbacks on creation
 	CreateORMREQIF(REQIF *REQIF)
+	CreateORMREQ_IF_CONTENT(REQ_IF_CONTENT *REQ_IF_CONTENT)
 	CreateORMREQ_IF_HEADER(REQ_IF_HEADER *REQ_IF_HEADER)
 }
 
 type AllModelsStructDeleteInterface interface { // insertion point for Callbacks on deletion
 	DeleteORMREQIF(REQIF *REQIF)
+	DeleteORMREQ_IF_CONTENT(REQ_IF_CONTENT *REQ_IF_CONTENT)
 	DeleteORMREQ_IF_HEADER(REQ_IF_HEADER *REQ_IF_HEADER)
 }
 
 func (stage *StageStruct) Reset() { // insertion point for array reset
 	stage.REQIFs = make(map[*REQIF]any)
 	stage.REQIFs_mapString = make(map[string]*REQIF)
+
+	stage.REQ_IF_CONTENTs = make(map[*REQ_IF_CONTENT]any)
+	stage.REQ_IF_CONTENTs_mapString = make(map[string]*REQ_IF_CONTENT)
 
 	stage.REQ_IF_HEADERs = make(map[*REQ_IF_HEADER]any)
 	stage.REQ_IF_HEADERs_mapString = make(map[string]*REQ_IF_HEADER)
@@ -357,6 +429,9 @@ func (stage *StageStruct) Nil() { // insertion point for array nil
 	stage.REQIFs = nil
 	stage.REQIFs_mapString = nil
 
+	stage.REQ_IF_CONTENTs = nil
+	stage.REQ_IF_CONTENTs_mapString = nil
+
 	stage.REQ_IF_HEADERs = nil
 	stage.REQ_IF_HEADERs_mapString = nil
 
@@ -365,6 +440,10 @@ func (stage *StageStruct) Nil() { // insertion point for array nil
 func (stage *StageStruct) Unstage() { // insertion point for array nil
 	for reqif := range stage.REQIFs {
 		reqif.Unstage(stage)
+	}
+
+	for req_if_content := range stage.REQ_IF_CONTENTs {
+		req_if_content.Unstage(stage)
 	}
 
 	for req_if_header := range stage.REQ_IF_HEADERs {
@@ -379,7 +458,7 @@ func (stage *StageStruct) Unstage() { // insertion point for array nil
 // - full refactoring of Gongstruct identifiers / fields
 type Gongstruct interface {
 	// insertion point for generic types
-	REQIF | REQ_IF_HEADER
+	REQIF | REQ_IF_CONTENT | REQ_IF_HEADER
 }
 
 type GongtructBasicField interface {
@@ -392,7 +471,7 @@ type GongtructBasicField interface {
 // - full refactoring of Gongstruct identifiers / fields
 type PointerToGongstruct interface {
 	// insertion point for generic types
-	*REQIF | *REQ_IF_HEADER
+	*REQIF | *REQ_IF_CONTENT | *REQ_IF_HEADER
 	GetName() string
 	CommitVoid(*StageStruct)
 	UnstageVoid(stage *StageStruct)
@@ -422,6 +501,7 @@ type GongstructSet interface {
 	map[any]any |
 		// insertion point for generic types
 		map[*REQIF]any |
+		map[*REQ_IF_CONTENT]any |
 		map[*REQ_IF_HEADER]any |
 		map[*any]any // because go does not support an extra "|" at the end of type specifications
 }
@@ -430,6 +510,7 @@ type GongstructMapString interface {
 	map[any]any |
 		// insertion point for generic types
 		map[string]*REQIF |
+		map[string]*REQ_IF_CONTENT |
 		map[string]*REQ_IF_HEADER |
 		map[*any]any // because go does not support an extra "|" at the end of type specifications
 }
@@ -443,6 +524,8 @@ func GongGetSet[Type GongstructSet](stage *StageStruct) *Type {
 	// insertion point for generic get functions
 	case map[*REQIF]any:
 		return any(&stage.REQIFs).(*Type)
+	case map[*REQ_IF_CONTENT]any:
+		return any(&stage.REQ_IF_CONTENTs).(*Type)
 	case map[*REQ_IF_HEADER]any:
 		return any(&stage.REQ_IF_HEADERs).(*Type)
 	default:
@@ -459,6 +542,8 @@ func GongGetMap[Type GongstructMapString](stage *StageStruct) *Type {
 	// insertion point for generic get functions
 	case map[string]*REQIF:
 		return any(&stage.REQIFs_mapString).(*Type)
+	case map[string]*REQ_IF_CONTENT:
+		return any(&stage.REQ_IF_CONTENTs_mapString).(*Type)
 	case map[string]*REQ_IF_HEADER:
 		return any(&stage.REQ_IF_HEADERs_mapString).(*Type)
 	default:
@@ -475,6 +560,8 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *StageStruct) *map[*Type]a
 	// insertion point for generic get functions
 	case REQIF:
 		return any(&stage.REQIFs).(*map[*Type]any)
+	case REQ_IF_CONTENT:
+		return any(&stage.REQ_IF_CONTENTs).(*map[*Type]any)
 	case REQ_IF_HEADER:
 		return any(&stage.REQ_IF_HEADERs).(*map[*Type]any)
 	default:
@@ -491,6 +578,8 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 	// insertion point for generic get functions
 	case *REQIF:
 		return any(&stage.REQIFs).(*map[Type]any)
+	case *REQ_IF_CONTENT:
+		return any(&stage.REQ_IF_CONTENTs).(*map[Type]any)
 	case *REQ_IF_HEADER:
 		return any(&stage.REQ_IF_HEADERs).(*map[Type]any)
 	default:
@@ -507,6 +596,8 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *StageStruct) *map[string]
 	// insertion point for generic get functions
 	case REQIF:
 		return any(&stage.REQIFs_mapString).(*map[string]*Type)
+	case REQ_IF_CONTENT:
+		return any(&stage.REQ_IF_CONTENTs_mapString).(*map[string]*Type)
 	case REQ_IF_HEADER:
 		return any(&stage.REQ_IF_HEADERs_mapString).(*map[string]*Type)
 	default:
@@ -528,6 +619,12 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			// Initialisation of associations
 			// field is initialized with an instance of REQ_IF_HEADER with the name of the field
 			REQ_IF_HEADER: &REQ_IF_HEADER{Name: "REQ_IF_HEADER"},
+			// field is initialized with an instance of REQ_IF_CONTENT with the name of the field
+			REQ_IF_CONTENT: &REQ_IF_CONTENT{Name: "REQ_IF_CONTENT"},
+		}).(*Type)
+	case REQ_IF_CONTENT:
+		return any(&REQ_IF_CONTENT{
+			// Initialisation of associations
 		}).(*Type)
 	case REQ_IF_HEADER:
 		return any(&REQ_IF_HEADER{
@@ -572,6 +669,28 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 				}
 			}
 			return any(res).(map[*End][]*Start)
+		case "REQ_IF_CONTENT":
+			res := make(map[*REQ_IF_CONTENT][]*REQIF)
+			for reqif := range stage.REQIFs {
+				if reqif.REQ_IF_CONTENT != nil {
+					req_if_content_ := reqif.REQ_IF_CONTENT
+					var reqifs []*REQIF
+					_, ok := res[req_if_content_]
+					if ok {
+						reqifs = res[req_if_content_]
+					} else {
+						reqifs = make([]*REQIF, 0)
+					}
+					reqifs = append(reqifs, reqif)
+					res[req_if_content_] = reqifs
+				}
+			}
+			return any(res).(map[*End][]*Start)
+		}
+	// reverse maps of direct associations of REQ_IF_CONTENT
+	case REQ_IF_CONTENT:
+		switch fieldname {
+		// insertion point for per direct association field
 		}
 	// reverse maps of direct associations of REQ_IF_HEADER
 	case REQ_IF_HEADER:
@@ -599,6 +718,11 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
+	// reverse maps of direct associations of REQ_IF_CONTENT
+	case REQ_IF_CONTENT:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
 	// reverse maps of direct associations of REQ_IF_HEADER
 	case REQ_IF_HEADER:
 		switch fieldname {
@@ -618,6 +742,8 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 	// insertion point for generic get gongstruct name
 	case REQIF:
 		res = "REQIF"
+	case REQ_IF_CONTENT:
+		res = "REQ_IF_CONTENT"
 	case REQ_IF_HEADER:
 		res = "REQ_IF_HEADER"
 	}
@@ -634,6 +760,8 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 	// insertion point for generic get gongstruct name
 	case *REQIF:
 		res = "REQIF"
+	case *REQ_IF_CONTENT:
+		res = "REQ_IF_CONTENT"
 	case *REQ_IF_HEADER:
 		res = "REQ_IF_HEADER"
 	}
@@ -648,7 +776,9 @@ func GetFields[Type Gongstruct]() (res []string) {
 	switch any(ret).(type) {
 	// insertion point for generic get gongstruct name
 	case REQIF:
-		res = []string{"Name", "REQ_IF_HEADER"}
+		res = []string{"Name", "REQ_IF_HEADER", "REQ_IF_CONTENT"}
+	case REQ_IF_CONTENT:
+		res = []string{"Name"}
 	case REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
 	}
@@ -672,6 +802,9 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 	case REQIF:
 		var rf ReverseField
 		_ = rf
+	case REQ_IF_CONTENT:
+		var rf ReverseField
+		_ = rf
 	case REQ_IF_HEADER:
 		var rf ReverseField
 		_ = rf
@@ -687,7 +820,9 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	switch any(ret).(type) {
 	// insertion point for generic get gongstruct name
 	case *REQIF:
-		res = []string{"Name", "REQ_IF_HEADER"}
+		res = []string{"Name", "REQ_IF_HEADER", "REQ_IF_CONTENT"}
+	case *REQ_IF_CONTENT:
+		res = []string{"Name"}
 	case *REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
 	}
@@ -707,6 +842,16 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 			if inferedInstance.REQ_IF_HEADER != nil {
 				res = inferedInstance.REQ_IF_HEADER.Name
 			}
+		case "REQ_IF_CONTENT":
+			if inferedInstance.REQ_IF_CONTENT != nil {
+				res = inferedInstance.REQ_IF_CONTENT.Name
+			}
+		}
+	case *REQ_IF_CONTENT:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res = inferedInstance.Name
 		}
 	case *REQ_IF_HEADER:
 		switch fieldName {
@@ -747,6 +892,16 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 			if inferedInstance.REQ_IF_HEADER != nil {
 				res = inferedInstance.REQ_IF_HEADER.Name
 			}
+		case "REQ_IF_CONTENT":
+			if inferedInstance.REQ_IF_CONTENT != nil {
+				res = inferedInstance.REQ_IF_CONTENT.Name
+			}
+		}
+	case REQ_IF_CONTENT:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res = inferedInstance.Name
 		}
 	case REQ_IF_HEADER:
 		switch fieldName {

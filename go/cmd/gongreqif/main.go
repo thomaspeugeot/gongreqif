@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"time"
 
 	gongreqif_models "github.com/thomaspeugeot/gongreqif/go/models"
 	gongreqif_stack "github.com/thomaspeugeot/gongreqif/go/stack"
@@ -59,6 +60,7 @@ func main() {
 
 	reqifModel := new(gongreqif_models.REQIF).Stage(stack.Stage)
 	reqifModel.Walk(&reqif, stack.Stage)
+	reqifModel.Name = time.Now().Format(time.DateTime)
 
 	stack.Stage.Commit()
 

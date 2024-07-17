@@ -23,6 +23,12 @@ func FillUpForm[T models.Gongstruct](
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		AssociationFieldToForm("REQ_IF_HEADER", instanceWithInferedType.REQ_IF_HEADER, formGroup, probe)
+		AssociationFieldToForm("REQ_IF_CONTENT", instanceWithInferedType.REQ_IF_CONTENT, formGroup, probe)
+
+	case *models.REQ_IF_CONTENT:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
 
 	case *models.REQ_IF_HEADER:
 		// insertion point

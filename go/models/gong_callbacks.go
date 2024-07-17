@@ -10,6 +10,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *StageStruct, instance *Type) {
 		if stage.OnAfterREQIFCreateCallback != nil {
 			stage.OnAfterREQIFCreateCallback.OnAfterCreate(stage, target)
 		}
+	case *REQ_IF_CONTENT:
+		if stage.OnAfterREQ_IF_CONTENTCreateCallback != nil {
+			stage.OnAfterREQ_IF_CONTENTCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *REQ_IF_HEADER:
 		if stage.OnAfterREQ_IF_HEADERCreateCallback != nil {
 			stage.OnAfterREQ_IF_HEADERCreateCallback.OnAfterCreate(stage, target)
@@ -28,6 +32,11 @@ func AfterUpdateFromFront[Type Gongstruct](stage *StageStruct, old, new *Type) {
 		newTarget := any(new).(*REQIF)
 		if stage.OnAfterREQIFUpdateCallback != nil {
 			stage.OnAfterREQIFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *REQ_IF_CONTENT:
+		newTarget := any(new).(*REQ_IF_CONTENT)
+		if stage.OnAfterREQ_IF_CONTENTUpdateCallback != nil {
+			stage.OnAfterREQ_IF_CONTENTUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
 	case *REQ_IF_HEADER:
 		newTarget := any(new).(*REQ_IF_HEADER)
@@ -49,6 +58,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *StageStruct, staged, front *Ty
 			staged := any(staged).(*REQIF)
 			stage.OnAfterREQIFDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *REQ_IF_CONTENT:
+		if stage.OnAfterREQ_IF_CONTENTDeleteCallback != nil {
+			staged := any(staged).(*REQ_IF_CONTENT)
+			stage.OnAfterREQ_IF_CONTENTDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *REQ_IF_HEADER:
 		if stage.OnAfterREQ_IF_HEADERDeleteCallback != nil {
 			staged := any(staged).(*REQ_IF_HEADER)
@@ -68,6 +82,10 @@ func AfterReadFromFront[Type Gongstruct](stage *StageStruct, instance *Type) {
 		if stage.OnAfterREQIFReadCallback != nil {
 			stage.OnAfterREQIFReadCallback.OnAfterRead(stage, target)
 		}
+	case *REQ_IF_CONTENT:
+		if stage.OnAfterREQ_IF_CONTENTReadCallback != nil {
+			stage.OnAfterREQ_IF_CONTENTReadCallback.OnAfterRead(stage, target)
+		}
 	case *REQ_IF_HEADER:
 		if stage.OnAfterREQ_IF_HEADERReadCallback != nil {
 			stage.OnAfterREQ_IF_HEADERReadCallback.OnAfterRead(stage, target)
@@ -86,6 +104,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *StageStruct, callba
 	case *REQIF:
 		stage.OnAfterREQIFUpdateCallback = any(callback).(OnAfterUpdateInterface[REQIF])
 	
+	case *REQ_IF_CONTENT:
+		stage.OnAfterREQ_IF_CONTENTUpdateCallback = any(callback).(OnAfterUpdateInterface[REQ_IF_CONTENT])
+	
 	case *REQ_IF_HEADER:
 		stage.OnAfterREQ_IF_HEADERUpdateCallback = any(callback).(OnAfterUpdateInterface[REQ_IF_HEADER])
 	
@@ -98,6 +119,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *StageStruct, callba
 		// insertion point
 	case *REQIF:
 		stage.OnAfterREQIFCreateCallback = any(callback).(OnAfterCreateInterface[REQIF])
+	
+	case *REQ_IF_CONTENT:
+		stage.OnAfterREQ_IF_CONTENTCreateCallback = any(callback).(OnAfterCreateInterface[REQ_IF_CONTENT])
 	
 	case *REQ_IF_HEADER:
 		stage.OnAfterREQ_IF_HEADERCreateCallback = any(callback).(OnAfterCreateInterface[REQ_IF_HEADER])
@@ -112,6 +136,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *StageStruct, callba
 	case *REQIF:
 		stage.OnAfterREQIFDeleteCallback = any(callback).(OnAfterDeleteInterface[REQIF])
 	
+	case *REQ_IF_CONTENT:
+		stage.OnAfterREQ_IF_CONTENTDeleteCallback = any(callback).(OnAfterDeleteInterface[REQ_IF_CONTENT])
+	
 	case *REQ_IF_HEADER:
 		stage.OnAfterREQ_IF_HEADERDeleteCallback = any(callback).(OnAfterDeleteInterface[REQ_IF_HEADER])
 	
@@ -124,6 +151,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *StageStruct, callback
 		// insertion point
 	case *REQIF:
 		stage.OnAfterREQIFReadCallback = any(callback).(OnAfterReadInterface[REQIF])
+	
+	case *REQ_IF_CONTENT:
+		stage.OnAfterREQ_IF_CONTENTReadCallback = any(callback).(OnAfterReadInterface[REQ_IF_CONTENT])
 	
 	case *REQ_IF_HEADER:
 		stage.OnAfterREQ_IF_HEADERReadCallback = any(callback).(OnAfterReadInterface[REQ_IF_HEADER])

@@ -65,6 +65,8 @@ func (reqifFormCallback *REQIFFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(reqif_.Name), formDiv)
 		case "REQ_IF_HEADER":
 			FormDivSelectFieldToField(&(reqif_.REQ_IF_HEADER), reqifFormCallback.probe.stageOfInterest, formDiv)
+		case "REQ_IF_CONTENT":
+			FormDivSelectFieldToField(&(reqif_.REQ_IF_CONTENT), reqifFormCallback.probe.stageOfInterest, formDiv)
 		}
 	}
 
@@ -96,6 +98,83 @@ func (reqifFormCallback *REQIFFormCallback) OnSave() {
 	}
 
 	fillUpTree(reqifFormCallback.probe)
+}
+func __gong__New__REQ_IF_CONTENTFormCallback(
+	req_if_content *models.REQ_IF_CONTENT,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (req_if_contentFormCallback *REQ_IF_CONTENTFormCallback) {
+	req_if_contentFormCallback = new(REQ_IF_CONTENTFormCallback)
+	req_if_contentFormCallback.probe = probe
+	req_if_contentFormCallback.req_if_content = req_if_content
+	req_if_contentFormCallback.formGroup = formGroup
+
+	req_if_contentFormCallback.CreationMode = (req_if_content == nil)
+
+	return
+}
+
+type REQ_IF_CONTENTFormCallback struct {
+	req_if_content *models.REQ_IF_CONTENT
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (req_if_contentFormCallback *REQ_IF_CONTENTFormCallback) OnSave() {
+
+	log.Println("REQ_IF_CONTENTFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	req_if_contentFormCallback.probe.formStage.Checkout()
+
+	if req_if_contentFormCallback.req_if_content == nil {
+		req_if_contentFormCallback.req_if_content = new(models.REQ_IF_CONTENT).Stage(req_if_contentFormCallback.probe.stageOfInterest)
+	}
+	req_if_content_ := req_if_contentFormCallback.req_if_content
+	_ = req_if_content_
+
+	for _, formDiv := range req_if_contentFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(req_if_content_.Name), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if req_if_contentFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		req_if_content_.Unstage(req_if_contentFormCallback.probe.stageOfInterest)
+	}
+
+	req_if_contentFormCallback.probe.stageOfInterest.Commit()
+	fillUpTable[models.REQ_IF_CONTENT](
+		req_if_contentFormCallback.probe,
+	)
+	req_if_contentFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if req_if_contentFormCallback.CreationMode || req_if_contentFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		req_if_contentFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: table.FormGroupDefaultName.ToString(),
+		}).Stage(req_if_contentFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__REQ_IF_CONTENTFormCallback(
+			nil,
+			req_if_contentFormCallback.probe,
+			newFormGroup,
+		)
+		req_if_content := new(models.REQ_IF_CONTENT)
+		FillUpForm(req_if_content, newFormGroup, req_if_contentFormCallback.probe)
+		req_if_contentFormCallback.probe.formStage.Commit()
+	}
+
+	fillUpTree(req_if_contentFormCallback.probe)
 }
 func __gong__New__REQ_IF_HEADERFormCallback(
 	req_if_header *models.REQ_IF_HEADER,

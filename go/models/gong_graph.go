@@ -8,6 +8,9 @@ func IsStaged[Type Gongstruct](stage *StageStruct, instance *Type) (ok bool) {
 	case *REQIF:
 		ok = stage.IsStagedREQIF(target)
 
+	case *REQ_IF_CONTENT:
+		ok = stage.IsStagedREQ_IF_CONTENT(target)
+
 	case *REQ_IF_HEADER:
 		ok = stage.IsStagedREQ_IF_HEADER(target)
 
@@ -21,6 +24,13 @@ func IsStaged[Type Gongstruct](stage *StageStruct, instance *Type) (ok bool) {
 func (stage *StageStruct) IsStagedREQIF(reqif *REQIF) (ok bool) {
 
 	_, ok = stage.REQIFs[reqif]
+
+	return
+}
+
+func (stage *StageStruct) IsStagedREQ_IF_CONTENT(req_if_content *REQ_IF_CONTENT) (ok bool) {
+
+	_, ok = stage.REQ_IF_CONTENTs[req_if_content]
 
 	return
 }
@@ -42,6 +52,9 @@ func StageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 	// insertion point for stage branch
 	case *REQIF:
 		stage.StageBranchREQIF(target)
+
+	case *REQ_IF_CONTENT:
+		stage.StageBranchREQ_IF_CONTENT(target)
 
 	case *REQ_IF_HEADER:
 		stage.StageBranchREQ_IF_HEADER(target)
@@ -65,6 +78,24 @@ func (stage *StageStruct) StageBranchREQIF(reqif *REQIF) {
 	if reqif.REQ_IF_HEADER != nil {
 		StageBranch(stage, reqif.REQ_IF_HEADER)
 	}
+	if reqif.REQ_IF_CONTENT != nil {
+		StageBranch(stage, reqif.REQ_IF_CONTENT)
+	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *StageStruct) StageBranchREQ_IF_CONTENT(req_if_content *REQ_IF_CONTENT) {
+
+	// check if instance is already staged
+	if IsStaged(stage, req_if_content) {
+		return
+	}
+
+	req_if_content.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -100,6 +131,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 		toT := CopyBranchREQIF(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *REQ_IF_CONTENT:
+		toT := CopyBranchREQ_IF_CONTENT(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *REQ_IF_HEADER:
 		toT := CopyBranchREQ_IF_HEADER(mapOrigCopy, fromT)
 		return any(toT).(*Type)
@@ -127,6 +162,28 @@ func CopyBranchREQIF(mapOrigCopy map[any]any, reqifFrom *REQIF) (reqifTo *REQIF)
 	if reqifFrom.REQ_IF_HEADER != nil {
 		reqifTo.REQ_IF_HEADER = CopyBranchREQ_IF_HEADER(mapOrigCopy, reqifFrom.REQ_IF_HEADER)
 	}
+	if reqifFrom.REQ_IF_CONTENT != nil {
+		reqifTo.REQ_IF_CONTENT = CopyBranchREQ_IF_CONTENT(mapOrigCopy, reqifFrom.REQ_IF_CONTENT)
+	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchREQ_IF_CONTENT(mapOrigCopy map[any]any, req_if_contentFrom *REQ_IF_CONTENT) (req_if_contentTo *REQ_IF_CONTENT) {
+
+	// req_if_contentFrom has already been copied
+	if _req_if_contentTo, ok := mapOrigCopy[req_if_contentFrom]; ok {
+		req_if_contentTo = _req_if_contentTo.(*REQ_IF_CONTENT)
+		return
+	}
+
+	req_if_contentTo = new(REQ_IF_CONTENT)
+	mapOrigCopy[req_if_contentFrom] = req_if_contentTo
+	req_if_contentFrom.CopyBasicFields(req_if_contentTo)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -163,6 +220,9 @@ func UnstageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 	case *REQIF:
 		stage.UnstageBranchREQIF(target)
 
+	case *REQ_IF_CONTENT:
+		stage.UnstageBranchREQ_IF_CONTENT(target)
+
 	case *REQ_IF_HEADER:
 		stage.UnstageBranchREQ_IF_HEADER(target)
 
@@ -185,6 +245,24 @@ func (stage *StageStruct) UnstageBranchREQIF(reqif *REQIF) {
 	if reqif.REQ_IF_HEADER != nil {
 		UnstageBranch(stage, reqif.REQ_IF_HEADER)
 	}
+	if reqif.REQ_IF_CONTENT != nil {
+		UnstageBranch(stage, reqif.REQ_IF_CONTENT)
+	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *StageStruct) UnstageBranchREQ_IF_CONTENT(req_if_content *REQ_IF_CONTENT) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, req_if_content) {
+		return
+	}
+
+	req_if_content.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 

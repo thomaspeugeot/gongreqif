@@ -6,6 +6,8 @@ type BackRepoData struct {
 
 	REQIFAPIs []*REQIFAPI
 
+	REQ_IF_CONTENTAPIs []*REQ_IF_CONTENTAPI
+
 	REQ_IF_HEADERAPIs []*REQ_IF_HEADERAPI
 }
 
@@ -19,6 +21,16 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		reqifDB.CopyBasicFieldsToREQIF_WOP(&reqifAPI.REQIF_WOP)
 
 		backRepoData.REQIFAPIs = append(backRepoData.REQIFAPIs, &reqifAPI)
+	}
+
+	for _, req_if_contentDB := range backRepo.BackRepoREQ_IF_CONTENT.Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTDB {
+
+		var req_if_contentAPI REQ_IF_CONTENTAPI
+		req_if_contentAPI.ID = req_if_contentDB.ID
+		req_if_contentAPI.REQ_IF_CONTENTPointersEncoding = req_if_contentDB.REQ_IF_CONTENTPointersEncoding
+		req_if_contentDB.CopyBasicFieldsToREQ_IF_CONTENT_WOP(&req_if_contentAPI.REQ_IF_CONTENT_WOP)
+
+		backRepoData.REQ_IF_CONTENTAPIs = append(backRepoData.REQ_IF_CONTENTAPIs, &req_if_contentAPI)
 	}
 
 	for _, req_if_headerDB := range backRepo.BackRepoREQ_IF_HEADER.Map_REQ_IF_HEADERDBID_REQ_IF_HEADERDB {

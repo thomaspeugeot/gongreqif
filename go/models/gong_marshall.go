@@ -128,6 +128,40 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 
 	}
 
+	map_REQ_IF_CONTENT_Identifiers := make(map[*REQ_IF_CONTENT]string)
+	_ = map_REQ_IF_CONTENT_Identifiers
+
+	req_if_contentOrdered := []*REQ_IF_CONTENT{}
+	for req_if_content := range stage.REQ_IF_CONTENTs {
+		req_if_contentOrdered = append(req_if_contentOrdered, req_if_content)
+	}
+	sort.Slice(req_if_contentOrdered[:], func(i, j int) bool {
+		return req_if_contentOrdered[i].Name < req_if_contentOrdered[j].Name
+	})
+	if len(req_if_contentOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, req_if_content := range req_if_contentOrdered {
+
+		id = generatesIdentifier("REQ_IF_CONTENT", idx, req_if_content.Name)
+		map_REQ_IF_CONTENT_Identifiers[req_if_content] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQ_IF_CONTENT")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_content.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_content.Name))
+		initializerStatements += setValueField
+
+	}
+
 	map_REQ_IF_HEADER_Identifiers := make(map[*REQ_IF_HEADER]string)
 	_ = map_REQ_IF_HEADER_Identifiers
 
@@ -221,6 +255,24 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			pointersInitializesStatements += setPointerField
 		}
 
+		if reqif.REQ_IF_CONTENT != nil {
+			setPointerField = PointerFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "REQ_IF_CONTENT")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQ_IF_CONTENT_Identifiers[reqif.REQ_IF_CONTENT])
+			pointersInitializesStatements += setPointerField
+		}
+
+	}
+
+	for idx, req_if_content := range req_if_contentOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("REQ_IF_CONTENT", idx, req_if_content.Name)
+		map_REQ_IF_CONTENT_Identifiers[req_if_content] = id
+
+		// Initialisation of values
 	}
 
 	for idx, req_if_header := range req_if_headerOrdered {

@@ -15,6 +15,7 @@ func SerializeStage(stage *StageStruct, filename string) {
 	{
 		// insertion point
 		SerializeExcelize[REQIF](stage, f)
+		SerializeExcelize[REQ_IF_CONTENT](stage, f)
 		SerializeExcelize[REQ_IF_HEADER](stage, f)
 	}
 

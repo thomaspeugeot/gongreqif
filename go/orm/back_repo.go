@@ -24,6 +24,8 @@ type BackRepoStruct struct {
 	// insertion point for per struct back repo declarations
 	BackRepoREQIF BackRepoREQIFStruct
 
+	BackRepoREQ_IF_CONTENT BackRepoREQ_IF_CONTENTStruct
+
 	BackRepoREQ_IF_HEADER BackRepoREQ_IF_HEADERStruct
 
 	CommitFromBackNb uint // records commit increments when performed by the back
@@ -67,6 +69,7 @@ func NewBackRepo(stage *models.StageStruct, filename string) (backRepo *BackRepo
 
 	err = db.AutoMigrate( // insertion point for reference to structs
 		&REQIFDB{},
+		&REQ_IF_CONTENTDB{},
 		&REQ_IF_HEADERDB{},
 	)
 
@@ -82,6 +85,14 @@ func NewBackRepo(stage *models.StageStruct, filename string) (backRepo *BackRepo
 		Map_REQIFDBID_REQIFPtr: make(map[uint]*models.REQIF, 0),
 		Map_REQIFDBID_REQIFDB:  make(map[uint]*REQIFDB, 0),
 		Map_REQIFPtr_REQIFDBID: make(map[*models.REQIF]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoREQ_IF_CONTENT = BackRepoREQ_IF_CONTENTStruct{
+		Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTPtr: make(map[uint]*models.REQ_IF_CONTENT, 0),
+		Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTDB:  make(map[uint]*REQ_IF_CONTENTDB, 0),
+		Map_REQ_IF_CONTENTPtr_REQ_IF_CONTENTDBID: make(map[*models.REQ_IF_CONTENT]uint, 0),
 
 		db:    db,
 		stage: stage,
@@ -143,10 +154,12 @@ func (backRepo *BackRepoStruct) IncrementPushFromFrontNb() uint {
 func (backRepo *BackRepoStruct) Commit(stage *models.StageStruct) {
 	// insertion point for per struct back repo phase one commit
 	backRepo.BackRepoREQIF.CommitPhaseOne(stage)
+	backRepo.BackRepoREQ_IF_CONTENT.CommitPhaseOne(stage)
 	backRepo.BackRepoREQ_IF_HEADER.CommitPhaseOne(stage)
 
 	// insertion point for per struct back repo phase two commit
 	backRepo.BackRepoREQIF.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoREQ_IF_CONTENT.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_HEADER.CommitPhaseTwo(backRepo)
 
 	backRepo.IncrementCommitFromBackNb()
@@ -156,10 +169,12 @@ func (backRepo *BackRepoStruct) Commit(stage *models.StageStruct) {
 func (backRepo *BackRepoStruct) Checkout(stage *models.StageStruct) {
 	// insertion point for per struct back repo phase one commit
 	backRepo.BackRepoREQIF.CheckoutPhaseOne()
+	backRepo.BackRepoREQ_IF_CONTENT.CheckoutPhaseOne()
 	backRepo.BackRepoREQ_IF_HEADER.CheckoutPhaseOne()
 
 	// insertion point for per struct back repo phase two commit
 	backRepo.BackRepoREQIF.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoREQ_IF_CONTENT.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_HEADER.CheckoutPhaseTwo(backRepo)
 }
 
@@ -169,6 +184,7 @@ func (backRepo *BackRepoStruct) Backup(stage *models.StageStruct, dirPath string
 
 	// insertion point for per struct backup
 	backRepo.BackRepoREQIF.Backup(dirPath)
+	backRepo.BackRepoREQ_IF_CONTENT.Backup(dirPath)
 	backRepo.BackRepoREQ_IF_HEADER.Backup(dirPath)
 }
 
@@ -181,6 +197,7 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.StageStruct, dirPath stri
 
 	// insertion point for per struct backup
 	backRepo.BackRepoREQIF.BackupXL(file)
+	backRepo.BackRepoREQ_IF_CONTENT.BackupXL(file)
 	backRepo.BackRepoREQ_IF_HEADER.BackupXL(file)
 
 	var b bytes.Buffer
@@ -207,6 +224,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.StageStruct, dirPath strin
 
 	// insertion point for per struct backup
 	backRepo.BackRepoREQIF.RestorePhaseOne(dirPath)
+	backRepo.BackRepoREQ_IF_CONTENT.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQ_IF_HEADER.RestorePhaseOne(dirPath)
 
 	//
@@ -215,6 +233,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.StageStruct, dirPath strin
 
 	// insertion point for per struct backup
 	backRepo.BackRepoREQIF.RestorePhaseTwo()
+	backRepo.BackRepoREQ_IF_CONTENT.RestorePhaseTwo()
 	backRepo.BackRepoREQ_IF_HEADER.RestorePhaseTwo()
 
 	backRepo.stage.Checkout()
@@ -244,6 +263,7 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.StageStruct, dirPath str
 
 	// insertion point for per struct backup
 	backRepo.BackRepoREQIF.RestoreXLPhaseOne(file)
+	backRepo.BackRepoREQ_IF_CONTENT.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQ_IF_HEADER.RestoreXLPhaseOne(file)
 
 	// commit the restored stage

@@ -17,6 +17,16 @@ func (from *REQIF) CopyBasicFields(to *REQIF) {
 	to.Name = from.Name
 }
 
+type REQ_IF_CONTENT_WOP struct {
+	// insertion point
+	Name string
+}
+
+func (from *REQ_IF_CONTENT) CopyBasicFields(to *REQ_IF_CONTENT) {
+	// insertion point
+	to.Name = from.Name
+}
+
 type REQ_IF_HEADER_WOP struct {
 	// insertion point
 	Name string
