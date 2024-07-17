@@ -65,8 +65,6 @@ func main() {
 
 	stack.Stage.Commit()
 
-	reqif.IDENTIFIER = "zoulou"
-
 	// Marshal the People instance to XML
 	xmlData, err := xml.MarshalIndent(reqif, "", "  ")
 	if err != nil {

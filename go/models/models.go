@@ -20,7 +20,11 @@ func (reqif *REQIF) Walk(_reqif *schema.REQ_IF, stage *StageStruct) {
 	reqif.REQ_IF_HEADER = new(REQ_IF_HEADER).Stage(stage)
 	reqif.REQ_IF_HEADER.Name = time.Now().Format(time.DateTime)
 	reqif.REQ_IF_HEADER.COMMENT = _reqif.THE_HEADER.REQ_IF_HEADER.COMMENT
-	// reqif.REQ_IF_HEADER.CREATION_TIME = _reqif.THE_HEADER.REQ_IF_HEADER.CREATION_TIME.ToGoTime()
+	reqif.REQ_IF_HEADER.CREATION_TIME = time.Time(_reqif.THE_HEADER.REQ_IF_HEADER.CREATION_TIME)
+
+	const myFormat = "2006-01-02T15:04:05.000-07:00"
+	log.Println("Date time", reqif.REQ_IF_HEADER.CREATION_TIME.Local().Format(myFormat))
+
 	reqif.REQ_IF_HEADER.REPOSITORY_ID = _reqif.THE_HEADER.REQ_IF_HEADER.REPOSITORY_ID
 	reqif.REQ_IF_HEADER.REQ_IF_TOOL_ID = _reqif.THE_HEADER.REQ_IF_HEADER.REQ_IF_TOOL_ID
 	reqif.REQ_IF_HEADER.REQ_IF_VERSION = _reqif.THE_HEADER.REQ_IF_HEADER.REQ_IF_VERSION
@@ -99,7 +103,6 @@ func (reqifContent *REQ_IF_CONTENT) Walk(_reqifContent *schema.REQ_IF_CONTENT, s
 	log.Println("REQ_IF_CONTENT", "Walk")
 
 	reqifContent.Name = time.Now().Format(time.DateTime)
-	_reqifContent.SPECIFICATIONS.SPECIFICATION.LONG_NAME = "Test"
 }
 
 type SPECIFICATION struct {
