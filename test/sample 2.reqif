@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<REQ-IF xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd">
     <THE-HEADER>
         <REQ-IF-HEADER IDENTIFIER="EF5AEFF3-C695-488A-9955-EDAAEACFE359">
             <COMMENT>Optional comment associated with the Exchange Document as a whole</COMMENT>

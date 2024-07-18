@@ -58,8 +58,9 @@ func main() {
 
 // processElement processes an XML element, prefixing all attributes with "reqif.xsd."
 func processElement(element *GenericElement) {
-	for i, attr := range element.Attrs {
-		element.Attrs[i].Name.Local = "reqif.xsd:" + attr.Name.Local
+	for i, _ := range element.Attrs {
+		element.Attrs[i].Name.Space = "reqif.xsd"
+		// element.Attrs[i].Name.Local = "reqif.xsd:" + attr.Name.Local
 	}
 	for i := range element.Nodes {
 		processElement(&element.Nodes[i])

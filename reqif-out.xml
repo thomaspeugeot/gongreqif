@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <REQ_IF>
   <THE-HEADER>
-    <REQ-IF-HEADER>
+    <REQ-IF-HEADER xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="EF5AEFF3-C695-488A-9955-EDAAEACFE359">
       <COMMENT>Optional comment associated with the Exchange Document as a whole</COMMENT>
       <CREATION-TIME>2011-06-13T10:24:18+01:00</CREATION-TIME>
       <REPOSITORY-ID>A4123EB9-CC82-4B62-95E1-31CB3203E39C</REPOSITORY-ID>
@@ -14,33 +14,33 @@
   <CORE-CONTENT>
     <REQ-IF-CONTENT>
       <DATATYPES>
-        <DATATYPE-DEFINITION-ENUMERATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+        <DATATYPE-DEFINITION-ENUMERATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="BindingForce" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPECIFIED-VALUES>
-            <ENUM-VALUE reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+            <ENUM-VALUE reqif.xsd:DESC="The requirement is a nice-to-have one, or it has growth potential for systems future stages of expansion." reqif.xsd:IDENTIFIER="Optional" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <PROPERTIES>
-                <EMBEDDED-VALUE></EMBEDDED-VALUE>
+                <EMBEDDED-VALUE reqif.xsd:KEY="3" reqif.xsd:OTHER-CONTENT="foo"></EMBEDDED-VALUE>
               </PROPERTIES>
             </ENUM-VALUE>
           </SPECIFIED-VALUES>
         </DATATYPE-DEFINITION-ENUMERATION>
-        <DATATYPE-DEFINITION-STRING xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+        <DATATYPE-DEFINITION-STRING xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="Text" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00" reqif.xsd:MAX-LENGTH="1000">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
         </DATATYPE-DEFINITION-STRING>
       </DATATYPES>
       <SPEC-TYPES>
-        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A legal requirement is a non-functional requirement that states a regulation that must be recognized by the system. Regulations could be laws, standards, specifications, etc." reqif.xsd:IDENTIFIER="LEGAL-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Legal Requirement">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPEC-ATTRIBUTES>
-            <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+            <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:DESC="The status of the requirement." reqif.xsd:IDENTIFIER="PERF-REQ-STATUS" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
               <DEFAULT-VALUE></DEFAULT-VALUE>
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <TYPE>
                 <DATATYPE-DEFINITION-ENUMERATION-REF>Status</DATATYPE-DEFINITION-ENUMERATION-REF>
               </TYPE>
             </ATTRIBUTE-DEFINITION-ENUMERATION>
-            <ATTRIBUTE-DEFINITION-STRING reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+            <ATTRIBUTE-DEFINITION-STRING reqif.xsd:DESC="The textual description of the performance requirement." reqif.xsd:IDENTIFIER="PERF-REQ-TXT" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <DEFAULT-VALUE></DEFAULT-VALUE>
               <TYPE>
@@ -49,17 +49,17 @@
             </ATTRIBUTE-DEFINITION-STRING>
           </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
-        <SPEC-RELATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+        <SPEC-RELATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="The refine relationship can be used to specify an element that refines a requirement, i.e. the element is an increase in detail compared to the requirement." reqif.xsd:IDENTIFIER="refine" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Refine Relationship">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
         </SPEC-RELATION-TYPE>
-        <SPECIFICATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+        <SPECIFICATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A Subsystem/Components Requirements Specification contains the next level of requirements after system requirements.The aim of subsystem and component requirements is to set precise technical requirements for the development of a subsystem/component. Subsystem/component requirements are derived from system requirements by considering existing technology, components, interfaces and so on." reqif.xsd:IDENTIFIER="CRS" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Subsystem/Components Requirements Specification">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
         </SPECIFICATION-TYPE>
       </SPEC-TYPES>
       <SPEC-OBJECTS>
-        <SPEC-OBJECT xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+        <SPEC-OBJECT xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="R003" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Fast system">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <VALUES>
             <ATTRIBUTE-VALUE-ENUMERATION>
@@ -70,7 +70,7 @@
                 <ENUM-VALUE-REF>Proposed</ENUM-VALUE-REF>
               </VALUES>
             </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-STRING reqif.xsd:THE-VALUE="The time span between detection of a fire and alerting of control center shall be less than 3 sec.">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>PERF-REQ-TXT</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -82,7 +82,7 @@
         </SPEC-OBJECT>
       </SPEC-OBJECTS>
       <SPEC-RELATIONS>
-        <SPEC-RELATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+        <SPEC-RELATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="ADB3C6E4-8014-4167-9D21-A8E13D98C6CA" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <VALUES></VALUES>
           <SOURCE>
@@ -97,14 +97,14 @@
         </SPEC-RELATION>
       </SPEC-RELATIONS>
       <SPECIFICATIONS>
-        <SPECIFICATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+        <SPECIFICATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="This is the User Requirements Specification for the Forest Fire Detection System of Customer Y." reqif.xsd:IDENTIFIER="F785DE59-9D79-4DEB-9709-AACC015EF7A1" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Forest Fire Detection System">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <VALUES></VALUES>
           <CHILDREN>
-            <SPEC-HIERARCHY reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+            <SPEC-HIERARCHY reqif.xsd:IDENTIFIER="E65E8A75-F1C1-48D1-9681-8AD99E2BE6EE" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <CHILDREN>
-                <SPEC-HIERARCHY reqif.xsd:LAST-CHANGE="0001-01-01T00:00:00.000+00:09">
+                <SPEC-HIERARCHY reqif.xsd:IDENTIFIER="A980AE9C-9C06-40B8-BFAE-213C27451649" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
                   <ALTERNATIVE-ID></ALTERNATIVE-ID>
                   <CHILDREN></CHILDREN>
                   <EDITABLE-ATTS></EDITABLE-ATTS>

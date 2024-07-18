@@ -53,3 +53,9 @@ Yes it does
 ```
 
 We have to go back to xmlplaygground
+
+### adding the prefix with regexp
+
+\b[A-Z-]+=
+
+reqif.xsd:$0

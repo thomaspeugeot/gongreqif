@@ -23,7 +23,7 @@
             "program": "go/cmd/gongreqif",
             "args": [
                 "-filename",
-                "../../../test/sample 2.reqif"
+                "../../../test/sample 2 modified.reqif"
             ]
         },
         {

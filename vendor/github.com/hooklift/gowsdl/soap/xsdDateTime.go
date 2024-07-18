@@ -6,7 +6,6 @@ package soap
 
 import (
 	"encoding/xml"
-	"fmt"
 	"strings"
 	"time"
 )
@@ -78,12 +77,24 @@ func (xdt XSDDateTime) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}, nil
 }
 
-func (xdt *XSDDateTime) UnmarshalXMLAttr(attr xml.Attr) error {
+func (x *XSDDateTime) UnmarshalXMLAttr(attr xml.Attr) error {
+
+	// Define the possible time layouts for parsing
+	layouts := []string{
+		time.RFC3339,
+		"2006-01-02T15:04:05",
+		"2006-01-02T15:04:05-07:00",
+		"2006-01-02T15:04:05Z07:00",
+		"2006-01-02T15:04:05.000-07:00",
+	}
+
 	var err error
-	const layout = "2006-01-02T15:04:05.000-07:00"
-	xdt.innerTime, err = time.Parse(layout, attr.Value)
-	if err != nil {
-		return fmt.Errorf("could not parse time: %v", err)
+	for _, layout := range layouts {
+		x.innerTime, err = time.Parse(layout, attr.Value)
+		if err == nil {
+			x.hasTz = layout == time.RFC3339 || layout == "2006-01-02T15:04:05-07:00" || layout == "2006-01-02T15:04:05Z07:00"
+			return nil
+		}
 	}
 
 	return nil
