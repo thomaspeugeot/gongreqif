@@ -317,6 +317,7 @@ var __gong__map_Indentifiers_gongstructName = make(map[string]string)
 var __gong__map_REQIF = make(map[string]*REQIF)
 var __gong__map_REQ_IF_CONTENT = make(map[string]*REQ_IF_CONTENT)
 var __gong__map_REQ_IF_HEADER = make(map[string]*REQ_IF_HEADER)
+var __gong__map_SPECIFICATION = make(map[string]*SPECIFICATION)
 
 // Parser needs to be configured for having the [Name1.Name2] or [pkg.Name1] ...
 // to be recognized as a proper identifier.
@@ -501,6 +502,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 										instanceREQ_IF_HEADER := (&REQ_IF_HEADER{Name: instanceName}).Stage(stage)
 										instance = any(instanceREQ_IF_HEADER)
 										__gong__map_REQ_IF_HEADER[identifier] = instanceREQ_IF_HEADER
+									case "SPECIFICATION":
+										instanceSPECIFICATION := (&SPECIFICATION{Name: instanceName}).Stage(stage)
+										instance = any(instanceSPECIFICATION)
+										__gong__map_SPECIFICATION[identifier] = instanceSPECIFICATION
 									}
 									__gong__map_Indentifiers_gongstructName[identifier] = gongstructName
 									return
@@ -553,6 +558,14 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 									"2006-01-02 15:04:05.999999999 -0700 MST",
 									date)
 							}
+						case "SPECIFICATION":
+							switch fieldName {
+							// insertion point for date assign code
+							case "LAST_CHANGE":
+								__gong__map_SPECIFICATION[identifier].LAST_CHANGE, _ = time.Parse(
+									"2006-01-02 15:04:05.999999999 -0700 MST",
+									date)
+							}
 						}
 					}
 				}
@@ -587,6 +600,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 						// insertion point for slice of pointers assign code
 						}
 					case "REQ_IF_HEADER":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "SPECIFICATION":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -687,6 +704,26 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_REQ_IF_HEADER[identifier].TITLE = fielValue
 				}
+			case "SPECIFICATION":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION[identifier].Name = fielValue
+				case "DESC":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION[identifier].DESC = fielValue
+				case "IDENTIFIER":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION[identifier].IDENTIFIER = fielValue
+				case "LONG_NAME":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION[identifier].LONG_NAME = fielValue
+				}
 			}
 		case *ast.Ident:
 			// assignment to boolean field ?
@@ -714,8 +751,15 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 			case "REQ_IF_CONTENT":
 				switch fieldName {
 				// insertion point for field dependant code
+				case "SPECIFICATION":
+					targetIdentifier := ident.Name
+					__gong__map_REQ_IF_CONTENT[identifier].SPECIFICATION = __gong__map_SPECIFICATION[targetIdentifier]
 				}
 			case "REQ_IF_HEADER":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
+			case "SPECIFICATION":
 				switch fieldName {
 				// insertion point for field dependant code
 				}
@@ -756,6 +800,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					// insertion point for enum assign code
 					}
 				case "REQ_IF_HEADER":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "SPECIFICATION":
 					switch fieldName {
 					// insertion point for enum assign code
 					}

@@ -14,6 +14,9 @@ func IsStaged[Type Gongstruct](stage *StageStruct, instance *Type) (ok bool) {
 	case *REQ_IF_HEADER:
 		ok = stage.IsStagedREQ_IF_HEADER(target)
 
+	case *SPECIFICATION:
+		ok = stage.IsStagedSPECIFICATION(target)
+
 	default:
 		_ = target
 	}
@@ -42,6 +45,13 @@ func (stage *StageStruct) IsStagedREQ_IF_HEADER(req_if_header *REQ_IF_HEADER) (o
 	return
 }
 
+func (stage *StageStruct) IsStagedSPECIFICATION(specification *SPECIFICATION) (ok bool) {
+
+	_, ok = stage.SPECIFICATIONs[specification]
+
+	return
+}
+
 // StageBranch stages instance and apply StageBranch on all gongstruct instances that are
 // referenced by pointers or slices of pointers of the instance
 //
@@ -58,6 +68,9 @@ func StageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 
 	case *REQ_IF_HEADER:
 		stage.StageBranchREQ_IF_HEADER(target)
+
+	case *SPECIFICATION:
+		stage.StageBranchSPECIFICATION(target)
 
 	default:
 		_ = target
@@ -96,6 +109,9 @@ func (stage *StageStruct) StageBranchREQ_IF_CONTENT(req_if_content *REQ_IF_CONTE
 	req_if_content.Stage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
+	if req_if_content.SPECIFICATION != nil {
+		StageBranch(stage, req_if_content.SPECIFICATION)
+	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -109,6 +125,21 @@ func (stage *StageStruct) StageBranchREQ_IF_HEADER(req_if_header *REQ_IF_HEADER)
 	}
 
 	req_if_header.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *StageStruct) StageBranchSPECIFICATION(specification *SPECIFICATION) {
+
+	// check if instance is already staged
+	if IsStaged(stage, specification) {
+		return
+	}
+
+	specification.Stage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
 
@@ -137,6 +168,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *REQ_IF_HEADER:
 		toT := CopyBranchREQ_IF_HEADER(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *SPECIFICATION:
+		toT := CopyBranchSPECIFICATION(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	default:
@@ -184,6 +219,9 @@ func CopyBranchREQ_IF_CONTENT(mapOrigCopy map[any]any, req_if_contentFrom *REQ_I
 	req_if_contentFrom.CopyBasicFields(req_if_contentTo)
 
 	//insertion point for the staging of instances referenced by pointers
+	if req_if_contentFrom.SPECIFICATION != nil {
+		req_if_contentTo.SPECIFICATION = CopyBranchSPECIFICATION(mapOrigCopy, req_if_contentFrom.SPECIFICATION)
+	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -209,6 +247,25 @@ func CopyBranchREQ_IF_HEADER(mapOrigCopy map[any]any, req_if_headerFrom *REQ_IF_
 	return
 }
 
+func CopyBranchSPECIFICATION(mapOrigCopy map[any]any, specificationFrom *SPECIFICATION) (specificationTo *SPECIFICATION) {
+
+	// specificationFrom has already been copied
+	if _specificationTo, ok := mapOrigCopy[specificationFrom]; ok {
+		specificationTo = _specificationTo.(*SPECIFICATION)
+		return
+	}
+
+	specificationTo = new(SPECIFICATION)
+	mapOrigCopy[specificationFrom] = specificationTo
+	specificationFrom.CopyBasicFields(specificationTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 // UnstageBranch stages instance and apply UnstageBranch on all gongstruct instances that are
 // referenced by pointers or slices of pointers of the insance
 //
@@ -225,6 +282,9 @@ func UnstageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 
 	case *REQ_IF_HEADER:
 		stage.UnstageBranchREQ_IF_HEADER(target)
+
+	case *SPECIFICATION:
+		stage.UnstageBranchSPECIFICATION(target)
 
 	default:
 		_ = target
@@ -263,6 +323,9 @@ func (stage *StageStruct) UnstageBranchREQ_IF_CONTENT(req_if_content *REQ_IF_CON
 	req_if_content.Unstage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
+	if req_if_content.SPECIFICATION != nil {
+		UnstageBranch(stage, req_if_content.SPECIFICATION)
+	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -276,6 +339,21 @@ func (stage *StageStruct) UnstageBranchREQ_IF_HEADER(req_if_header *REQ_IF_HEADE
 	}
 
 	req_if_header.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *StageStruct) UnstageBranchSPECIFICATION(specification *SPECIFICATION) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, specification) {
+		return
+	}
+
+	specification.Unstage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
 

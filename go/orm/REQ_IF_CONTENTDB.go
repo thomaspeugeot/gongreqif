@@ -46,6 +46,10 @@ type REQ_IF_CONTENTAPI struct {
 // reverse pointers of slice of poitners to Struct
 type REQ_IF_CONTENTPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
+
+	// field SPECIFICATION is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	SPECIFICATIONID sql.NullInt64
 }
 
 // REQ_IF_CONTENTDB describes a req_if_content in the database
@@ -211,6 +215,18 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CommitPhaseTwoInstan
 		req_if_contentDB.CopyBasicFieldsFromREQ_IF_CONTENT(req_if_content)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value req_if_content.SPECIFICATION translates to updating the req_if_content.SPECIFICATIONID
+		req_if_contentDB.SPECIFICATIONID.Valid = true // allow for a 0 value (nil association)
+		if req_if_content.SPECIFICATION != nil {
+			if SPECIFICATIONId, ok := backRepo.BackRepoSPECIFICATION.Map_SPECIFICATIONPtr_SPECIFICATIONDBID[req_if_content.SPECIFICATION]; ok {
+				req_if_contentDB.SPECIFICATIONID.Int64 = int64(SPECIFICATIONId)
+				req_if_contentDB.SPECIFICATIONID.Valid = true
+			}
+		} else {
+			req_if_contentDB.SPECIFICATIONID.Int64 = 0
+			req_if_contentDB.SPECIFICATIONID.Valid = true
+		}
+
 		query := backRepoREQ_IF_CONTENT.db.Save(&req_if_contentDB)
 		if query.Error != nil {
 			log.Fatalln(query.Error)
@@ -324,6 +340,11 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CheckoutPhaseTwoInst
 func (req_if_contentDB *REQ_IF_CONTENTDB) DecodePointers(backRepo *BackRepoStruct, req_if_content *models.REQ_IF_CONTENT) {
 
 	// insertion point for checkout of pointer encoding
+	// SPECIFICATION field
+	req_if_content.SPECIFICATION = nil
+	if req_if_contentDB.SPECIFICATIONID.Int64 != 0 {
+		req_if_content.SPECIFICATION = backRepo.BackRepoSPECIFICATION.Map_SPECIFICATIONDBID_SPECIFICATIONPtr[uint(req_if_contentDB.SPECIFICATIONID.Int64)]
+	}
 	return
 }
 
@@ -552,6 +573,12 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) RestorePhaseTwo() {
 		_ = req_if_contentDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing SPECIFICATION field
+		if req_if_contentDB.SPECIFICATIONID.Int64 != 0 {
+			req_if_contentDB.SPECIFICATIONID.Int64 = int64(BackRepoSPECIFICATIONid_atBckpTime_newID[uint(req_if_contentDB.SPECIFICATIONID.Int64)])
+			req_if_contentDB.SPECIFICATIONID.Valid = true
+		}
+
 		// update databse with new index encoding
 		query := backRepoREQ_IF_CONTENT.db.Model(req_if_contentDB).Updates(*req_if_contentDB)
 		if query.Error != nil {

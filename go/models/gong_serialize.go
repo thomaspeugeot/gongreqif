@@ -17,6 +17,7 @@ func SerializeStage(stage *StageStruct, filename string) {
 		SerializeExcelize[REQIF](stage, f)
 		SerializeExcelize[REQ_IF_CONTENT](stage, f)
 		SerializeExcelize[REQ_IF_HEADER](stage, f)
+		SerializeExcelize[SPECIFICATION](stage, f)
 	}
 
 	var tab ExcelizeTabulator

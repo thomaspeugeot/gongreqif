@@ -28,6 +28,8 @@ type BackRepoStruct struct {
 
 	BackRepoREQ_IF_HEADER BackRepoREQ_IF_HEADERStruct
 
+	BackRepoSPECIFICATION BackRepoSPECIFICATIONStruct
+
 	CommitFromBackNb uint // records commit increments when performed by the back
 
 	PushFromFrontNb uint // records commit increments when performed by the front
@@ -71,6 +73,7 @@ func NewBackRepo(stage *models.StageStruct, filename string) (backRepo *BackRepo
 		&REQIFDB{},
 		&REQ_IF_CONTENTDB{},
 		&REQ_IF_HEADERDB{},
+		&SPECIFICATIONDB{},
 	)
 
 	if err != nil {
@@ -101,6 +104,14 @@ func NewBackRepo(stage *models.StageStruct, filename string) (backRepo *BackRepo
 		Map_REQ_IF_HEADERDBID_REQ_IF_HEADERPtr: make(map[uint]*models.REQ_IF_HEADER, 0),
 		Map_REQ_IF_HEADERDBID_REQ_IF_HEADERDB:  make(map[uint]*REQ_IF_HEADERDB, 0),
 		Map_REQ_IF_HEADERPtr_REQ_IF_HEADERDBID: make(map[*models.REQ_IF_HEADER]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoSPECIFICATION = BackRepoSPECIFICATIONStruct{
+		Map_SPECIFICATIONDBID_SPECIFICATIONPtr: make(map[uint]*models.SPECIFICATION, 0),
+		Map_SPECIFICATIONDBID_SPECIFICATIONDB:  make(map[uint]*SPECIFICATIONDB, 0),
+		Map_SPECIFICATIONPtr_SPECIFICATIONDBID: make(map[*models.SPECIFICATION]uint, 0),
 
 		db:    db,
 		stage: stage,
@@ -156,11 +167,13 @@ func (backRepo *BackRepoStruct) Commit(stage *models.StageStruct) {
 	backRepo.BackRepoREQIF.CommitPhaseOne(stage)
 	backRepo.BackRepoREQ_IF_CONTENT.CommitPhaseOne(stage)
 	backRepo.BackRepoREQ_IF_HEADER.CommitPhaseOne(stage)
+	backRepo.BackRepoSPECIFICATION.CommitPhaseOne(stage)
 
 	// insertion point for per struct back repo phase two commit
 	backRepo.BackRepoREQIF.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_CONTENT.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_HEADER.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoSPECIFICATION.CommitPhaseTwo(backRepo)
 
 	backRepo.IncrementCommitFromBackNb()
 }
@@ -171,11 +184,13 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.StageStruct) {
 	backRepo.BackRepoREQIF.CheckoutPhaseOne()
 	backRepo.BackRepoREQ_IF_CONTENT.CheckoutPhaseOne()
 	backRepo.BackRepoREQ_IF_HEADER.CheckoutPhaseOne()
+	backRepo.BackRepoSPECIFICATION.CheckoutPhaseOne()
 
 	// insertion point for per struct back repo phase two commit
 	backRepo.BackRepoREQIF.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_CONTENT.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_HEADER.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoSPECIFICATION.CheckoutPhaseTwo(backRepo)
 }
 
 // Backup the BackRepoStruct
@@ -186,6 +201,7 @@ func (backRepo *BackRepoStruct) Backup(stage *models.StageStruct, dirPath string
 	backRepo.BackRepoREQIF.Backup(dirPath)
 	backRepo.BackRepoREQ_IF_CONTENT.Backup(dirPath)
 	backRepo.BackRepoREQ_IF_HEADER.Backup(dirPath)
+	backRepo.BackRepoSPECIFICATION.Backup(dirPath)
 }
 
 // Backup in XL the BackRepoStruct
@@ -199,6 +215,7 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.StageStruct, dirPath stri
 	backRepo.BackRepoREQIF.BackupXL(file)
 	backRepo.BackRepoREQ_IF_CONTENT.BackupXL(file)
 	backRepo.BackRepoREQ_IF_HEADER.BackupXL(file)
+	backRepo.BackRepoSPECIFICATION.BackupXL(file)
 
 	var b bytes.Buffer
 	writer := bufio.NewWriter(&b)
@@ -226,6 +243,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.StageStruct, dirPath strin
 	backRepo.BackRepoREQIF.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQ_IF_CONTENT.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQ_IF_HEADER.RestorePhaseOne(dirPath)
+	backRepo.BackRepoSPECIFICATION.RestorePhaseOne(dirPath)
 
 	//
 	// restauration second phase (reindex pointers with the new ID)
@@ -235,6 +253,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.StageStruct, dirPath strin
 	backRepo.BackRepoREQIF.RestorePhaseTwo()
 	backRepo.BackRepoREQ_IF_CONTENT.RestorePhaseTwo()
 	backRepo.BackRepoREQ_IF_HEADER.RestorePhaseTwo()
+	backRepo.BackRepoSPECIFICATION.RestorePhaseTwo()
 
 	backRepo.stage.Checkout()
 }
@@ -265,6 +284,7 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.StageStruct, dirPath str
 	backRepo.BackRepoREQIF.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQ_IF_CONTENT.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQ_IF_HEADER.RestoreXLPhaseOne(file)
+	backRepo.BackRepoSPECIFICATION.RestoreXLPhaseOne(file)
 
 	// commit the restored stage
 	backRepo.stage.Commit()

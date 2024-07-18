@@ -238,6 +238,64 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 
 	}
 
+	map_SPECIFICATION_Identifiers := make(map[*SPECIFICATION]string)
+	_ = map_SPECIFICATION_Identifiers
+
+	specificationOrdered := []*SPECIFICATION{}
+	for specification := range stage.SPECIFICATIONs {
+		specificationOrdered = append(specificationOrdered, specification)
+	}
+	sort.Slice(specificationOrdered[:], func(i, j int) bool {
+		return specificationOrdered[i].Name < specificationOrdered[j].Name
+	})
+	if len(specificationOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, specification := range specificationOrdered {
+
+		id = generatesIdentifier("SPECIFICATION", idx, specification.Name)
+		map_SPECIFICATION_Identifiers[specification] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPECIFICATION")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification.DESC))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification.IDENTIFIER))
+		initializerStatements += setValueField
+
+		setValueField = TimeInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", specification.LAST_CHANGE.String())
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification.LONG_NAME))
+		initializerStatements += setValueField
+
+	}
+
 	// insertion initialization of objects to stage
 	for idx, reqif := range reqifOrdered {
 		var setPointerField string
@@ -273,6 +331,14 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 		map_REQ_IF_CONTENT_Identifiers[req_if_content] = id
 
 		// Initialisation of values
+		if req_if_content.SPECIFICATION != nil {
+			setPointerField = PointerFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPECIFICATION")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPECIFICATION_Identifiers[req_if_content.SPECIFICATION])
+			pointersInitializesStatements += setPointerField
+		}
+
 	}
 
 	for idx, req_if_header := range req_if_headerOrdered {
@@ -281,6 +347,16 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 
 		id = generatesIdentifier("REQ_IF_HEADER", idx, req_if_header.Name)
 		map_REQ_IF_HEADER_Identifiers[req_if_header] = id
+
+		// Initialisation of values
+	}
+
+	for idx, specification := range specificationOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("SPECIFICATION", idx, specification.Name)
+		map_SPECIFICATION_Identifiers[specification] = id
 
 		// Initialisation of values
 	}

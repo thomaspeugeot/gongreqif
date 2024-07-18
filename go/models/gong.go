@@ -79,6 +79,16 @@ type StageStruct struct {
 	OnAfterREQ_IF_HEADERDeleteCallback OnAfterDeleteInterface[REQ_IF_HEADER]
 	OnAfterREQ_IF_HEADERReadCallback   OnAfterReadInterface[REQ_IF_HEADER]
 
+	SPECIFICATIONs           map[*SPECIFICATION]any
+	SPECIFICATIONs_mapString map[string]*SPECIFICATION
+
+	// insertion point for slice of pointers maps
+
+	OnAfterSPECIFICATIONCreateCallback OnAfterCreateInterface[SPECIFICATION]
+	OnAfterSPECIFICATIONUpdateCallback OnAfterUpdateInterface[SPECIFICATION]
+	OnAfterSPECIFICATIONDeleteCallback OnAfterDeleteInterface[SPECIFICATION]
+	OnAfterSPECIFICATIONReadCallback   OnAfterReadInterface[SPECIFICATION]
+
 	AllModelsStructCreateCallback AllModelsStructCreateInterface
 
 	AllModelsStructDeleteCallback AllModelsStructDeleteInterface
@@ -153,6 +163,8 @@ type BackRepoInterface interface {
 	CheckoutREQ_IF_CONTENT(req_if_content *REQ_IF_CONTENT)
 	CommitREQ_IF_HEADER(req_if_header *REQ_IF_HEADER)
 	CheckoutREQ_IF_HEADER(req_if_header *REQ_IF_HEADER)
+	CommitSPECIFICATION(specification *SPECIFICATION)
+	CheckoutSPECIFICATION(specification *SPECIFICATION)
 	GetLastCommitFromBackNb() uint
 	GetLastPushFromFrontNb() uint
 }
@@ -168,6 +180,9 @@ func NewStage(path string) (stage *StageStruct) {
 
 		REQ_IF_HEADERs:           make(map[*REQ_IF_HEADER]any),
 		REQ_IF_HEADERs_mapString: make(map[string]*REQ_IF_HEADER),
+
+		SPECIFICATIONs:           make(map[*SPECIFICATION]any),
+		SPECIFICATIONs_mapString: make(map[string]*SPECIFICATION),
 
 		// end of insertion point
 		Map_GongStructName_InstancesNb: make(map[string]int),
@@ -205,6 +220,7 @@ func (stage *StageStruct) Commit() {
 	stage.Map_GongStructName_InstancesNb["REQIF"] = len(stage.REQIFs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF_CONTENT"] = len(stage.REQ_IF_CONTENTs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF_HEADER"] = len(stage.REQ_IF_HEADERs)
+	stage.Map_GongStructName_InstancesNb["SPECIFICATION"] = len(stage.SPECIFICATIONs)
 
 }
 
@@ -218,6 +234,7 @@ func (stage *StageStruct) Checkout() {
 	stage.Map_GongStructName_InstancesNb["REQIF"] = len(stage.REQIFs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF_CONTENT"] = len(stage.REQ_IF_CONTENTs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF_HEADER"] = len(stage.REQ_IF_HEADERs)
+	stage.Map_GongStructName_InstancesNb["SPECIFICATION"] = len(stage.SPECIFICATIONs)
 
 }
 
@@ -400,17 +417,69 @@ func (req_if_header *REQ_IF_HEADER) GetName() (res string) {
 	return req_if_header.Name
 }
 
+// Stage puts specification to the model stage
+func (specification *SPECIFICATION) Stage(stage *StageStruct) *SPECIFICATION {
+	stage.SPECIFICATIONs[specification] = __member
+	stage.SPECIFICATIONs_mapString[specification.Name] = specification
+
+	return specification
+}
+
+// Unstage removes specification off the model stage
+func (specification *SPECIFICATION) Unstage(stage *StageStruct) *SPECIFICATION {
+	delete(stage.SPECIFICATIONs, specification)
+	delete(stage.SPECIFICATIONs_mapString, specification.Name)
+	return specification
+}
+
+// UnstageVoid removes specification off the model stage
+func (specification *SPECIFICATION) UnstageVoid(stage *StageStruct) {
+	delete(stage.SPECIFICATIONs, specification)
+	delete(stage.SPECIFICATIONs_mapString, specification.Name)
+}
+
+// commit specification to the back repo (if it is already staged)
+func (specification *SPECIFICATION) Commit(stage *StageStruct) *SPECIFICATION {
+	if _, ok := stage.SPECIFICATIONs[specification]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitSPECIFICATION(specification)
+		}
+	}
+	return specification
+}
+
+func (specification *SPECIFICATION) CommitVoid(stage *StageStruct) {
+	specification.Commit(stage)
+}
+
+// Checkout specification to the back repo (if it is already staged)
+func (specification *SPECIFICATION) Checkout(stage *StageStruct) *SPECIFICATION {
+	if _, ok := stage.SPECIFICATIONs[specification]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutSPECIFICATION(specification)
+		}
+	}
+	return specification
+}
+
+// for satisfaction of GongStruct interface
+func (specification *SPECIFICATION) GetName() (res string) {
+	return specification.Name
+}
+
 // swagger:ignore
 type AllModelsStructCreateInterface interface { // insertion point for Callbacks on creation
 	CreateORMREQIF(REQIF *REQIF)
 	CreateORMREQ_IF_CONTENT(REQ_IF_CONTENT *REQ_IF_CONTENT)
 	CreateORMREQ_IF_HEADER(REQ_IF_HEADER *REQ_IF_HEADER)
+	CreateORMSPECIFICATION(SPECIFICATION *SPECIFICATION)
 }
 
 type AllModelsStructDeleteInterface interface { // insertion point for Callbacks on deletion
 	DeleteORMREQIF(REQIF *REQIF)
 	DeleteORMREQ_IF_CONTENT(REQ_IF_CONTENT *REQ_IF_CONTENT)
 	DeleteORMREQ_IF_HEADER(REQ_IF_HEADER *REQ_IF_HEADER)
+	DeleteORMSPECIFICATION(SPECIFICATION *SPECIFICATION)
 }
 
 func (stage *StageStruct) Reset() { // insertion point for array reset
@@ -423,6 +492,9 @@ func (stage *StageStruct) Reset() { // insertion point for array reset
 	stage.REQ_IF_HEADERs = make(map[*REQ_IF_HEADER]any)
 	stage.REQ_IF_HEADERs_mapString = make(map[string]*REQ_IF_HEADER)
 
+	stage.SPECIFICATIONs = make(map[*SPECIFICATION]any)
+	stage.SPECIFICATIONs_mapString = make(map[string]*SPECIFICATION)
+
 }
 
 func (stage *StageStruct) Nil() { // insertion point for array nil
@@ -434,6 +506,9 @@ func (stage *StageStruct) Nil() { // insertion point for array nil
 
 	stage.REQ_IF_HEADERs = nil
 	stage.REQ_IF_HEADERs_mapString = nil
+
+	stage.SPECIFICATIONs = nil
+	stage.SPECIFICATIONs_mapString = nil
 
 }
 
@@ -450,6 +525,10 @@ func (stage *StageStruct) Unstage() { // insertion point for array nil
 		req_if_header.Unstage(stage)
 	}
 
+	for specification := range stage.SPECIFICATIONs {
+		specification.Unstage(stage)
+	}
+
 }
 
 // Gongstruct is the type parameter for generated generic function that allows
@@ -458,7 +537,7 @@ func (stage *StageStruct) Unstage() { // insertion point for array nil
 // - full refactoring of Gongstruct identifiers / fields
 type Gongstruct interface {
 	// insertion point for generic types
-	REQIF | REQ_IF_CONTENT | REQ_IF_HEADER
+	REQIF | REQ_IF_CONTENT | REQ_IF_HEADER | SPECIFICATION
 }
 
 type GongtructBasicField interface {
@@ -471,7 +550,7 @@ type GongtructBasicField interface {
 // - full refactoring of Gongstruct identifiers / fields
 type PointerToGongstruct interface {
 	// insertion point for generic types
-	*REQIF | *REQ_IF_CONTENT | *REQ_IF_HEADER
+	*REQIF | *REQ_IF_CONTENT | *REQ_IF_HEADER | *SPECIFICATION
 	GetName() string
 	CommitVoid(*StageStruct)
 	UnstageVoid(stage *StageStruct)
@@ -503,6 +582,7 @@ type GongstructSet interface {
 		map[*REQIF]any |
 		map[*REQ_IF_CONTENT]any |
 		map[*REQ_IF_HEADER]any |
+		map[*SPECIFICATION]any |
 		map[*any]any // because go does not support an extra "|" at the end of type specifications
 }
 
@@ -512,6 +592,7 @@ type GongstructMapString interface {
 		map[string]*REQIF |
 		map[string]*REQ_IF_CONTENT |
 		map[string]*REQ_IF_HEADER |
+		map[string]*SPECIFICATION |
 		map[*any]any // because go does not support an extra "|" at the end of type specifications
 }
 
@@ -528,6 +609,8 @@ func GongGetSet[Type GongstructSet](stage *StageStruct) *Type {
 		return any(&stage.REQ_IF_CONTENTs).(*Type)
 	case map[*REQ_IF_HEADER]any:
 		return any(&stage.REQ_IF_HEADERs).(*Type)
+	case map[*SPECIFICATION]any:
+		return any(&stage.SPECIFICATIONs).(*Type)
 	default:
 		return nil
 	}
@@ -546,6 +629,8 @@ func GongGetMap[Type GongstructMapString](stage *StageStruct) *Type {
 		return any(&stage.REQ_IF_CONTENTs_mapString).(*Type)
 	case map[string]*REQ_IF_HEADER:
 		return any(&stage.REQ_IF_HEADERs_mapString).(*Type)
+	case map[string]*SPECIFICATION:
+		return any(&stage.SPECIFICATIONs_mapString).(*Type)
 	default:
 		return nil
 	}
@@ -564,6 +649,8 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *StageStruct) *map[*Type]a
 		return any(&stage.REQ_IF_CONTENTs).(*map[*Type]any)
 	case REQ_IF_HEADER:
 		return any(&stage.REQ_IF_HEADERs).(*map[*Type]any)
+	case SPECIFICATION:
+		return any(&stage.SPECIFICATIONs).(*map[*Type]any)
 	default:
 		return nil
 	}
@@ -582,6 +669,8 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.REQ_IF_CONTENTs).(*map[Type]any)
 	case *REQ_IF_HEADER:
 		return any(&stage.REQ_IF_HEADERs).(*map[Type]any)
+	case *SPECIFICATION:
+		return any(&stage.SPECIFICATIONs).(*map[Type]any)
 	default:
 		return nil
 	}
@@ -600,6 +689,8 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *StageStruct) *map[string]
 		return any(&stage.REQ_IF_CONTENTs_mapString).(*map[string]*Type)
 	case REQ_IF_HEADER:
 		return any(&stage.REQ_IF_HEADERs_mapString).(*map[string]*Type)
+	case SPECIFICATION:
+		return any(&stage.SPECIFICATIONs_mapString).(*map[string]*Type)
 	default:
 		return nil
 	}
@@ -625,9 +716,15 @@ func GetAssociationName[Type Gongstruct]() *Type {
 	case REQ_IF_CONTENT:
 		return any(&REQ_IF_CONTENT{
 			// Initialisation of associations
+			// field is initialized with an instance of SPECIFICATION with the name of the field
+			SPECIFICATION: &SPECIFICATION{Name: "SPECIFICATION"},
 		}).(*Type)
 	case REQ_IF_HEADER:
 		return any(&REQ_IF_HEADER{
+			// Initialisation of associations
+		}).(*Type)
+	case SPECIFICATION:
+		return any(&SPECIFICATION{
 			// Initialisation of associations
 		}).(*Type)
 	default:
@@ -691,9 +788,31 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 	case REQ_IF_CONTENT:
 		switch fieldname {
 		// insertion point for per direct association field
+		case "SPECIFICATION":
+			res := make(map[*SPECIFICATION][]*REQ_IF_CONTENT)
+			for req_if_content := range stage.REQ_IF_CONTENTs {
+				if req_if_content.SPECIFICATION != nil {
+					specification_ := req_if_content.SPECIFICATION
+					var req_if_contents []*REQ_IF_CONTENT
+					_, ok := res[specification_]
+					if ok {
+						req_if_contents = res[specification_]
+					} else {
+						req_if_contents = make([]*REQ_IF_CONTENT, 0)
+					}
+					req_if_contents = append(req_if_contents, req_if_content)
+					res[specification_] = req_if_contents
+				}
+			}
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of REQ_IF_HEADER
 	case REQ_IF_HEADER:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of SPECIFICATION
+	case SPECIFICATION:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -728,6 +847,11 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
+	// reverse maps of direct associations of SPECIFICATION
+	case SPECIFICATION:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
 	}
 	return nil
 }
@@ -746,6 +870,8 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "REQ_IF_CONTENT"
 	case REQ_IF_HEADER:
 		res = "REQ_IF_HEADER"
+	case SPECIFICATION:
+		res = "SPECIFICATION"
 	}
 	return res
 }
@@ -764,6 +890,8 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "REQ_IF_CONTENT"
 	case *REQ_IF_HEADER:
 		res = "REQ_IF_HEADER"
+	case *SPECIFICATION:
+		res = "SPECIFICATION"
 	}
 	return res
 }
@@ -778,9 +906,11 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case REQIF:
 		res = []string{"Name", "REQ_IF_HEADER", "REQ_IF_CONTENT"}
 	case REQ_IF_CONTENT:
-		res = []string{"Name"}
+		res = []string{"Name", "SPECIFICATION"}
 	case REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
+	case SPECIFICATION:
+		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	}
 	return
 }
@@ -808,6 +938,9 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 	case REQ_IF_HEADER:
 		var rf ReverseField
 		_ = rf
+	case SPECIFICATION:
+		var rf ReverseField
+		_ = rf
 	}
 	return
 }
@@ -822,9 +955,11 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *REQIF:
 		res = []string{"Name", "REQ_IF_HEADER", "REQ_IF_CONTENT"}
 	case *REQ_IF_CONTENT:
-		res = []string{"Name"}
+		res = []string{"Name", "SPECIFICATION"}
 	case *REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
+	case *SPECIFICATION:
+		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	}
 	return
 }
@@ -852,6 +987,10 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 		// string value of fields
 		case "Name":
 			res = inferedInstance.Name
+		case "SPECIFICATION":
+			if inferedInstance.SPECIFICATION != nil {
+				res = inferedInstance.SPECIFICATION.Name
+			}
 		}
 	case *REQ_IF_HEADER:
 		switch fieldName {
@@ -872,6 +1011,20 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 			res = inferedInstance.SOURCE_TOOL_ID
 		case "TITLE":
 			res = inferedInstance.TITLE
+		}
+	case *SPECIFICATION:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res = inferedInstance.Name
+		case "DESC":
+			res = inferedInstance.DESC
+		case "IDENTIFIER":
+			res = inferedInstance.IDENTIFIER
+		case "LAST_CHANGE":
+			res = inferedInstance.LAST_CHANGE.String()
+		case "LONG_NAME":
+			res = inferedInstance.LONG_NAME
 		}
 	default:
 		_ = inferedInstance
@@ -902,6 +1055,10 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 		// string value of fields
 		case "Name":
 			res = inferedInstance.Name
+		case "SPECIFICATION":
+			if inferedInstance.SPECIFICATION != nil {
+				res = inferedInstance.SPECIFICATION.Name
+			}
 		}
 	case REQ_IF_HEADER:
 		switch fieldName {
@@ -922,6 +1079,20 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 			res = inferedInstance.SOURCE_TOOL_ID
 		case "TITLE":
 			res = inferedInstance.TITLE
+		}
+	case SPECIFICATION:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res = inferedInstance.Name
+		case "DESC":
+			res = inferedInstance.DESC
+		case "IDENTIFIER":
+			res = inferedInstance.IDENTIFIER
+		case "LAST_CHANGE":
+			res = inferedInstance.LAST_CHANGE.String()
+		case "LONG_NAME":
+			res = inferedInstance.LONG_NAME
 		}
 	default:
 		_ = inferedInstance

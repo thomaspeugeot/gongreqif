@@ -26,6 +26,8 @@ func fillUpTablePointerToGongstruct[T models.PointerToGongstruct](
 		fillUpTable[models.REQ_IF_CONTENT](probe)
 	case *models.REQ_IF_HEADER:
 		fillUpTable[models.REQ_IF_HEADER](probe)
+	case *models.SPECIFICATION:
+		fillUpTable[models.SPECIFICATION](probe)
 	default:
 		log.Println("unknow type")
 	}

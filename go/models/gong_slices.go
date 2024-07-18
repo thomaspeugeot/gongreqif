@@ -42,6 +42,9 @@ func EvictInOtherSlices[OwningType PointerToGongstruct, FieldType PointerToGongs
 	case *REQ_IF_HEADER:
 		// insertion point per field
 
+	case *SPECIFICATION:
+		// insertion point per field
+
 	default:
 		_ = owningInstanceInfered // to avoid "declared and not used" error if no named struct has slices
 	}
@@ -58,6 +61,9 @@ func (stage *StageStruct) ComputeReverseMaps() {
 	// insertion point per field
 
 	// Compute reverse map for named struct REQ_IF_HEADER
+	// insertion point per field
+
+	// Compute reverse map for named struct SPECIFICATION
 	// insertion point per field
 
 }
