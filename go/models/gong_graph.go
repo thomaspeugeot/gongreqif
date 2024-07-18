@@ -17,6 +17,9 @@ func IsStaged[Type Gongstruct](stage *StageStruct, instance *Type) (ok bool) {
 	case *SPECIFICATION:
 		ok = stage.IsStagedSPECIFICATION(target)
 
+	case *SPECIFICATION_TYPE:
+		ok = stage.IsStagedSPECIFICATION_TYPE(target)
+
 	case *SPEC_HIERARCHY:
 		ok = stage.IsStagedSPEC_HIERARCHY(target)
 
@@ -55,6 +58,13 @@ func (stage *StageStruct) IsStagedSPECIFICATION(specification *SPECIFICATION) (o
 	return
 }
 
+func (stage *StageStruct) IsStagedSPECIFICATION_TYPE(specification_type *SPECIFICATION_TYPE) (ok bool) {
+
+	_, ok = stage.SPECIFICATION_TYPEs[specification_type]
+
+	return
+}
+
 func (stage *StageStruct) IsStagedSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARCHY) (ok bool) {
 
 	_, ok = stage.SPEC_HIERARCHYs[spec_hierarchy]
@@ -81,6 +91,9 @@ func StageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 
 	case *SPECIFICATION:
 		stage.StageBranchSPECIFICATION(target)
+
+	case *SPECIFICATION_TYPE:
+		stage.StageBranchSPECIFICATION_TYPE(target)
 
 	case *SPEC_HIERARCHY:
 		stage.StageBranchSPEC_HIERARCHY(target)
@@ -163,6 +176,21 @@ func (stage *StageStruct) StageBranchSPECIFICATION(specification *SPECIFICATION)
 
 }
 
+func (stage *StageStruct) StageBranchSPECIFICATION_TYPE(specification_type *SPECIFICATION_TYPE) {
+
+	// check if instance is already staged
+	if IsStaged(stage, specification_type) {
+		return
+	}
+
+	specification_type.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *StageStruct) StageBranchSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARCHY) {
 
 	// check if instance is already staged
@@ -206,6 +234,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *SPECIFICATION:
 		toT := CopyBranchSPECIFICATION(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *SPECIFICATION_TYPE:
+		toT := CopyBranchSPECIFICATION_TYPE(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *SPEC_HIERARCHY:
@@ -307,6 +339,25 @@ func CopyBranchSPECIFICATION(mapOrigCopy map[any]any, specificationFrom *SPECIFI
 	return
 }
 
+func CopyBranchSPECIFICATION_TYPE(mapOrigCopy map[any]any, specification_typeFrom *SPECIFICATION_TYPE) (specification_typeTo *SPECIFICATION_TYPE) {
+
+	// specification_typeFrom has already been copied
+	if _specification_typeTo, ok := mapOrigCopy[specification_typeFrom]; ok {
+		specification_typeTo = _specification_typeTo.(*SPECIFICATION_TYPE)
+		return
+	}
+
+	specification_typeTo = new(SPECIFICATION_TYPE)
+	mapOrigCopy[specification_typeFrom] = specification_typeTo
+	specification_typeFrom.CopyBasicFields(specification_typeTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchSPEC_HIERARCHY(mapOrigCopy map[any]any, spec_hierarchyFrom *SPEC_HIERARCHY) (spec_hierarchyTo *SPEC_HIERARCHY) {
 
 	// spec_hierarchyFrom has already been copied
@@ -348,6 +399,9 @@ func UnstageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 
 	case *SPECIFICATION:
 		stage.UnstageBranchSPECIFICATION(target)
+
+	case *SPECIFICATION_TYPE:
+		stage.UnstageBranchSPECIFICATION_TYPE(target)
 
 	case *SPEC_HIERARCHY:
 		stage.UnstageBranchSPEC_HIERARCHY(target)
@@ -425,6 +479,21 @@ func (stage *StageStruct) UnstageBranchSPECIFICATION(specification *SPECIFICATIO
 	if specification.CHILDREN != nil {
 		UnstageBranch(stage, specification.CHILDREN)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *StageStruct) UnstageBranchSPECIFICATION_TYPE(specification_type *SPECIFICATION_TYPE) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, specification_type) {
+		return
+	}
+
+	specification_type.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 

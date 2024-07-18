@@ -64,6 +64,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION" {
 		fillUpTable[models.SPECIFICATION](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION_TYPE" {
+		fillUpTable[models.SPECIFICATION_TYPE](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPEC_HIERARCHY" {
 		fillUpTable[models.SPEC_HIERARCHY](nodeImplGongstruct.probe)
 	}

@@ -677,7 +677,7 @@ type REQ_IF struct {
 }
 
 type REQ_IF_CONTENT struct {
-	DATATYPES struct {
+	DATATYPES []struct {
 		DATATYPE_DEFINITION_BOOLEAN *DATATYPE_DEFINITION_BOOLEAN `xml:"DATATYPE-DEFINITION-BOOLEAN,omitempty" json:"DATATYPE-DEFINITION-BOOLEAN,omitempty"`
 
 		DATATYPE_DEFINITION_DATE *DATATYPE_DEFINITION_DATE `xml:"DATATYPE-DEFINITION-DATE,omitempty" json:"DATATYPE-DEFINITION-DATE,omitempty"`
@@ -693,7 +693,7 @@ type REQ_IF_CONTENT struct {
 		DATATYPE_DEFINITION_XHTML *DATATYPE_DEFINITION_XHTML `xml:"DATATYPE-DEFINITION-XHTML,omitempty" json:"DATATYPE-DEFINITION-XHTML,omitempty"`
 	} `xml:"DATATYPES,omitempty" json:"DATATYPES,omitempty"`
 
-	SPEC_TYPES struct {
+	SPEC_TYPES []struct {
 		RELATION_GROUP_TYPE *RELATION_GROUP_TYPE `xml:"RELATION-GROUP-TYPE,omitempty" json:"RELATION-GROUP-TYPE,omitempty"`
 
 		SPEC_OBJECT_TYPE *SPEC_OBJECT_TYPE `xml:"SPEC-OBJECT-TYPE,omitempty" json:"SPEC-OBJECT-TYPE,omitempty"`
@@ -703,19 +703,19 @@ type REQ_IF_CONTENT struct {
 		SPECIFICATION_TYPE *SPECIFICATION_TYPE `xml:"SPECIFICATION-TYPE,omitempty" json:"SPECIFICATION-TYPE,omitempty"`
 	} `xml:"SPEC-TYPES,omitempty" json:"SPEC-TYPES,omitempty"`
 
-	SPEC_OBJECTS struct {
+	SPEC_OBJECTS []struct {
 		SPEC_OBJECT *SPEC_OBJECT `xml:"SPEC-OBJECT,omitempty" json:"SPEC-OBJECT,omitempty"`
 	} `xml:"SPEC-OBJECTS,omitempty" json:"SPEC-OBJECTS,omitempty"`
 
-	SPEC_RELATIONS struct {
+	SPEC_RELATIONS []struct {
 		SPEC_RELATION *SPEC_RELATION `xml:"SPEC-RELATION,omitempty" json:"SPEC-RELATION,omitempty"`
 	} `xml:"SPEC-RELATIONS,omitempty" json:"SPEC-RELATIONS,omitempty"`
 
-	SPECIFICATIONS struct {
+	SPECIFICATIONS []struct {
 		SPECIFICATION *SPECIFICATION `xml:"SPECIFICATION,omitempty" json:"SPECIFICATION,omitempty"`
 	} `xml:"SPECIFICATIONS,omitempty" json:"SPECIFICATIONS,omitempty"`
 
-	SPEC_RELATION_GROUPS struct {
+	SPEC_RELATION_GROUPS []struct {
 		RELATION_GROUP *RELATION_GROUP `xml:"RELATION-GROUP,omitempty" json:"RELATION-GROUP,omitempty"`
 	} `xml:"SPEC-RELATION-GROUPS,omitempty" json:"SPEC-RELATION-GROUPS,omitempty"`
 }

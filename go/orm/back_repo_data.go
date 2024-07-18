@@ -12,6 +12,8 @@ type BackRepoData struct {
 
 	SPECIFICATIONAPIs []*SPECIFICATIONAPI
 
+	SPECIFICATION_TYPEAPIs []*SPECIFICATION_TYPEAPI
+
 	SPEC_HIERARCHYAPIs []*SPEC_HIERARCHYAPI
 }
 
@@ -55,6 +57,16 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		specificationDB.CopyBasicFieldsToSPECIFICATION_WOP(&specificationAPI.SPECIFICATION_WOP)
 
 		backRepoData.SPECIFICATIONAPIs = append(backRepoData.SPECIFICATIONAPIs, &specificationAPI)
+	}
+
+	for _, specification_typeDB := range backRepo.BackRepoSPECIFICATION_TYPE.Map_SPECIFICATION_TYPEDBID_SPECIFICATION_TYPEDB {
+
+		var specification_typeAPI SPECIFICATION_TYPEAPI
+		specification_typeAPI.ID = specification_typeDB.ID
+		specification_typeAPI.SPECIFICATION_TYPEPointersEncoding = specification_typeDB.SPECIFICATION_TYPEPointersEncoding
+		specification_typeDB.CopyBasicFieldsToSPECIFICATION_TYPE_WOP(&specification_typeAPI.SPECIFICATION_TYPE_WOP)
+
+		backRepoData.SPECIFICATION_TYPEAPIs = append(backRepoData.SPECIFICATION_TYPEAPIs, &specification_typeAPI)
 	}
 
 	for _, spec_hierarchyDB := range backRepo.BackRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYDBID_SPEC_HIERARCHYDB {

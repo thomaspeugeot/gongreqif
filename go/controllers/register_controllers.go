@@ -75,6 +75,13 @@ func registerControllers(r *gin.Engine) {
 		v1.PUT("/v1/specifications/:id", GetController().UpdateSPECIFICATION)
 		v1.DELETE("/v1/specifications/:id", GetController().DeleteSPECIFICATION)
 
+		v1.GET("/v1/specification_types", GetController().GetSPECIFICATION_TYPEs)
+		v1.GET("/v1/specification_types/:id", GetController().GetSPECIFICATION_TYPE)
+		v1.POST("/v1/specification_types", GetController().PostSPECIFICATION_TYPE)
+		v1.PATCH("/v1/specification_types/:id", GetController().UpdateSPECIFICATION_TYPE)
+		v1.PUT("/v1/specification_types/:id", GetController().UpdateSPECIFICATION_TYPE)
+		v1.DELETE("/v1/specification_types/:id", GetController().DeleteSPECIFICATION_TYPE)
+
 		v1.GET("/v1/spec_hierarchys", GetController().GetSPEC_HIERARCHYs)
 		v1.GET("/v1/spec_hierarchys/:id", GetController().GetSPEC_HIERARCHY)
 		v1.POST("/v1/spec_hierarchys", GetController().PostSPEC_HIERARCHY)

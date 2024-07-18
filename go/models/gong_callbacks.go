@@ -22,6 +22,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *StageStruct, instance *Type) {
 		if stage.OnAfterSPECIFICATIONCreateCallback != nil {
 			stage.OnAfterSPECIFICATIONCreateCallback.OnAfterCreate(stage, target)
 		}
+	case *SPECIFICATION_TYPE:
+		if stage.OnAfterSPECIFICATION_TYPECreateCallback != nil {
+			stage.OnAfterSPECIFICATION_TYPECreateCallback.OnAfterCreate(stage, target)
+		}
 	case *SPEC_HIERARCHY:
 		if stage.OnAfterSPEC_HIERARCHYCreateCallback != nil {
 			stage.OnAfterSPEC_HIERARCHYCreateCallback.OnAfterCreate(stage, target)
@@ -55,6 +59,11 @@ func AfterUpdateFromFront[Type Gongstruct](stage *StageStruct, old, new *Type) {
 		newTarget := any(new).(*SPECIFICATION)
 		if stage.OnAfterSPECIFICATIONUpdateCallback != nil {
 			stage.OnAfterSPECIFICATIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *SPECIFICATION_TYPE:
+		newTarget := any(new).(*SPECIFICATION_TYPE)
+		if stage.OnAfterSPECIFICATION_TYPEUpdateCallback != nil {
+			stage.OnAfterSPECIFICATION_TYPEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
 	case *SPEC_HIERARCHY:
 		newTarget := any(new).(*SPEC_HIERARCHY)
@@ -91,6 +100,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *StageStruct, staged, front *Ty
 			staged := any(staged).(*SPECIFICATION)
 			stage.OnAfterSPECIFICATIONDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *SPECIFICATION_TYPE:
+		if stage.OnAfterSPECIFICATION_TYPEDeleteCallback != nil {
+			staged := any(staged).(*SPECIFICATION_TYPE)
+			stage.OnAfterSPECIFICATION_TYPEDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *SPEC_HIERARCHY:
 		if stage.OnAfterSPEC_HIERARCHYDeleteCallback != nil {
 			staged := any(staged).(*SPEC_HIERARCHY)
@@ -122,6 +136,10 @@ func AfterReadFromFront[Type Gongstruct](stage *StageStruct, instance *Type) {
 		if stage.OnAfterSPECIFICATIONReadCallback != nil {
 			stage.OnAfterSPECIFICATIONReadCallback.OnAfterRead(stage, target)
 		}
+	case *SPECIFICATION_TYPE:
+		if stage.OnAfterSPECIFICATION_TYPEReadCallback != nil {
+			stage.OnAfterSPECIFICATION_TYPEReadCallback.OnAfterRead(stage, target)
+		}
 	case *SPEC_HIERARCHY:
 		if stage.OnAfterSPEC_HIERARCHYReadCallback != nil {
 			stage.OnAfterSPEC_HIERARCHYReadCallback.OnAfterRead(stage, target)
@@ -149,6 +167,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *StageStruct, callba
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION])
 	
+	case *SPECIFICATION_TYPE:
+		stage.OnAfterSPECIFICATION_TYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION_TYPE])
+	
 	case *SPEC_HIERARCHY:
 		stage.OnAfterSPEC_HIERARCHYUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_HIERARCHY])
 	
@@ -170,6 +191,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *StageStruct, callba
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONCreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION])
+	
+	case *SPECIFICATION_TYPE:
+		stage.OnAfterSPECIFICATION_TYPECreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION_TYPE])
 	
 	case *SPEC_HIERARCHY:
 		stage.OnAfterSPEC_HIERARCHYCreateCallback = any(callback).(OnAfterCreateInterface[SPEC_HIERARCHY])
@@ -193,6 +217,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *StageStruct, callba
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION])
 	
+	case *SPECIFICATION_TYPE:
+		stage.OnAfterSPECIFICATION_TYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION_TYPE])
+	
 	case *SPEC_HIERARCHY:
 		stage.OnAfterSPEC_HIERARCHYDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_HIERARCHY])
 	
@@ -214,6 +241,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *StageStruct, callback
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION])
+	
+	case *SPECIFICATION_TYPE:
+		stage.OnAfterSPECIFICATION_TYPEReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION_TYPE])
 	
 	case *SPEC_HIERARCHY:
 		stage.OnAfterSPEC_HIERARCHYReadCallback = any(callback).(OnAfterReadInterface[SPEC_HIERARCHY])

@@ -45,6 +45,9 @@ func EvictInOtherSlices[OwningType PointerToGongstruct, FieldType PointerToGongs
 	case *SPECIFICATION:
 		// insertion point per field
 
+	case *SPECIFICATION_TYPE:
+		// insertion point per field
+
 	case *SPEC_HIERARCHY:
 		// insertion point per field
 
@@ -67,6 +70,9 @@ func (stage *StageStruct) ComputeReverseMaps() {
 	// insertion point per field
 
 	// Compute reverse map for named struct SPECIFICATION
+	// insertion point per field
+
+	// Compute reverse map for named struct SPECIFICATION_TYPE
 	// insertion point per field
 
 	// Compute reverse map for named struct SPEC_HIERARCHY

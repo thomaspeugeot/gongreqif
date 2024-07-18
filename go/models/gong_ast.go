@@ -318,6 +318,7 @@ var __gong__map_REQIF = make(map[string]*REQIF)
 var __gong__map_REQ_IF_CONTENT = make(map[string]*REQ_IF_CONTENT)
 var __gong__map_REQ_IF_HEADER = make(map[string]*REQ_IF_HEADER)
 var __gong__map_SPECIFICATION = make(map[string]*SPECIFICATION)
+var __gong__map_SPECIFICATION_TYPE = make(map[string]*SPECIFICATION_TYPE)
 var __gong__map_SPEC_HIERARCHY = make(map[string]*SPEC_HIERARCHY)
 
 // Parser needs to be configured for having the [Name1.Name2] or [pkg.Name1] ...
@@ -507,6 +508,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 										instanceSPECIFICATION := (&SPECIFICATION{Name: instanceName}).Stage(stage)
 										instance = any(instanceSPECIFICATION)
 										__gong__map_SPECIFICATION[identifier] = instanceSPECIFICATION
+									case "SPECIFICATION_TYPE":
+										instanceSPECIFICATION_TYPE := (&SPECIFICATION_TYPE{Name: instanceName}).Stage(stage)
+										instance = any(instanceSPECIFICATION_TYPE)
+										__gong__map_SPECIFICATION_TYPE[identifier] = instanceSPECIFICATION_TYPE
 									case "SPEC_HIERARCHY":
 										instanceSPEC_HIERARCHY := (&SPEC_HIERARCHY{Name: instanceName}).Stage(stage)
 										instance = any(instanceSPEC_HIERARCHY)
@@ -571,6 +576,14 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 									"2006-01-02 15:04:05.999999999 -0700 MST",
 									date)
 							}
+						case "SPECIFICATION_TYPE":
+							switch fieldName {
+							// insertion point for date assign code
+							case "LAST_CHANGE":
+								__gong__map_SPECIFICATION_TYPE[identifier].LAST_CHANGE, _ = time.Parse(
+									"2006-01-02 15:04:05.999999999 -0700 MST",
+									date)
+							}
 						case "SPEC_HIERARCHY":
 							switch fieldName {
 							// insertion point for date assign code
@@ -617,6 +630,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 						// insertion point for slice of pointers assign code
 						}
 					case "SPECIFICATION":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "SPECIFICATION_TYPE":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -741,6 +758,26 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_SPECIFICATION[identifier].LONG_NAME = fielValue
 				}
+			case "SPECIFICATION_TYPE":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION_TYPE[identifier].Name = fielValue
+				case "DESC":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION_TYPE[identifier].DESC = fielValue
+				case "IDENTIFIER":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION_TYPE[identifier].IDENTIFIER = fielValue
+				case "LONG_NAME":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION_TYPE[identifier].LONG_NAME = fielValue
+				}
 			case "SPEC_HIERARCHY":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -807,6 +844,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					targetIdentifier := ident.Name
 					__gong__map_SPECIFICATION[identifier].CHILDREN = __gong__map_SPEC_HIERARCHY[targetIdentifier]
 				}
+			case "SPECIFICATION_TYPE":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
 			case "SPEC_HIERARCHY":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -869,6 +910,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					// insertion point for enum assign code
 					}
 				case "SPECIFICATION":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "SPECIFICATION_TYPE":
 					switch fieldName {
 					// insertion point for enum assign code
 					}

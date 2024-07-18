@@ -356,6 +356,91 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 
 	fillUpTree(specificationFormCallback.probe)
 }
+func __gong__New__SPECIFICATION_TYPEFormCallback(
+	specification_type *models.SPECIFICATION_TYPE,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (specification_typeFormCallback *SPECIFICATION_TYPEFormCallback) {
+	specification_typeFormCallback = new(SPECIFICATION_TYPEFormCallback)
+	specification_typeFormCallback.probe = probe
+	specification_typeFormCallback.specification_type = specification_type
+	specification_typeFormCallback.formGroup = formGroup
+
+	specification_typeFormCallback.CreationMode = (specification_type == nil)
+
+	return
+}
+
+type SPECIFICATION_TYPEFormCallback struct {
+	specification_type *models.SPECIFICATION_TYPE
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (specification_typeFormCallback *SPECIFICATION_TYPEFormCallback) OnSave() {
+
+	log.Println("SPECIFICATION_TYPEFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	specification_typeFormCallback.probe.formStage.Checkout()
+
+	if specification_typeFormCallback.specification_type == nil {
+		specification_typeFormCallback.specification_type = new(models.SPECIFICATION_TYPE).Stage(specification_typeFormCallback.probe.stageOfInterest)
+	}
+	specification_type_ := specification_typeFormCallback.specification_type
+	_ = specification_type_
+
+	for _, formDiv := range specification_typeFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(specification_type_.Name), formDiv)
+		case "DESC":
+			FormDivBasicFieldToField(&(specification_type_.DESC), formDiv)
+		case "IDENTIFIER":
+			FormDivBasicFieldToField(&(specification_type_.IDENTIFIER), formDiv)
+		case "LAST_CHANGE":
+			FormDivBasicFieldToField(&(specification_type_.LAST_CHANGE), formDiv)
+		case "LONG_NAME":
+			FormDivBasicFieldToField(&(specification_type_.LONG_NAME), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if specification_typeFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		specification_type_.Unstage(specification_typeFormCallback.probe.stageOfInterest)
+	}
+
+	specification_typeFormCallback.probe.stageOfInterest.Commit()
+	fillUpTable[models.SPECIFICATION_TYPE](
+		specification_typeFormCallback.probe,
+	)
+	specification_typeFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if specification_typeFormCallback.CreationMode || specification_typeFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		specification_typeFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: table.FormGroupDefaultName.ToString(),
+		}).Stage(specification_typeFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__SPECIFICATION_TYPEFormCallback(
+			nil,
+			specification_typeFormCallback.probe,
+			newFormGroup,
+		)
+		specification_type := new(models.SPECIFICATION_TYPE)
+		FillUpForm(specification_type, newFormGroup, specification_typeFormCallback.probe)
+		specification_typeFormCallback.probe.formStage.Commit()
+	}
+
+	fillUpTree(specification_typeFormCallback.probe)
+}
 func __gong__New__SPEC_HIERARCHYFormCallback(
 	spec_hierarchy *models.SPEC_HIERARCHY,
 	probe *Probe,

@@ -53,13 +53,15 @@ type REQ_IF_CONTENT struct {
 	// } `xml:"SPEC-RELATION-GROUPS,omitempty" json:"SPEC-RELATION-GROUPS,omitempty"`
 }
 
-func (reqifContent *REQ_IF_CONTENT) Walk(_reqifContent *schema.REQ_IF_CONTENT, stage *StageStruct) {
+func (reqif *REQ_IF_CONTENT) Walk(_reqif *schema.REQ_IF_CONTENT, stage *StageStruct) {
 	log.Println("REQ_IF_CONTENT", "Walk")
 
-	reqifContent.Name = time.Now().Format(time.DateTime)
+	reqif.Name = time.Now().Format(time.DateTime)
 
-	specification := new(SPECIFICATION).Stage(stage)
-	reqifContent.SPECIFICATION = specification
-	specification.Walk(_reqifContent.SPECIFICATIONS.SPECIFICATION, stage)
+	for _, r := range _reqif.SPECIFICATIONS {
+		specification := new(SPECIFICATION).Stage(stage)
+		reqif.SPECIFICATION = specification
+		specification.Walk(r.SPECIFICATION, stage)
+	}
 
 }
