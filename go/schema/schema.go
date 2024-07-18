@@ -49,7 +49,7 @@ type ContentType string
 
 type ContentTypes string
 
-type Datetime CustomDate
+type Datetime soap.XSDDateTime
 
 type FPI NormalizedString
 
@@ -249,7 +249,7 @@ type ATTRIBUTE_DEFINITION_BOOLEAN struct {
 
 	IS_EDITABLE bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-EDITABLE,attr,omitempty" json:"IS-EDITABLE,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -273,7 +273,7 @@ type ATTRIBUTE_DEFINITION_DATE struct {
 
 	IS_EDITABLE bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-EDITABLE,attr,omitempty" json:"IS-EDITABLE,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -297,7 +297,7 @@ type ATTRIBUTE_DEFINITION_ENUMERATION struct {
 
 	IS_EDITABLE bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-EDITABLE,attr,omitempty" json:"IS-EDITABLE,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 
@@ -323,7 +323,7 @@ type ATTRIBUTE_DEFINITION_INTEGER struct {
 
 	IS_EDITABLE bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-EDITABLE,attr,omitempty" json:"IS-EDITABLE,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -347,7 +347,7 @@ type ATTRIBUTE_DEFINITION_REAL struct {
 
 	IS_EDITABLE bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-EDITABLE,attr,omitempty" json:"IS-EDITABLE,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -371,7 +371,7 @@ type ATTRIBUTE_DEFINITION_STRING struct {
 
 	IS_EDITABLE bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-EDITABLE,attr,omitempty" json:"IS-EDITABLE,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -395,7 +395,7 @@ type ATTRIBUTE_DEFINITION_XHTML struct {
 
 	IS_EDITABLE bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-EDITABLE,attr,omitempty" json:"IS-EDITABLE,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -413,7 +413,7 @@ type ATTRIBUTE_VALUE_DATE struct {
 		ATTRIBUTE_DEFINITION_DATE_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty" json:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
 
-	THE_VALUE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
+	THE_VALUE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
 }
 
 type ATTRIBUTE_VALUE_ENUMERATION struct {
@@ -471,7 +471,7 @@ type DATATYPE_DEFINITION_BOOLEAN struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -485,7 +485,7 @@ type DATATYPE_DEFINITION_DATE struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -503,7 +503,7 @@ type DATATYPE_DEFINITION_ENUMERATION struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -517,7 +517,7 @@ type DATATYPE_DEFINITION_INTEGER struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 
@@ -537,7 +537,7 @@ type DATATYPE_DEFINITION_REAL struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 
@@ -555,7 +555,7 @@ type DATATYPE_DEFINITION_STRING struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 
@@ -571,7 +571,7 @@ type DATATYPE_DEFINITION_XHTML struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -595,7 +595,7 @@ type ENUM_VALUE struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -625,7 +625,7 @@ type RELATION_GROUP struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -655,7 +655,7 @@ type RELATION_GROUP_TYPE struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -723,7 +723,7 @@ type REQ_IF_CONTENT struct {
 type REQ_IF_HEADER struct {
 	COMMENT string `xml:"COMMENT,omitempty" json:"COMMENT,omitempty"`
 
-	CREATION_TIME CustomDate `xml:"CREATION-TIME,omitempty" json:"CREATION-TIME,omitempty"`
+	CREATION_TIME soap.XSDDateTime `xml:"CREATION-TIME,omitempty" json:"CREATION-TIME,omitempty"`
 
 	REPOSITORY_ID string `xml:"REPOSITORY-ID,omitempty" json:"REPOSITORY-ID,omitempty"`
 
@@ -775,7 +775,7 @@ type SPEC_HIERARCHY struct {
 
 	IS_TABLE_INTERNAL bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-TABLE-INTERNAL,attr,omitempty" json:"IS-TABLE-INTERNAL,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -809,7 +809,7 @@ type SPEC_OBJECT struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -839,7 +839,7 @@ type SPEC_OBJECT_TYPE struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -881,7 +881,7 @@ type SPEC_RELATION struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -911,7 +911,7 @@ type SPEC_RELATION_TYPE struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -949,7 +949,7 @@ type SPECIFICATION struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }
@@ -979,7 +979,7 @@ type SPECIFICATION_TYPE struct {
 
 	IDENTIFIER *ID `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IDENTIFIER,attr,omitempty" json:"IDENTIFIER,omitempty"`
 
-	LAST_CHANGE CustomDate `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
+	LAST_CHANGE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LAST-CHANGE,attr,omitempty" json:"LAST-CHANGE,omitempty"`
 
 	LONG_NAME string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd LONG-NAME,attr,omitempty" json:"LONG-NAME,omitempty"`
 }

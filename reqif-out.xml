@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <REQ_IF>
   <THE-HEADER>
-    <REQ-IF-HEADER xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_8da68f26-585c-4193-b6ca-a07cedff2a5c">
-      <CREATION-TIME>
-        <T>0001-01-01T00:00:00Z</T>
-      </CREATION-TIME>
+    <REQ-IF-HEADER xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+      reqif.xsd:IDENTIFIER="_8da68f26-585c-4193-b6ca-a07cedff2a5c">
+      <CREATION-TIME>2017-04-25T15:44:26+02:00</CREATION-TIME>
       <REPOSITORY-ID>524d2a940b0233d5</REPOSITORY-ID>
       <REQ-IF-TOOL-ID>IBM Rational DOORS</REQ-IF-TOOL-ID>
       <REQ-IF-VERSION>1.0</REQ-IF-VERSION>
@@ -15,10 +14,14 @@
   <CORE-CONTENT>
     <REQ-IF-CONTENT>
       <DATATYPES>
-        <DATATYPE-DEFINITION-ENUMERATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_ahyOEMk3Eee5A_N9aQFa1w" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="IE Object Type">
+        <DATATYPE-DEFINITION-ENUMERATION
+          xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+          reqif.xsd:IDENTIFIER="_ahyOEMk3Eee5A_N9aQFa1w"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00" reqif.xsd:LONG-NAME="IE Object Type">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPECIFIED-VALUES>
-            <ENUM-VALUE reqif.xsd:IDENTIFIER="_hZP1IMk3Eee5A_N9aQFa1w" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Capability">
+            <ENUM-VALUE reqif.xsd:IDENTIFIER="_hZP1IMk3Eee5A_N9aQFa1w"
+              reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00" reqif.xsd:LONG-NAME="Capability">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <PROPERTIES>
                 <EMBEDDED-VALUE reqif.xsd:KEY="2" reqif.xsd:OTHER-CONTENT="Sea_Green"></EMBEDDED-VALUE>
@@ -26,22 +29,32 @@
             </ENUM-VALUE>
           </SPECIFIED-VALUES>
         </DATATYPE-DEFINITION-ENUMERATION>
-        <DATATYPE-DEFINITION-XHTML xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_i6FNMMkgEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="String">
+        <DATATYPE-DEFINITION-XHTML
+          xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+          reqif.xsd:IDENTIFIER="_i6FNMMkgEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00" reqif.xsd:LONG-NAME="String">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
         </DATATYPE-DEFINITION-XHTML>
       </DATATYPES>
       <SPEC-TYPES>
-        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_LaeSsMkhEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Requirement Type">
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+          reqif.xsd:IDENTIFIER="_LaeSsMkhEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00"
+          reqif.xsd:LONG-NAME="Requirement Type">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPEC-ATTRIBUTES>
-            <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:IDENTIFIER="_0VDX0Mk3Eee5A_N9aQFa1w" reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="IE Object Type">
+            <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:IDENTIFIER="_0VDX0Mk3Eee5A_N9aQFa1w"
+              reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00"
+              reqif.xsd:LONG-NAME="IE Object Type">
               <DEFAULT-VALUE></DEFAULT-VALUE>
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <TYPE>
                 <DATATYPE-DEFINITION-ENUMERATION-REF>_ahyOEMk3Eee5A_N9aQFa1w</DATATYPE-DEFINITION-ENUMERATION-REF>
               </TYPE>
             </ATTRIBUTE-DEFINITION-ENUMERATION>
-            <ATTRIBUTE-DEFINITION-XHTML reqif.xsd:IDENTIFIER="_25YvEMkyEee5A_N9aQFa1w" reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="IE PUID">
+            <ATTRIBUTE-DEFINITION-XHTML reqif.xsd:IDENTIFIER="_25YvEMkyEee5A_N9aQFa1w"
+              reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00"
+              reqif.xsd:LONG-NAME="IE PUID">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <DEFAULT-VALUE></DEFAULT-VALUE>
               <TYPE>
@@ -50,10 +63,14 @@
             </ATTRIBUTE-DEFINITION-XHTML>
           </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
-        <SPECIFICATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_NAXScMkhEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Module Type">
+        <SPECIFICATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+          reqif.xsd:IDENTIFIER="_NAXScMkhEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00" reqif.xsd:LONG-NAME="Module Type">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPEC-ATTRIBUTES>
-            <ATTRIBUTE-DEFINITION-XHTML reqif.xsd:IDENTIFIER="_jLB90MkhEee8KsfWrp9EJQ" reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="ReqIF.Name">
+            <ATTRIBUTE-DEFINITION-XHTML reqif.xsd:IDENTIFIER="_jLB90MkhEee8KsfWrp9EJQ"
+              reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00"
+              reqif.xsd:LONG-NAME="ReqIF.Name">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <DEFAULT-VALUE></DEFAULT-VALUE>
               <TYPE>
@@ -64,7 +81,9 @@
         </SPECIFICATION-TYPE>
       </SPEC-TYPES>
       <SPEC-OBJECTS>
-        <SPEC-OBJECT xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_xen_QMkhEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Requirement-1">
+        <SPEC-OBJECT xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+          reqif.xsd:IDENTIFIER="_xen_QMkhEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00" reqif.xsd:LONG-NAME="Requirement-1">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <VALUES>
             <ATTRIBUTE-VALUE-ENUMERATION>
@@ -89,11 +108,15 @@
       </SPEC-OBJECTS>
       <SPEC-RELATIONS></SPEC-RELATIONS>
       <SPECIFICATIONS>
-        <SPECIFICATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_dESzoMkiEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="MODULE-1">
+        <SPECIFICATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+          reqif.xsd:IDENTIFIER="_dESzoMkiEee8KsfWrp9EJQ"
+          reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00" reqif.xsd:LONG-NAME="MODULE-1">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <VALUES></VALUES>
           <CHILDREN>
-            <SPEC-HIERARCHY reqif.xsd:IDENTIFIER="_Ob6YgMkjEee8KsfWrp9EJQ" reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Requirement-1">
+            <SPEC-HIERARCHY reqif.xsd:IDENTIFIER="_Ob6YgMkjEee8KsfWrp9EJQ"
+              reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+01:00"
+              reqif.xsd:LONG-NAME="Requirement-1">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <CHILDREN></CHILDREN>
               <EDITABLE-ATTS></EDITABLE-ATTS>

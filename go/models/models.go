@@ -20,7 +20,8 @@ func (reqif *REQIF) Walk(_reqif *schema.REQ_IF, stage *StageStruct) {
 	reqif.REQ_IF_HEADER = new(REQ_IF_HEADER).Stage(stage)
 	reqif.REQ_IF_HEADER.Name = time.Now().Format(time.DateTime)
 	reqif.REQ_IF_HEADER.COMMENT = _reqif.THE_HEADER.REQ_IF_HEADER.COMMENT
-	reqif.REQ_IF_HEADER.CREATION_TIME = time.Time(_reqif.THE_HEADER.REQ_IF_HEADER.CREATION_TIME)
+	// reqif.REQ_IF_HEADER.CREATION_TIME = time.Time(_reqif.THE_HEADER.REQ_IF_HEADER.CREATION_TIME)
+	reqif.REQ_IF_HEADER.CREATION_TIME = _reqif.THE_HEADER.REQ_IF_HEADER.CREATION_TIME.ToGoTime()
 
 	const myFormat = "2006-01-02T15:04:05.000-07:00"
 	log.Println("Date time", reqif.REQ_IF_HEADER.CREATION_TIME.Local().Format(myFormat))

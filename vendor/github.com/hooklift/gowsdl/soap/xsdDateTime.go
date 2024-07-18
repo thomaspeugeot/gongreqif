@@ -6,6 +6,7 @@ package soap
 
 import (
 	"encoding/xml"
+	"fmt"
 	"strings"
 	"time"
 )
@@ -67,6 +68,25 @@ func (xdt *XSDDateTime) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	var err error
 	xdt.innerTime, xdt.hasTz, err = unmarshalTime(d, start, time.RFC3339Nano)
 	return err
+}
+
+func (xdt XSDDateTime) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	const myFormat = "2006-01-02T15:04:05.000-07:00"
+	return xml.Attr{
+		Name:  name,
+		Value: xdt.ToGoTime().Format(myFormat),
+	}, nil
+}
+
+func (xdt *XSDDateTime) UnmarshalXMLAttr(attr xml.Attr) error {
+	var err error
+	const layout = "2006-01-02T15:04:05.000-07:00"
+	xdt.innerTime, err = time.Parse(layout, attr.Value)
+	if err != nil {
+		return fmt.Errorf("could not parse time: %v", err)
+	}
+
+	return nil
 }
 
 // CreateXsdDateTime creates an object represent xsd:datetime object in Golang
