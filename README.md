@@ -64,4 +64,18 @@ reqif.xsd:$0
 
 It's strange, SPEC HIERARCHY has only one "children"
 
+There is a problem because the XSD says that SPEC_TYPES is a slice of object
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+
+and the schema has only one pointer.
+
+in fact, the XSD has no slice of pointers at all.
+
+One needs to go back to the xmlplayground.
+
+
 
