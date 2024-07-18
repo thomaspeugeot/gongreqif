@@ -85,5 +85,18 @@ Indeed, gowsdl has trouble with this xsd def. By patching the schema
 
 this works
 
+serie of sed to apply
+
+ *
+ []*
+
+IDENTIFIER []*ID
+IDENTIFIER *ID
+
+REQ_IF_CONTENT []*
+REQ_IF_CONTENT *
+
+REQ_IF_HEADER []*
+REQ_IF_HEADER *
 
 
