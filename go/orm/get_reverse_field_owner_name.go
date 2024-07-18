@@ -44,6 +44,13 @@ func GetReverseFieldOwnerName[T models.Gongstruct](
 	case *models.SPECIFICATION_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
+		case "REQ_IF_CONTENT":
+			switch reverseField.Fieldname {
+			case "SPECIFICATION_TYPES":
+				if _req_if_content, ok := stage.REQ_IF_CONTENT_SPECIFICATION_TYPES_reverseMap[inst]; ok {
+					res = _req_if_content.Name
+				}
+			}
 		}
 
 	case *models.SPEC_HIERARCHY:
@@ -106,6 +113,11 @@ func GetReverseFieldOwner[T models.Gongstruct](
 	case *models.SPECIFICATION_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
+		case "REQ_IF_CONTENT":
+			switch reverseField.Fieldname {
+			case "SPECIFICATION_TYPES":
+				res = stage.REQ_IF_CONTENT_SPECIFICATION_TYPES_reverseMap[inst]
+			}
 		}
 
 	case *models.SPEC_HIERARCHY:

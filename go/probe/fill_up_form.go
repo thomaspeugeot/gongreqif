@@ -30,6 +30,7 @@ func FillUpForm[T models.Gongstruct](
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		AssociationSliceToForm("SPEC_OBJECT_TYPES", instanceWithInferedType, &instanceWithInferedType.SPEC_OBJECT_TYPES, formGroup, probe)
+		AssociationSliceToForm("SPECIFICATION_TYPES", instanceWithInferedType, &instanceWithInferedType.SPECIFICATION_TYPES, formGroup, probe)
 		AssociationSliceToForm("SPECIFICATIONS", instanceWithInferedType, &instanceWithInferedType.SPECIFICATIONS, formGroup, probe)
 
 	case *models.REQ_IF_HEADER:
@@ -63,6 +64,8 @@ func FillUpForm[T models.Gongstruct](
 		BasicFieldtoForm("LAST_CHANGE", instanceWithInferedType.LAST_CHANGE, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		BasicFieldtoForm("LONG_NAME", instanceWithInferedType.LONG_NAME, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("TYPE", instanceWithInferedType.TYPE, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		{
 			var rf models.ReverseField
@@ -99,6 +102,28 @@ func FillUpForm[T models.Gongstruct](
 			false, false, 0, false, 0)
 		BasicFieldtoForm("LONG_NAME", instanceWithInferedType.LONG_NAME, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "REQ_IF_CONTENT"
+			rf.Fieldname = "SPECIFICATION_TYPES"
+			reverseFieldOwner := orm.GetReverseFieldOwner(probe.stageOfInterest, probe.backRepoOfInterest, instanceWithInferedType, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.REQ_IF_CONTENT),
+					"SPECIFICATION_TYPES",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.REQ_IF_CONTENT, *models.SPECIFICATION_TYPE](
+					nil,
+					"SPECIFICATION_TYPES",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
 
 	case *models.SPEC_HIERARCHY:
 		// insertion point

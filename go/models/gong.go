@@ -64,6 +64,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	REQ_IF_CONTENT_SPEC_OBJECT_TYPES_reverseMap map[*SPEC_OBJECT_TYPE]*REQ_IF_CONTENT
+	REQ_IF_CONTENT_SPECIFICATION_TYPES_reverseMap map[*SPECIFICATION_TYPE]*REQ_IF_CONTENT
 	REQ_IF_CONTENT_SPECIFICATIONS_reverseMap map[*SPECIFICATION]*REQ_IF_CONTENT
 
 	OnAfterREQ_IF_CONTENTCreateCallback OnAfterCreateInterface[REQ_IF_CONTENT]
@@ -993,6 +994,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			// Initialisation of associations
 			// field is initialized with an instance of SPEC_OBJECT_TYPE with the name of the field
 			SPEC_OBJECT_TYPES: []*SPEC_OBJECT_TYPE{{Name: "SPEC_OBJECT_TYPES"}},
+			// field is initialized with an instance of SPECIFICATION_TYPE with the name of the field
+			SPECIFICATION_TYPES: []*SPECIFICATION_TYPE{{Name: "SPECIFICATION_TYPES"}},
 			// field is initialized with an instance of SPECIFICATION with the name of the field
 			SPECIFICATIONS: []*SPECIFICATION{{Name: "SPECIFICATIONS"}},
 		}).(*Type)
@@ -1174,6 +1177,14 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 				}
 			}
 			return any(res).(map[*End]*Start)
+		case "SPECIFICATION_TYPES":
+			res := make(map[*SPECIFICATION_TYPE]*REQ_IF_CONTENT)
+			for req_if_content := range stage.REQ_IF_CONTENTs {
+				for _, specification_type_ := range req_if_content.SPECIFICATION_TYPES {
+					res[specification_type_] = req_if_content
+				}
+			}
+			return any(res).(map[*End]*Start)
 		case "SPECIFICATIONS":
 			res := make(map[*SPECIFICATION]*REQ_IF_CONTENT)
 			for req_if_content := range stage.REQ_IF_CONTENTs {
@@ -1274,11 +1285,11 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case REQIF:
 		res = []string{"Name", "REQ_IF_HEADER", "REQ_IF_CONTENT"}
 	case REQ_IF_CONTENT:
-		res = []string{"Name", "SPEC_OBJECT_TYPES", "SPECIFICATIONS"}
+		res = []string{"Name", "SPEC_OBJECT_TYPES", "SPECIFICATION_TYPES", "SPECIFICATIONS"}
 	case REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
 	case SPECIFICATION:
-		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
+		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "TYPE"}
 	case SPECIFICATION_TYPE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	case SPEC_HIERARCHY:
@@ -1321,6 +1332,9 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 	case SPECIFICATION_TYPE:
 		var rf ReverseField
 		_ = rf
+		rf.GongstructName = "REQ_IF_CONTENT"
+		rf.Fieldname = "SPECIFICATION_TYPES"
+		res = append(res, rf)
 	case SPEC_HIERARCHY:
 		var rf ReverseField
 		_ = rf
@@ -1344,11 +1358,11 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *REQIF:
 		res = []string{"Name", "REQ_IF_HEADER", "REQ_IF_CONTENT"}
 	case *REQ_IF_CONTENT:
-		res = []string{"Name", "SPEC_OBJECT_TYPES", "SPECIFICATIONS"}
+		res = []string{"Name", "SPEC_OBJECT_TYPES", "SPECIFICATION_TYPES", "SPECIFICATIONS"}
 	case *REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
 	case *SPECIFICATION:
-		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
+		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "TYPE"}
 	case *SPECIFICATION_TYPE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	case *SPEC_HIERARCHY:
@@ -1384,6 +1398,13 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 			res = inferedInstance.Name
 		case "SPEC_OBJECT_TYPES":
 			for idx, __instance__ := range inferedInstance.SPEC_OBJECT_TYPES {
+				if idx > 0 {
+					res += "\n"
+				}
+				res += __instance__.Name
+			}
+		case "SPECIFICATION_TYPES":
+			for idx, __instance__ := range inferedInstance.SPECIFICATION_TYPES {
 				if idx > 0 {
 					res += "\n"
 				}
@@ -1434,6 +1455,8 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 			res = inferedInstance.LAST_CHANGE.String()
 		case "LONG_NAME":
 			res = inferedInstance.LONG_NAME
+		case "TYPE":
+			res = inferedInstance.TYPE
 		}
 	case *SPECIFICATION_TYPE:
 		switch fieldName {
@@ -1523,6 +1546,13 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 				}
 				res += __instance__.Name
 			}
+		case "SPECIFICATION_TYPES":
+			for idx, __instance__ := range inferedInstance.SPECIFICATION_TYPES {
+				if idx > 0 {
+					res += "\n"
+				}
+				res += __instance__.Name
+			}
 		case "SPECIFICATIONS":
 			for idx, __instance__ := range inferedInstance.SPECIFICATIONS {
 				if idx > 0 {
@@ -1568,6 +1598,8 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 			res = inferedInstance.LAST_CHANGE.String()
 		case "LONG_NAME":
 			res = inferedInstance.LONG_NAME
+		case "TYPE":
+			res = inferedInstance.TYPE
 		}
 	case SPECIFICATION_TYPE:
 		switch fieldName {

@@ -153,6 +153,9 @@ func (stage *StageStruct) StageBranchREQ_IF_CONTENT(req_if_content *REQ_IF_CONTE
 	for _, _spec_object_type := range req_if_content.SPEC_OBJECT_TYPES {
 		StageBranch(stage, _spec_object_type)
 	}
+	for _, _specification_type := range req_if_content.SPECIFICATION_TYPES {
+		StageBranch(stage, _specification_type)
+	}
 	for _, _specification := range req_if_content.SPECIFICATIONS {
 		StageBranch(stage, _specification)
 	}
@@ -328,6 +331,9 @@ func CopyBranchREQ_IF_CONTENT(mapOrigCopy map[any]any, req_if_contentFrom *REQ_I
 	//insertion point for the staging of instances referenced by slice of pointers
 	for _, _spec_object_type := range req_if_contentFrom.SPEC_OBJECT_TYPES {
 		req_if_contentTo.SPEC_OBJECT_TYPES = append(req_if_contentTo.SPEC_OBJECT_TYPES, CopyBranchSPEC_OBJECT_TYPE(mapOrigCopy, _spec_object_type))
+	}
+	for _, _specification_type := range req_if_contentFrom.SPECIFICATION_TYPES {
+		req_if_contentTo.SPECIFICATION_TYPES = append(req_if_contentTo.SPECIFICATION_TYPES, CopyBranchSPECIFICATION_TYPE(mapOrigCopy, _specification_type))
 	}
 	for _, _specification := range req_if_contentFrom.SPECIFICATIONS {
 		req_if_contentTo.SPECIFICATIONS = append(req_if_contentTo.SPECIFICATIONS, CopyBranchSPECIFICATION(mapOrigCopy, _specification))
@@ -507,6 +513,9 @@ func (stage *StageStruct) UnstageBranchREQ_IF_CONTENT(req_if_content *REQ_IF_CON
 	//insertion point for the staging of instances referenced by slice of pointers
 	for _, _spec_object_type := range req_if_content.SPEC_OBJECT_TYPES {
 		UnstageBranch(stage, _spec_object_type)
+	}
+	for _, _specification_type := range req_if_content.SPECIFICATION_TYPES {
+		UnstageBranch(stage, _specification_type)
 	}
 	for _, _specification := range req_if_content.SPECIFICATIONS {
 		UnstageBranch(stage, _specification)

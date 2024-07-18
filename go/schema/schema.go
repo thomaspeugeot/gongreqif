@@ -240,7 +240,7 @@ type ATTRIBUTE_DEFINITION_BOOLEAN struct {
 	} `xml:"DEFAULT-VALUE,omitempty" json:"DEFAULT-VALUE,omitempty"`
 
 	TYPE struct {
-		DATATYPE_DEFINITION_BOOLEAN_REF []*LOCAL_REF `xml:"DATATYPE-DEFINITION-BOOLEAN-REF,omitempty" json:"DATATYPE-DEFINITION-BOOLEAN-REF,omitempty"`
+		DATATYPE_DEFINITION_BOOLEAN_REF *LOCAL_REF `xml:"DATATYPE-DEFINITION-BOOLEAN-REF,omitempty" json:"DATATYPE-DEFINITION-BOOLEAN-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -264,7 +264,7 @@ type ATTRIBUTE_DEFINITION_DATE struct {
 	} `xml:"DEFAULT-VALUE,omitempty" json:"DEFAULT-VALUE,omitempty"`
 
 	TYPE struct {
-		DATATYPE_DEFINITION_DATE_REF []*LOCAL_REF `xml:"DATATYPE-DEFINITION-DATE-REF,omitempty" json:"DATATYPE-DEFINITION-DATE-REF,omitempty"`
+		DATATYPE_DEFINITION_DATE_REF *LOCAL_REF `xml:"DATATYPE-DEFINITION-DATE-REF,omitempty" json:"DATATYPE-DEFINITION-DATE-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -288,7 +288,7 @@ type ATTRIBUTE_DEFINITION_ENUMERATION struct {
 	} `xml:"ALTERNATIVE-ID,omitempty" json:"ALTERNATIVE-ID,omitempty"`
 
 	TYPE struct {
-		DATATYPE_DEFINITION_ENUMERATION_REF []*LOCAL_REF `xml:"DATATYPE-DEFINITION-ENUMERATION-REF,omitempty" json:"DATATYPE-DEFINITION-ENUMERATION-REF,omitempty"`
+		DATATYPE_DEFINITION_ENUMERATION_REF *LOCAL_REF `xml:"DATATYPE-DEFINITION-ENUMERATION-REF,omitempty" json:"DATATYPE-DEFINITION-ENUMERATION-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -314,7 +314,7 @@ type ATTRIBUTE_DEFINITION_INTEGER struct {
 	} `xml:"DEFAULT-VALUE,omitempty" json:"DEFAULT-VALUE,omitempty"`
 
 	TYPE struct {
-		DATATYPE_DEFINITION_INTEGER_REF []*LOCAL_REF `xml:"DATATYPE-DEFINITION-INTEGER-REF,omitempty" json:"DATATYPE-DEFINITION-INTEGER-REF,omitempty"`
+		DATATYPE_DEFINITION_INTEGER_REF *LOCAL_REF `xml:"DATATYPE-DEFINITION-INTEGER-REF,omitempty" json:"DATATYPE-DEFINITION-INTEGER-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -338,7 +338,7 @@ type ATTRIBUTE_DEFINITION_REAL struct {
 	} `xml:"DEFAULT-VALUE,omitempty" json:"DEFAULT-VALUE,omitempty"`
 
 	TYPE struct {
-		DATATYPE_DEFINITION_REAL_REF []*LOCAL_REF `xml:"DATATYPE-DEFINITION-REAL-REF,omitempty" json:"DATATYPE-DEFINITION-REAL-REF,omitempty"`
+		DATATYPE_DEFINITION_REAL_REF *LOCAL_REF `xml:"DATATYPE-DEFINITION-REAL-REF,omitempty" json:"DATATYPE-DEFINITION-REAL-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -362,7 +362,7 @@ type ATTRIBUTE_DEFINITION_STRING struct {
 	} `xml:"DEFAULT-VALUE,omitempty" json:"DEFAULT-VALUE,omitempty"`
 
 	TYPE struct {
-		DATATYPE_DEFINITION_STRING_REF []*LOCAL_REF `xml:"DATATYPE-DEFINITION-STRING-REF,omitempty" json:"DATATYPE-DEFINITION-STRING-REF,omitempty"`
+		DATATYPE_DEFINITION_STRING_REF *LOCAL_REF `xml:"DATATYPE-DEFINITION-STRING-REF,omitempty" json:"DATATYPE-DEFINITION-STRING-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -386,7 +386,7 @@ type ATTRIBUTE_DEFINITION_XHTML struct {
 	} `xml:"DEFAULT-VALUE,omitempty" json:"DEFAULT-VALUE,omitempty"`
 
 	TYPE struct {
-		DATATYPE_DEFINITION_XHTML_REF []*LOCAL_REF `xml:"DATATYPE-DEFINITION-XHTML-REF,omitempty" json:"DATATYPE-DEFINITION-XHTML-REF,omitempty"`
+		DATATYPE_DEFINITION_XHTML_REF *LOCAL_REF `xml:"DATATYPE-DEFINITION-XHTML-REF,omitempty" json:"DATATYPE-DEFINITION-XHTML-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -402,7 +402,7 @@ type ATTRIBUTE_DEFINITION_XHTML struct {
 
 type ATTRIBUTE_VALUE_BOOLEAN struct {
 	DEFINITION struct {
-		ATTRIBUTE_DEFINITION_BOOLEAN_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty" json:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_BOOLEAN_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty" json:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
 
 	THE_VALUE bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
@@ -410,7 +410,7 @@ type ATTRIBUTE_VALUE_BOOLEAN struct {
 
 type ATTRIBUTE_VALUE_DATE struct {
 	DEFINITION struct {
-		ATTRIBUTE_DEFINITION_DATE_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty" json:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_DATE_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty" json:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
 
 	THE_VALUE soap.XSDDateTime `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
@@ -418,17 +418,17 @@ type ATTRIBUTE_VALUE_DATE struct {
 
 type ATTRIBUTE_VALUE_ENUMERATION struct {
 	DEFINITION struct {
-		ATTRIBUTE_DEFINITION_ENUMERATION_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty" json:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_ENUMERATION_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty" json:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
 
 	VALUES struct {
-		ENUM_VALUE_REF []*LOCAL_REF `xml:"ENUM-VALUE-REF,omitempty" json:"ENUM-VALUE-REF,omitempty"`
+		ENUM_VALUE_REF *LOCAL_REF `xml:"ENUM-VALUE-REF,omitempty" json:"ENUM-VALUE-REF,omitempty"`
 	} `xml:"VALUES,omitempty" json:"VALUES,omitempty"`
 }
 
 type ATTRIBUTE_VALUE_INTEGER struct {
 	DEFINITION struct {
-		ATTRIBUTE_DEFINITION_INTEGER_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty" json:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_INTEGER_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty" json:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
 
 	THE_VALUE int32 `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
@@ -436,7 +436,7 @@ type ATTRIBUTE_VALUE_INTEGER struct {
 
 type ATTRIBUTE_VALUE_REAL struct {
 	DEFINITION struct {
-		ATTRIBUTE_DEFINITION_REAL_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty" json:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_REAL_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty" json:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
 
 	THE_VALUE float64 `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
@@ -444,7 +444,7 @@ type ATTRIBUTE_VALUE_REAL struct {
 
 type ATTRIBUTE_VALUE_STRING struct {
 	DEFINITION struct {
-		ATTRIBUTE_DEFINITION_STRING_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty" json:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_STRING_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty" json:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
 
 	THE_VALUE string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd THE-VALUE,attr,omitempty" json:"THE-VALUE,omitempty"`
@@ -456,7 +456,7 @@ type ATTRIBUTE_VALUE_XHTML struct {
 	THE_ORIGINAL_VALUE []*XHTML_CONTENT `xml:"THE-ORIGINAL-VALUE,omitempty" json:"THE-ORIGINAL-VALUE,omitempty"`
 
 	DEFINITION struct {
-		ATTRIBUTE_DEFINITION_XHTML_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-XHTML-REF,omitempty" json:"ATTRIBUTE-DEFINITION-XHTML-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_XHTML_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-XHTML-REF,omitempty" json:"ATTRIBUTE-DEFINITION-XHTML-REF,omitempty"`
 	} `xml:"DEFINITION,omitempty" json:"DEFINITION,omitempty"`
 
 	IS_SIMPLIFIED bool `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd IS-SIMPLIFIED,attr,omitempty" json:"IS-SIMPLIFIED,omitempty"`
@@ -610,7 +610,7 @@ type RELATION_GROUP struct {
 	} `xml:"SOURCE-SPECIFICATION,omitempty" json:"SOURCE-SPECIFICATION,omitempty"`
 
 	SPEC_RELATIONS struct {
-		SPEC_RELATION_REF []*LOCAL_REF `xml:"SPEC-RELATION-REF,omitempty" json:"SPEC-RELATION-REF,omitempty"`
+		SPEC_RELATION_REF *LOCAL_REF `xml:"SPEC-RELATION-REF,omitempty" json:"SPEC-RELATION-REF,omitempty"`
 	} `xml:"SPEC-RELATIONS,omitempty" json:"SPEC-RELATIONS,omitempty"`
 
 	TARGET_SPECIFICATION struct {
@@ -618,7 +618,7 @@ type RELATION_GROUP struct {
 	} `xml:"TARGET-SPECIFICATION,omitempty" json:"TARGET-SPECIFICATION,omitempty"`
 
 	TYPE struct {
-		RELATION_GROUP_TYPE_REF []*LOCAL_REF `xml:"RELATION-GROUP-TYPE-REF,omitempty" json:"RELATION-GROUP-TYPE-REF,omitempty"`
+		RELATION_GROUP_TYPE_REF *LOCAL_REF `xml:"RELATION-GROUP-TYPE-REF,omitempty" json:"RELATION-GROUP-TYPE-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -748,19 +748,19 @@ type SPEC_HIERARCHY struct {
 	} `xml:"CHILDREN,omitempty" json:"CHILDREN,omitempty"`
 
 	EDITABLE_ATTS struct {
-		ATTRIBUTE_DEFINITION_BOOLEAN_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty" json:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_BOOLEAN_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty" json:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty"`
 
-		ATTRIBUTE_DEFINITION_DATE_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty" json:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_DATE_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty" json:"ATTRIBUTE-DEFINITION-DATE-REF,omitempty"`
 
-		ATTRIBUTE_DEFINITION_ENUMERATION_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty" json:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_ENUMERATION_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty" json:"ATTRIBUTE-DEFINITION-ENUMERATION-REF,omitempty"`
 
-		ATTRIBUTE_DEFINITION_INTEGER_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty" json:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_INTEGER_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty" json:"ATTRIBUTE-DEFINITION-INTEGER-REF,omitempty"`
 
-		ATTRIBUTE_DEFINITION_REAL_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty" json:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_REAL_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty" json:"ATTRIBUTE-DEFINITION-REAL-REF,omitempty"`
 
-		ATTRIBUTE_DEFINITION_STRING_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty" json:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_STRING_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty" json:"ATTRIBUTE-DEFINITION-STRING-REF,omitempty"`
 
-		ATTRIBUTE_DEFINITION_XHTML_REF []*LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-XHTML-REF,omitempty" json:"ATTRIBUTE-DEFINITION-XHTML-REF,omitempty"`
+		ATTRIBUTE_DEFINITION_XHTML_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-XHTML-REF,omitempty" json:"ATTRIBUTE-DEFINITION-XHTML-REF,omitempty"`
 	} `xml:"EDITABLE-ATTS,omitempty" json:"EDITABLE-ATTS,omitempty"`
 
 	OBJECT struct {
@@ -802,7 +802,7 @@ type SPEC_OBJECT struct {
 	} `xml:"VALUES,omitempty" json:"VALUES,omitempty"`
 
 	TYPE struct {
-		SPEC_OBJECT_TYPE_REF []*LOCAL_REF `xml:"SPEC-OBJECT-TYPE-REF,omitempty" json:"SPEC-OBJECT-TYPE-REF,omitempty"`
+		SPEC_OBJECT_TYPE_REF *LOCAL_REF `xml:"SPEC-OBJECT-TYPE-REF,omitempty" json:"SPEC-OBJECT-TYPE-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -874,7 +874,7 @@ type SPEC_RELATION struct {
 	} `xml:"TARGET,omitempty" json:"TARGET,omitempty"`
 
 	TYPE struct {
-		SPEC_RELATION_TYPE_REF []*LOCAL_REF `xml:"SPEC-RELATION-TYPE-REF,omitempty" json:"SPEC-RELATION-TYPE-REF,omitempty"`
+		SPEC_RELATION_TYPE_REF *LOCAL_REF `xml:"SPEC-RELATION-TYPE-REF,omitempty" json:"SPEC-RELATION-TYPE-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -942,7 +942,7 @@ type SPECIFICATION struct {
 	} `xml:"CHILDREN,omitempty" json:"CHILDREN,omitempty"`
 
 	TYPE struct {
-		SPECIFICATION_TYPE_REF []*LOCAL_REF `xml:"SPECIFICATION-TYPE-REF,omitempty" json:"SPECIFICATION-TYPE-REF,omitempty"`
+		SPECIFICATION_TYPE_REF *LOCAL_REF `xml:"SPECIFICATION-TYPE-REF,omitempty" json:"SPECIFICATION-TYPE-REF,omitempty"`
 	} `xml:"TYPE,omitempty" json:"TYPE,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`

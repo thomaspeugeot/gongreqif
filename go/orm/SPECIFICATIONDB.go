@@ -77,6 +77,9 @@ type SPECIFICATIONDB struct {
 
 	// Declation for basic field specificationDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
+
+	// Declation for basic field specificationDB.TYPE
+	TYPE_Data sql.NullString
 	
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
@@ -109,6 +112,8 @@ type SPECIFICATIONWOP struct {
 	LAST_CHANGE time.Time `xlsx:"4"`
 
 	LONG_NAME string `xlsx:"5"`
+
+	TYPE string `xlsx:"6"`
 	// insertion for WOP pointer fields
 }
 
@@ -120,6 +125,7 @@ var SPECIFICATION_Fields = []string{
 	"IDENTIFIER",
 	"LAST_CHANGE",
 	"LONG_NAME",
+	"TYPE",
 }
 
 type BackRepoSPECIFICATIONStruct struct {
@@ -417,6 +423,9 @@ func (specificationDB *SPECIFICATIONDB) CopyBasicFieldsFromSPECIFICATION(specifi
 
 	specificationDB.LONG_NAME_Data.String = specification.LONG_NAME
 	specificationDB.LONG_NAME_Data.Valid = true
+
+	specificationDB.TYPE_Data.String = specification.TYPE
+	specificationDB.TYPE_Data.Valid = true
 }
 
 // CopyBasicFieldsFromSPECIFICATION_WOP
@@ -437,6 +446,9 @@ func (specificationDB *SPECIFICATIONDB) CopyBasicFieldsFromSPECIFICATION_WOP(spe
 
 	specificationDB.LONG_NAME_Data.String = specification.LONG_NAME
 	specificationDB.LONG_NAME_Data.Valid = true
+
+	specificationDB.TYPE_Data.String = specification.TYPE
+	specificationDB.TYPE_Data.Valid = true
 }
 
 // CopyBasicFieldsFromSPECIFICATIONWOP
@@ -457,6 +469,9 @@ func (specificationDB *SPECIFICATIONDB) CopyBasicFieldsFromSPECIFICATIONWOP(spec
 
 	specificationDB.LONG_NAME_Data.String = specification.LONG_NAME
 	specificationDB.LONG_NAME_Data.Valid = true
+
+	specificationDB.TYPE_Data.String = specification.TYPE
+	specificationDB.TYPE_Data.Valid = true
 }
 
 // CopyBasicFieldsToSPECIFICATION
@@ -467,6 +482,7 @@ func (specificationDB *SPECIFICATIONDB) CopyBasicFieldsToSPECIFICATION(specifica
 	specification.IDENTIFIER = specificationDB.IDENTIFIER_Data.String
 	specification.LAST_CHANGE = specificationDB.LAST_CHANGE_Data.Time
 	specification.LONG_NAME = specificationDB.LONG_NAME_Data.String
+	specification.TYPE = specificationDB.TYPE_Data.String
 }
 
 // CopyBasicFieldsToSPECIFICATION_WOP
@@ -477,6 +493,7 @@ func (specificationDB *SPECIFICATIONDB) CopyBasicFieldsToSPECIFICATION_WOP(speci
 	specification.IDENTIFIER = specificationDB.IDENTIFIER_Data.String
 	specification.LAST_CHANGE = specificationDB.LAST_CHANGE_Data.Time
 	specification.LONG_NAME = specificationDB.LONG_NAME_Data.String
+	specification.TYPE = specificationDB.TYPE_Data.String
 }
 
 // CopyBasicFieldsToSPECIFICATIONWOP
@@ -488,6 +505,7 @@ func (specificationDB *SPECIFICATIONDB) CopyBasicFieldsToSPECIFICATIONWOP(specif
 	specification.IDENTIFIER = specificationDB.IDENTIFIER_Data.String
 	specification.LAST_CHANGE = specificationDB.LAST_CHANGE_Data.Time
 	specification.LONG_NAME = specificationDB.LONG_NAME_Data.String
+	specification.TYPE = specificationDB.TYPE_Data.String
 }
 
 // Backup generates a json file from a slice of all SPECIFICATIONDB instances in the backrepo

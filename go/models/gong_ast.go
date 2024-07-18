@@ -643,6 +643,12 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 							target := __gong__map_SPEC_OBJECT_TYPE[targetIdentifier]
 							__gong__map_REQ_IF_CONTENT[identifier].SPEC_OBJECT_TYPES =
 								append(__gong__map_REQ_IF_CONTENT[identifier].SPEC_OBJECT_TYPES, target)
+						case "SPECIFICATION_TYPES":
+							// remove first and last char
+							targetIdentifier := ident.Name
+							target := __gong__map_SPECIFICATION_TYPE[targetIdentifier]
+							__gong__map_REQ_IF_CONTENT[identifier].SPECIFICATION_TYPES =
+								append(__gong__map_REQ_IF_CONTENT[identifier].SPECIFICATION_TYPES, target)
 						case "SPECIFICATIONS":
 							// remove first and last char
 							targetIdentifier := ident.Name
@@ -786,6 +792,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_SPECIFICATION[identifier].LONG_NAME = fielValue
+				case "TYPE":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION[identifier].TYPE = fielValue
 				}
 			case "SPECIFICATION_TYPE":
 				switch fieldName {

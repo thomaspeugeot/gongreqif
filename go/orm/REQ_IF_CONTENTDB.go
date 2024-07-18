@@ -50,6 +50,9 @@ type REQ_IF_CONTENTPointersEncoding struct {
 	// field SPEC_OBJECT_TYPES is a slice of pointers to another Struct (optional or 0..1)
 	SPEC_OBJECT_TYPES IntSlice `gorm:"type:TEXT"`
 
+	// field SPECIFICATION_TYPES is a slice of pointers to another Struct (optional or 0..1)
+	SPECIFICATION_TYPES IntSlice `gorm:"type:TEXT"`
+
 	// field SPECIFICATIONS is a slice of pointers to another Struct (optional or 0..1)
 	SPECIFICATIONS IntSlice `gorm:"type:TEXT"`
 }
@@ -236,6 +239,24 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CommitPhaseTwoInstan
 		}
 
 		// 1. reset
+		req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPECIFICATION_TYPES = make([]int, 0)
+		// 2. encode
+		for _, specification_typeAssocEnd := range req_if_content.SPECIFICATION_TYPES {
+			specification_typeAssocEnd_DB :=
+				backRepo.BackRepoSPECIFICATION_TYPE.GetSPECIFICATION_TYPEDBFromSPECIFICATION_TYPEPtr(specification_typeAssocEnd)
+			
+			// the stage might be inconsistant, meaning that the specification_typeAssocEnd_DB might
+			// be missing from the stage. In this case, the commit operation is robust
+			// An alternative would be to crash here to reveal the missing element.
+			if specification_typeAssocEnd_DB == nil {
+				continue
+			}
+			
+			req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPECIFICATION_TYPES =
+				append(req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPECIFICATION_TYPES, int(specification_typeAssocEnd_DB.ID))
+		}
+
+		// 1. reset
 		req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPECIFICATIONS = make([]int, 0)
 		// 2. encode
 		for _, specificationAssocEnd := range req_if_content.SPECIFICATIONS {
@@ -373,6 +394,15 @@ func (req_if_contentDB *REQ_IF_CONTENTDB) DecodePointers(backRepo *BackRepoStruc
 	req_if_content.SPEC_OBJECT_TYPES = req_if_content.SPEC_OBJECT_TYPES[:0]
 	for _, _SPEC_OBJECT_TYPEid := range req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPEC_OBJECT_TYPES {
 		req_if_content.SPEC_OBJECT_TYPES = append(req_if_content.SPEC_OBJECT_TYPES, backRepo.BackRepoSPEC_OBJECT_TYPE.Map_SPEC_OBJECT_TYPEDBID_SPEC_OBJECT_TYPEPtr[uint(_SPEC_OBJECT_TYPEid)])
+	}
+
+	// This loop redeem req_if_content.SPECIFICATION_TYPES in the stage from the encode in the back repo
+	// It parses all SPECIFICATION_TYPEDB in the back repo and if the reverse pointer encoding matches the back repo ID
+	// it appends the stage instance
+	// 1. reset the slice
+	req_if_content.SPECIFICATION_TYPES = req_if_content.SPECIFICATION_TYPES[:0]
+	for _, _SPECIFICATION_TYPEid := range req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPECIFICATION_TYPES {
+		req_if_content.SPECIFICATION_TYPES = append(req_if_content.SPECIFICATION_TYPES, backRepo.BackRepoSPECIFICATION_TYPE.Map_SPECIFICATION_TYPEDBID_SPECIFICATION_TYPEPtr[uint(_SPECIFICATION_TYPEid)])
 	}
 
 	// This loop redeem req_if_content.SPECIFICATIONS in the stage from the encode in the back repo

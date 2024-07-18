@@ -57,6 +57,25 @@ func EvictInOtherSlices[OwningType PointerToGongstruct, FieldType PointerToGongs
 				}
 			}
 		}
+		if fieldName == "SPECIFICATION_TYPES" {
+
+			// walk all instances of the owning type
+			for _instance := range *GetGongstructInstancesSetFromPointerType[OwningType](stage) {
+				if any(_instance).(*REQ_IF_CONTENT) != owningInstanceInfered {
+					_inferedTypeInstance := any(_instance).(*REQ_IF_CONTENT)
+					reference := make([]FieldType, 0)
+					targetFieldSlice := any(_inferedTypeInstance.SPECIFICATION_TYPES).([]FieldType)
+					copy(targetFieldSlice, reference)
+					_inferedTypeInstance.SPECIFICATION_TYPES = _inferedTypeInstance.SPECIFICATION_TYPES[0:]
+					for _, fieldInstance := range reference {
+						if _, ok := setOfFieldInstances[any(fieldInstance).(FieldType)]; !ok {
+							_inferedTypeInstance.SPECIFICATION_TYPES =
+								append(_inferedTypeInstance.SPECIFICATION_TYPES, any(fieldInstance).(*SPECIFICATION_TYPE))
+						}
+					}
+				}
+			}
+		}
 		if fieldName == "SPECIFICATIONS" {
 
 			// walk all instances of the owning type
@@ -112,6 +131,14 @@ func (stage *StageStruct) ComputeReverseMaps() {
 		_ = req_if_content
 		for _, _spec_object_type := range req_if_content.SPEC_OBJECT_TYPES {
 			stage.REQ_IF_CONTENT_SPEC_OBJECT_TYPES_reverseMap[_spec_object_type] = req_if_content
+		}
+	}
+	clear(stage.REQ_IF_CONTENT_SPECIFICATION_TYPES_reverseMap)
+	stage.REQ_IF_CONTENT_SPECIFICATION_TYPES_reverseMap = make(map[*SPECIFICATION_TYPE]*REQ_IF_CONTENT)
+	for req_if_content := range stage.REQ_IF_CONTENTs {
+		_ = req_if_content
+		for _, _specification_type := range req_if_content.SPECIFICATION_TYPES {
+			stage.REQ_IF_CONTENT_SPECIFICATION_TYPES_reverseMap[_specification_type] = req_if_content
 		}
 	}
 	clear(stage.REQ_IF_CONTENT_SPECIFICATIONS_reverseMap)

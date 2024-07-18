@@ -58,6 +58,7 @@ type SPECIFICATION_WOP struct {
 	IDENTIFIER string
 	LAST_CHANGE time.Time
 	LONG_NAME string
+	TYPE string
 }
 
 func (from *SPECIFICATION) CopyBasicFields(to *SPECIFICATION) {
@@ -67,6 +68,7 @@ func (from *SPECIFICATION) CopyBasicFields(to *SPECIFICATION) {
 	to.IDENTIFIER = from.IDENTIFIER
 	to.LAST_CHANGE = from.LAST_CHANGE
 	to.LONG_NAME = from.LONG_NAME
+	to.TYPE = from.TYPE
 }
 
 type SPECIFICATION_TYPE_WOP struct {

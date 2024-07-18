@@ -322,6 +322,8 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(specification_.LAST_CHANGE), formDiv)
 		case "LONG_NAME":
 			FormDivBasicFieldToField(&(specification_.LONG_NAME), formDiv)
+		case "TYPE":
+			FormDivBasicFieldToField(&(specification_.TYPE), formDiv)
 		case "REQ_IF_CONTENT:SPECIFICATIONS":
 			// we need to retrieve the field owner before the change
 			var pastREQ_IF_CONTENTOwner *models.REQ_IF_CONTENT
@@ -449,6 +451,48 @@ func (specification_typeFormCallback *SPECIFICATION_TYPEFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(specification_type_.LAST_CHANGE), formDiv)
 		case "LONG_NAME":
 			FormDivBasicFieldToField(&(specification_type_.LONG_NAME), formDiv)
+		case "REQ_IF_CONTENT:SPECIFICATION_TYPES":
+			// we need to retrieve the field owner before the change
+			var pastREQ_IF_CONTENTOwner *models.REQ_IF_CONTENT
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "REQ_IF_CONTENT"
+			rf.Fieldname = "SPECIFICATION_TYPES"
+			reverseFieldOwner := orm.GetReverseFieldOwner(
+				specification_typeFormCallback.probe.stageOfInterest,
+				specification_typeFormCallback.probe.backRepoOfInterest,
+				specification_type_,
+				&rf)
+
+			if reverseFieldOwner != nil {
+				pastREQ_IF_CONTENTOwner = reverseFieldOwner.(*models.REQ_IF_CONTENT)
+			}
+			if formDiv.FormFields[0].FormFieldSelect.Value == nil {
+				if pastREQ_IF_CONTENTOwner != nil {
+					idx := slices.Index(pastREQ_IF_CONTENTOwner.SPECIFICATION_TYPES, specification_type_)
+					pastREQ_IF_CONTENTOwner.SPECIFICATION_TYPES = slices.Delete(pastREQ_IF_CONTENTOwner.SPECIFICATION_TYPES, idx, idx+1)
+				}
+			} else {
+				// we need to retrieve the field owner after the change
+				// parse all astrcut and get the one with the name in the
+				// div
+				for _req_if_content := range *models.GetGongstructInstancesSet[models.REQ_IF_CONTENT](specification_typeFormCallback.probe.stageOfInterest) {
+
+					// the match is base on the name
+					if _req_if_content.GetName() == formDiv.FormFields[0].FormFieldSelect.Value.GetName() {
+						newREQ_IF_CONTENTOwner := _req_if_content // we have a match
+						if pastREQ_IF_CONTENTOwner != nil {
+							if newREQ_IF_CONTENTOwner != pastREQ_IF_CONTENTOwner {
+								idx := slices.Index(pastREQ_IF_CONTENTOwner.SPECIFICATION_TYPES, specification_type_)
+								pastREQ_IF_CONTENTOwner.SPECIFICATION_TYPES = slices.Delete(pastREQ_IF_CONTENTOwner.SPECIFICATION_TYPES, idx, idx+1)
+								newREQ_IF_CONTENTOwner.SPECIFICATION_TYPES = append(newREQ_IF_CONTENTOwner.SPECIFICATION_TYPES, specification_type_)
+							}
+						} else {
+							newREQ_IF_CONTENTOwner.SPECIFICATION_TYPES = append(newREQ_IF_CONTENTOwner.SPECIFICATION_TYPES, specification_type_)
+						}
+					}
+				}
+			}
 		}
 	}
 
