@@ -77,5 +77,13 @@ in fact, the XSD has no slice of pointers at all.
 
 One needs to go back to the xmlplayground.
 
+Indeed, gowsdl has trouble with this xsd def. By patching the schema
+
+```go
+		SPEC_OBJECT_TYPE []*SPEC_OBJECT_TYPE `xml:"SPEC-OBJECT-TYPE,omitempty" json:"SPEC-OBJECT-TYPE,omitempty"`
+```
+
+this works
+
 
 

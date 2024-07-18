@@ -57,9 +57,9 @@ func (reqif *SPECIFICATION) Walk(_reqif *schema.SPECIFICATION, stage *StageStruc
 	reqif.LAST_CHANGE = _reqif.LAST_CHANGE.ToGoTime()
 	reqif.LONG_NAME = _reqif.LONG_NAME
 
-	if _reqif.CHILDREN.SPEC_HIERARCHY != nil {
-		sh := new(SPEC_HIERARCHY).Stage(stage)
-		sh.Walk(_reqif.CHILDREN.SPEC_HIERARCHY, stage)
-		reqif.CHILDREN = sh
-	}
+	//	if _reqif.CHILDREN.SPEC_HIERARCHY != nil {
+	//		sh := new(SPEC_HIERARCHY).Stage(stage)
+	//		sh.Walk(_reqif.CHILDREN.SPEC_HIERARCHY, stage)
+	//		reqif.CHILDREN = sh
+	//	}
 }

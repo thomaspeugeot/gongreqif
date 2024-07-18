@@ -58,10 +58,10 @@ func (reqif *REQ_IF_CONTENT) Walk(_reqif *schema.REQ_IF_CONTENT, stage *StageStr
 
 	reqif.Name = time.Now().Format(time.DateTime)
 
-	for _, r := range _reqif.SPECIFICATIONS {
-		specification := new(SPECIFICATION).Stage(stage)
-		reqif.SPECIFICATION = specification
-		specification.Walk(r.SPECIFICATION, stage)
-	}
+	// for _, r := range _reqif.SPECIFICATIONS {
+	// 	specification := new(SPECIFICATION).Stage(stage)
+	// 	reqif.SPECIFICATION = specification
+	// 	specification.Walk(r.SPECIFICATION, stage)
+	// }
 
 }

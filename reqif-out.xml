@@ -14,9 +14,56 @@
   <CORE-CONTENT>
     <REQ-IF-CONTENT>
       <DATATYPES>
+        <DATATYPE-DEFINITION-ENUMERATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="Status" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPECIFIED-VALUES>
+            <ENUM-VALUE reqif.xsd:DESC="Requirement has been proposed." reqif.xsd:IDENTIFIER="Proposed" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <PROPERTIES>
+                <EMBEDDED-VALUE reqif.xsd:KEY="1" reqif.xsd:OTHER-CONTENT="foo"></EMBEDDED-VALUE>
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE reqif.xsd:DESC="Requirement has been accepted." reqif.xsd:IDENTIFIER="Accepted" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <PROPERTIES>
+                <EMBEDDED-VALUE reqif.xsd:KEY="2" reqif.xsd:OTHER-CONTENT="foo"></EMBEDDED-VALUE>
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE reqif.xsd:DESC="Requirement has been rejected or de-scoped." reqif.xsd:IDENTIFIER="Rejected" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <PROPERTIES>
+                <EMBEDDED-VALUE reqif.xsd:KEY="3" reqif.xsd:OTHER-CONTENT="foo"></EMBEDDED-VALUE>
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE reqif.xsd:DESC="Requirement has been satisfied by an implementation of system components." reqif.xsd:IDENTIFIER="Implemented" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <PROPERTIES>
+                <EMBEDDED-VALUE reqif.xsd:KEY="4" reqif.xsd:OTHER-CONTENT="foo"></EMBEDDED-VALUE>
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE reqif.xsd:DESC="Satisfaction of requirement has been approved by QA and customer/user." reqif.xsd:IDENTIFIER="Approved" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <PROPERTIES>
+                <EMBEDDED-VALUE reqif.xsd:KEY="5" reqif.xsd:OTHER-CONTENT="foo"></EMBEDDED-VALUE>
+              </PROPERTIES>
+            </ENUM-VALUE>
+          </SPECIFIED-VALUES>
+        </DATATYPE-DEFINITION-ENUMERATION>
         <DATATYPE-DEFINITION-ENUMERATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="BindingForce" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPECIFIED-VALUES>
+            <ENUM-VALUE reqif.xsd:DESC="The fulfilment of the requirement is essential, i.e. in the event of non-fulfilment the system will not satisfy stakeholder needs or will result in a deficiency that cannot be ameliorated." reqif.xsd:IDENTIFIER="Mandatory" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <PROPERTIES>
+                <EMBEDDED-VALUE reqif.xsd:KEY="1" reqif.xsd:OTHER-CONTENT="foo"></EMBEDDED-VALUE>
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE reqif.xsd:DESC="The fulfilment of the requirement should be aspired, but non-fulfilment will not result in an inacceptable deficiency." reqif.xsd:IDENTIFIER="Worthwhile" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <PROPERTIES>
+                <EMBEDDED-VALUE reqif.xsd:KEY="2" reqif.xsd:OTHER-CONTENT="foo"></EMBEDDED-VALUE>
+              </PROPERTIES>
+            </ENUM-VALUE>
             <ENUM-VALUE reqif.xsd:DESC="The requirement is a nice-to-have one, or it has growth potential for systems future stages of expansion." reqif.xsd:IDENTIFIER="Optional" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <PROPERTIES>
@@ -30,7 +77,45 @@
         </DATATYPE-DEFINITION-STRING>
       </DATATYPES>
       <SPEC-TYPES>
-        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A legal requirement is a non-functional requirement that states a regulation that must be recognized by the system. Regulations could be laws, standards, specifications, etc." reqif.xsd:IDENTIFIER="LEGAL-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Legal Requirement">
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A functional requirement describes a function of the system, i.e. what the system must do resp. a service the system provides to its users." reqif.xsd:IDENTIFIER="FUNC-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Functional Requirement">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:DESC="The status of the requirement." reqif.xsd:IDENTIFIER="FUNC-REQ-STATUS" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
+              <DEFAULT-VALUE></DEFAULT-VALUE>
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <TYPE>
+                <DATATYPE-DEFINITION-ENUMERATION-REF>Status</DATATYPE-DEFINITION-ENUMERATION-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-ENUMERATION>
+            <ATTRIBUTE-DEFINITION-STRING reqif.xsd:DESC="The textual description of the requirement." reqif.xsd:IDENTIFIER="FUNC-REQ-TXT" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <DEFAULT-VALUE></DEFAULT-VALUE>
+              <TYPE>
+                <DATATYPE-DEFINITION-STRING-REF>Text</DATATYPE-DEFINITION-STRING-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-STRING>
+          </SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A (user) story is a special kind of functional requirement, which uses one or more sentences in the everyday or business language of the end user that captures what the user (resp. a role) wants to achieve. User stories generally follow the following template: &#34;As a &lt;role&gt;, I want &lt;goal/desire&gt; so that &lt;benefit&gt;.&#34;" reqif.xsd:IDENTIFIER="STORY" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="User Story">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:DESC="The status of the requirement." reqif.xsd:IDENTIFIER="STORY-STATUS" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
+              <DEFAULT-VALUE></DEFAULT-VALUE>
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <TYPE>
+                <DATATYPE-DEFINITION-ENUMERATION-REF>Status</DATATYPE-DEFINITION-ENUMERATION-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-ENUMERATION>
+            <ATTRIBUTE-DEFINITION-STRING reqif.xsd:DESC="The story." reqif.xsd:IDENTIFIER="STORY-TXT" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <DEFAULT-VALUE></DEFAULT-VALUE>
+              <TYPE>
+                <DATATYPE-DEFINITION-STRING-REF>Text</DATATYPE-DEFINITION-STRING-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-STRING>
+          </SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A performance requirement is a non-functional requirement that describes the amount of useful work accomplished by the system compared to the time and resources used." reqif.xsd:IDENTIFIER="PERF-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Performance Requirement">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPEC-ATTRIBUTES>
             <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:DESC="The status of the requirement." reqif.xsd:IDENTIFIER="PERF-REQ-STATUS" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
@@ -49,16 +134,90 @@
             </ATTRIBUTE-DEFINITION-STRING>
           </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A scalability requirement is a non-functional requirement that describes the ability of the system to handle growing amounts of work in a graceful manner or its ability to be enlarged to accommodate that growth." reqif.xsd:IDENTIFIER="SCALE-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Scalability Requirement">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A security requirement is a non-functional requirement that describes the stipulated degree of the systems protection against danger, damage, misuse, unauthorized access, data loss and crime." reqif.xsd:IDENTIFIER="SEC-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Security Requirement">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A maintainability requirement is a non-functional requirement that describes the ease with which the system can be maintained in order to isolate defects or their cause, correct defects or their cause, meet new requirements, make future maintenance easier, or cope with a changed environment." reqif.xsd:IDENTIFIER="MAIN-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Maintainability Requirement">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A usability requirement is a non-functional requirement describing the intended ease of use (ergonomical comfort) and learnability of the system." reqif.xsd:IDENTIFIER="USABILITY-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Usability Requirement">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A legal requirement is a non-functional requirement that states a regulation that must be recognized by the system. Regulations could be laws, standards, specifications, etc." reqif.xsd:IDENTIFIER="LEGAL-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Legal Requirement">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPEC-RELATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="The deriveReq relationship can be used to specify when one requirement is a derivation from another requirement. This relationship expresses the relation between a particular requirement and the requirements that support this requirement." reqif.xsd:IDENTIFIER="deriveReq" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Derive Requirement Relationship">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
+        </SPEC-RELATION-TYPE>
         <SPEC-RELATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="The refine relationship can be used to specify an element that refines a requirement, i.e. the element is an increase in detail compared to the requirement." reqif.xsd:IDENTIFIER="refine" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Refine Relationship">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
         </SPEC-RELATION-TYPE>
+        <SPECIFICATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A User Requirements Specification (a.k.a. Stakeholder Requirements Specification) specifies the requirements the user expects from the system to be constructed. User Requirements are the top level of requirements. They capture the needs of users, the customer and other sources of requirements like legal regulations and internal company high level requirements." reqif.xsd:IDENTIFIER="URS" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00" reqif.xsd:LONG-NAME="User Requirements Specification">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
+        </SPECIFICATION-TYPE>
+        <SPECIFICATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A System Requirements Specification contains the next level of requirements after user requirements. The aim of system requirements is to set precise technical requirements for the system development. System requirements are derived from user requirements by considering existing technology, components and so on." reqif.xsd:IDENTIFIER="SRS" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="System Requirements Specification">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
+        </SPECIFICATION-TYPE>
         <SPECIFICATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A Subsystem/Components Requirements Specification contains the next level of requirements after system requirements.The aim of subsystem and component requirements is to set precise technical requirements for the development of a subsystem/component. Subsystem/component requirements are derived from system requirements by considering existing technology, components, interfaces and so on." reqif.xsd:IDENTIFIER="CRS" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Subsystem/Components Requirements Specification">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
         </SPECIFICATION-TYPE>
       </SPEC-TYPES>
       <SPEC-OBJECTS>
+        <SPEC-OBJECT xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="R001" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Observe earths surface.">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <VALUES>
+            <ATTRIBUTE-VALUE-ENUMERATION>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>FUNC-REQ-STATUS</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+              </DEFINITION>
+              <VALUES>
+                <ENUM-VALUE-REF>Proposed</ENUM-VALUE-REF>
+              </VALUES>
+            </ATTRIBUTE-VALUE-ENUMERATION>
+            <ATTRIBUTE-VALUE-STRING reqif.xsd:THE-VALUE="The system shall observe the earths surface.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>FUNC-REQ-TXT</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>FUNC-REQ</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="R002" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Spotting fire">
+          <ALTERNATIVE-ID></ALTERNATIVE-ID>
+          <VALUES>
+            <ATTRIBUTE-VALUE-ENUMERATION>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>FUNC-REQ-STATUS</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+              </DEFINITION>
+              <VALUES>
+                <ENUM-VALUE-REF>Proposed</ENUM-VALUE-REF>
+              </VALUES>
+            </ATTRIBUTE-VALUE-ENUMERATION>
+            <ATTRIBUTE-VALUE-STRING reqif.xsd:THE-VALUE="The system shall alert the control center if it spots a fire in a forest.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>FUNC-REQ-TXT</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>FUNC-REQ</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
         <SPEC-OBJECT xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="R003" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Fast system">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <VALUES>
