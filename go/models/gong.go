@@ -823,6 +823,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 	case SPEC_HIERARCHY:
 		return any(&SPEC_HIERARCHY{
 			// Initialisation of associations
+			// field is initialized with an instance of SPEC_HIERARCHY with the name of the field
+			CHILDREN: &SPEC_HIERARCHY{Name: "CHILDREN"},
 		}).(*Type)
 	default:
 		return nil
@@ -934,6 +936,23 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 	case SPEC_HIERARCHY:
 		switch fieldname {
 		// insertion point for per direct association field
+		case "CHILDREN":
+			res := make(map[*SPEC_HIERARCHY][]*SPEC_HIERARCHY)
+			for spec_hierarchy := range stage.SPEC_HIERARCHYs {
+				if spec_hierarchy.CHILDREN != nil {
+					spec_hierarchy_ := spec_hierarchy.CHILDREN
+					var spec_hierarchys []*SPEC_HIERARCHY
+					_, ok := res[spec_hierarchy_]
+					if ok {
+						spec_hierarchys = res[spec_hierarchy_]
+					} else {
+						spec_hierarchys = make([]*SPEC_HIERARCHY, 0)
+					}
+					spec_hierarchys = append(spec_hierarchys, spec_hierarchy)
+					res[spec_hierarchy_] = spec_hierarchys
+				}
+			}
+			return any(res).(map[*End][]*Start)
 		}
 	}
 	return nil
@@ -1040,7 +1059,7 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case SPECIFICATION:
 		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	case SPEC_HIERARCHY:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "IS_TABLE_INTERNAL", "LAST_CHANGE", "LONG_NAME"}
+		res = []string{"Name", "CHILDREN", "OBJECT", "DESC", "IDENTIFIER", "IS_EDITABLE", "IS_TABLE_INTERNAL", "LAST_CHANGE", "LONG_NAME"}
 	}
 	return
 }
@@ -1094,7 +1113,7 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *SPECIFICATION:
 		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	case *SPEC_HIERARCHY:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "IS_TABLE_INTERNAL", "LAST_CHANGE", "LONG_NAME"}
+		res = []string{"Name", "CHILDREN", "OBJECT", "DESC", "IDENTIFIER", "IS_EDITABLE", "IS_TABLE_INTERNAL", "LAST_CHANGE", "LONG_NAME"}
 	}
 	return
 }
@@ -1170,6 +1189,12 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 		// string value of fields
 		case "Name":
 			res = inferedInstance.Name
+		case "CHILDREN":
+			if inferedInstance.CHILDREN != nil {
+				res = inferedInstance.CHILDREN.Name
+			}
+		case "OBJECT":
+			res = inferedInstance.OBJECT
 		case "DESC":
 			res = inferedInstance.DESC
 		case "IDENTIFIER":
@@ -1260,6 +1285,12 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 		// string value of fields
 		case "Name":
 			res = inferedInstance.Name
+		case "CHILDREN":
+			if inferedInstance.CHILDREN != nil {
+				res = inferedInstance.CHILDREN.Name
+			}
+		case "OBJECT":
+			res = inferedInstance.OBJECT
 		case "DESC":
 			res = inferedInstance.DESC
 		case "IDENTIFIER":

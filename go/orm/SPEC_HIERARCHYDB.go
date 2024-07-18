@@ -46,6 +46,10 @@ type SPEC_HIERARCHYAPI struct {
 // reverse pointers of slice of poitners to Struct
 type SPEC_HIERARCHYPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
+
+	// field CHILDREN is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	CHILDRENID sql.NullInt64
 }
 
 // SPEC_HIERARCHYDB describes a spec_hierarchy in the database
@@ -61,6 +65,9 @@ type SPEC_HIERARCHYDB struct {
 
 	// Declation for basic field spec_hierarchyDB.Name
 	Name_Data sql.NullString
+
+	// Declation for basic field spec_hierarchyDB.OBJECT
+	OBJECT_Data sql.NullString
 
 	// Declation for basic field spec_hierarchyDB.DESC
 	DESC_Data sql.NullString
@@ -106,17 +113,19 @@ type SPEC_HIERARCHYWOP struct {
 
 	Name string `xlsx:"1"`
 
-	DESC string `xlsx:"2"`
+	OBJECT string `xlsx:"2"`
 
-	IDENTIFIER string `xlsx:"3"`
+	DESC string `xlsx:"3"`
 
-	IS_EDITABLE bool `xlsx:"4"`
+	IDENTIFIER string `xlsx:"4"`
 
-	IS_TABLE_INTERNAL bool `xlsx:"5"`
+	IS_EDITABLE bool `xlsx:"5"`
 
-	LAST_CHANGE time.Time `xlsx:"6"`
+	IS_TABLE_INTERNAL bool `xlsx:"6"`
 
-	LONG_NAME string `xlsx:"7"`
+	LAST_CHANGE time.Time `xlsx:"7"`
+
+	LONG_NAME string `xlsx:"8"`
 	// insertion for WOP pointer fields
 }
 
@@ -124,6 +133,7 @@ var SPEC_HIERARCHY_Fields = []string{
 	// insertion for WOP basic fields
 	"ID",
 	"Name",
+	"OBJECT",
 	"DESC",
 	"IDENTIFIER",
 	"IS_EDITABLE",
@@ -249,6 +259,18 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitPhaseTwoInstan
 		spec_hierarchyDB.CopyBasicFieldsFromSPEC_HIERARCHY(spec_hierarchy)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value spec_hierarchy.CHILDREN translates to updating the spec_hierarchy.CHILDRENID
+		spec_hierarchyDB.CHILDRENID.Valid = true // allow for a 0 value (nil association)
+		if spec_hierarchy.CHILDREN != nil {
+			if CHILDRENId, ok := backRepo.BackRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYPtr_SPEC_HIERARCHYDBID[spec_hierarchy.CHILDREN]; ok {
+				spec_hierarchyDB.CHILDRENID.Int64 = int64(CHILDRENId)
+				spec_hierarchyDB.CHILDRENID.Valid = true
+			}
+		} else {
+			spec_hierarchyDB.CHILDRENID.Int64 = 0
+			spec_hierarchyDB.CHILDRENID.Valid = true
+		}
+
 		query := backRepoSPEC_HIERARCHY.db.Save(&spec_hierarchyDB)
 		if query.Error != nil {
 			log.Fatalln(query.Error)
@@ -362,6 +384,11 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CheckoutPhaseTwoInst
 func (spec_hierarchyDB *SPEC_HIERARCHYDB) DecodePointers(backRepo *BackRepoStruct, spec_hierarchy *models.SPEC_HIERARCHY) {
 
 	// insertion point for checkout of pointer encoding
+	// CHILDREN field
+	spec_hierarchy.CHILDREN = nil
+	if spec_hierarchyDB.CHILDRENID.Int64 != 0 {
+		spec_hierarchy.CHILDREN = backRepo.BackRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYDBID_SPEC_HIERARCHYPtr[uint(spec_hierarchyDB.CHILDRENID.Int64)]
+	}
 	return
 }
 
@@ -399,6 +426,9 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsFromSPEC_HIERARCHY(spec
 	spec_hierarchyDB.Name_Data.String = spec_hierarchy.Name
 	spec_hierarchyDB.Name_Data.Valid = true
 
+	spec_hierarchyDB.OBJECT_Data.String = spec_hierarchy.OBJECT
+	spec_hierarchyDB.OBJECT_Data.Valid = true
+
 	spec_hierarchyDB.DESC_Data.String = spec_hierarchy.DESC
 	spec_hierarchyDB.DESC_Data.Valid = true
 
@@ -424,6 +454,9 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsFromSPEC_HIERARCHY_WOP(
 
 	spec_hierarchyDB.Name_Data.String = spec_hierarchy.Name
 	spec_hierarchyDB.Name_Data.Valid = true
+
+	spec_hierarchyDB.OBJECT_Data.String = spec_hierarchy.OBJECT
+	spec_hierarchyDB.OBJECT_Data.Valid = true
 
 	spec_hierarchyDB.DESC_Data.String = spec_hierarchy.DESC
 	spec_hierarchyDB.DESC_Data.Valid = true
@@ -451,6 +484,9 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsFromSPEC_HIERARCHYWOP(s
 	spec_hierarchyDB.Name_Data.String = spec_hierarchy.Name
 	spec_hierarchyDB.Name_Data.Valid = true
 
+	spec_hierarchyDB.OBJECT_Data.String = spec_hierarchy.OBJECT
+	spec_hierarchyDB.OBJECT_Data.Valid = true
+
 	spec_hierarchyDB.DESC_Data.String = spec_hierarchy.DESC
 	spec_hierarchyDB.DESC_Data.Valid = true
 
@@ -474,6 +510,7 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsFromSPEC_HIERARCHYWOP(s
 func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsToSPEC_HIERARCHY(spec_hierarchy *models.SPEC_HIERARCHY) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	spec_hierarchy.Name = spec_hierarchyDB.Name_Data.String
+	spec_hierarchy.OBJECT = spec_hierarchyDB.OBJECT_Data.String
 	spec_hierarchy.DESC = spec_hierarchyDB.DESC_Data.String
 	spec_hierarchy.IDENTIFIER = spec_hierarchyDB.IDENTIFIER_Data.String
 	spec_hierarchy.IS_EDITABLE = spec_hierarchyDB.IS_EDITABLE_Data.Bool
@@ -486,6 +523,7 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsToSPEC_HIERARCHY(spec_h
 func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsToSPEC_HIERARCHY_WOP(spec_hierarchy *models.SPEC_HIERARCHY_WOP) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	spec_hierarchy.Name = spec_hierarchyDB.Name_Data.String
+	spec_hierarchy.OBJECT = spec_hierarchyDB.OBJECT_Data.String
 	spec_hierarchy.DESC = spec_hierarchyDB.DESC_Data.String
 	spec_hierarchy.IDENTIFIER = spec_hierarchyDB.IDENTIFIER_Data.String
 	spec_hierarchy.IS_EDITABLE = spec_hierarchyDB.IS_EDITABLE_Data.Bool
@@ -499,6 +537,7 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsToSPEC_HIERARCHYWOP(spe
 	spec_hierarchy.ID = int(spec_hierarchyDB.ID)
 	// insertion point for checkout of basic fields (back repo to stage)
 	spec_hierarchy.Name = spec_hierarchyDB.Name_Data.String
+	spec_hierarchy.OBJECT = spec_hierarchyDB.OBJECT_Data.String
 	spec_hierarchy.DESC = spec_hierarchyDB.DESC_Data.String
 	spec_hierarchy.IDENTIFIER = spec_hierarchyDB.IDENTIFIER_Data.String
 	spec_hierarchy.IS_EDITABLE = spec_hierarchyDB.IS_EDITABLE_Data.Bool
@@ -662,6 +701,12 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) RestorePhaseTwo() {
 		_ = spec_hierarchyDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing CHILDREN field
+		if spec_hierarchyDB.CHILDRENID.Int64 != 0 {
+			spec_hierarchyDB.CHILDRENID.Int64 = int64(BackRepoSPEC_HIERARCHYid_atBckpTime_newID[uint(spec_hierarchyDB.CHILDRENID.Int64)])
+			spec_hierarchyDB.CHILDRENID.Valid = true
+		}
+
 		// update databse with new index encoding
 		query := backRepoSPEC_HIERARCHY.db.Model(spec_hierarchyDB).Updates(*spec_hierarchyDB)
 		if query.Error != nil {

@@ -748,6 +748,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_SPEC_HIERARCHY[identifier].Name = fielValue
+				case "OBJECT":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_HIERARCHY[identifier].OBJECT = fielValue
 				case "DESC":
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
@@ -806,6 +810,9 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 			case "SPEC_HIERARCHY":
 				switch fieldName {
 				// insertion point for field dependant code
+				case "CHILDREN":
+					targetIdentifier := ident.Name
+					__gong__map_SPEC_HIERARCHY[identifier].CHILDREN = __gong__map_SPEC_HIERARCHY[targetIdentifier]
 				case "IS_EDITABLE":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)

@@ -59,3 +59,9 @@ We have to go back to xmlplaygground
 \b[A-Z-]+=
 
 reqif.xsd:$0
+
+### SPEC HIERARCHY
+
+It's strange, SPEC HIERARCHY has only one "children"
+
+

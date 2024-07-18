@@ -173,6 +173,9 @@ func (stage *StageStruct) StageBranchSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARC
 	spec_hierarchy.Stage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
+	if spec_hierarchy.CHILDREN != nil {
+		StageBranch(stage, spec_hierarchy.CHILDREN)
+	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -317,6 +320,9 @@ func CopyBranchSPEC_HIERARCHY(mapOrigCopy map[any]any, spec_hierarchyFrom *SPEC_
 	spec_hierarchyFrom.CopyBasicFields(spec_hierarchyTo)
 
 	//insertion point for the staging of instances referenced by pointers
+	if spec_hierarchyFrom.CHILDREN != nil {
+		spec_hierarchyTo.CHILDREN = CopyBranchSPEC_HIERARCHY(mapOrigCopy, spec_hierarchyFrom.CHILDREN)
+	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -434,6 +440,9 @@ func (stage *StageStruct) UnstageBranchSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERA
 	spec_hierarchy.Unstage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
+	if spec_hierarchy.CHILDREN != nil {
+		UnstageBranch(stage, spec_hierarchy.CHILDREN)
+	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
 

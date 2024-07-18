@@ -1,126 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <REQ_IF>
   <THE-HEADER>
-    <REQ-IF-HEADER xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="EF5AEFF3-C695-488A-9955-EDAAEACFE359">
-      <COMMENT>Optional comment associated with the Exchange Document as a whole</COMMENT>
-      <CREATION-TIME>2011-06-13T10:24:18+01:00</CREATION-TIME>
-      <REPOSITORY-ID>A4123EB9-CC82-4B62-95E1-31CB3203E39C</REPOSITORY-ID>
-      <REQ-IF-TOOL-ID>SparxSystems Enterprise Architect 8.0</REQ-IF-TOOL-ID>
+    <REQ-IF-HEADER xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_8da68f26-585c-4193-b6ca-a07cedff2a5c">
+      <CREATION-TIME>2017-04-25T15:44:26+02:00</CREATION-TIME>
+      <REPOSITORY-ID>524d2a940b0233d5</REPOSITORY-ID>
+      <REQ-IF-TOOL-ID>IBM Rational DOORS</REQ-IF-TOOL-ID>
       <REQ-IF-VERSION>1.0</REQ-IF-VERSION>
-      <SOURCE-TOOL-ID>microTool in-Step</SOURCE-TOOL-ID>
-      <TITLE>Example ReqIF file</TITLE>
+      <SOURCE-TOOL-ID>IBM Rational DOORS</SOURCE-TOOL-ID>
+      <TITLE>IBM Rational DOORS, 25 April 2017</TITLE>
     </REQ-IF-HEADER>
   </THE-HEADER>
   <CORE-CONTENT>
     <REQ-IF-CONTENT>
       <DATATYPES>
-        <DATATYPE-DEFINITION-ENUMERATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="BindingForce" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+        <DATATYPE-DEFINITION-ENUMERATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_ahyOEMk3Eee5A_N9aQFa1w" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="IE Object Type">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPECIFIED-VALUES>
-            <ENUM-VALUE reqif.xsd:DESC="The requirement is a nice-to-have one, or it has growth potential for systems future stages of expansion." reqif.xsd:IDENTIFIER="Optional" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00">
+            <ENUM-VALUE reqif.xsd:IDENTIFIER="_hZP1IMk3Eee5A_N9aQFa1w" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Capability">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <PROPERTIES>
-                <EMBEDDED-VALUE reqif.xsd:KEY="3" reqif.xsd:OTHER-CONTENT="foo"></EMBEDDED-VALUE>
+                <EMBEDDED-VALUE reqif.xsd:KEY="2" reqif.xsd:OTHER-CONTENT="Sea_Green"></EMBEDDED-VALUE>
               </PROPERTIES>
             </ENUM-VALUE>
           </SPECIFIED-VALUES>
         </DATATYPE-DEFINITION-ENUMERATION>
-        <DATATYPE-DEFINITION-STRING xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="Text" reqif.xsd:LAST-CHANGE="2011-06-13T00:00:00.000+01:00" reqif.xsd:MAX-LENGTH="1000">
+        <DATATYPE-DEFINITION-XHTML xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_i6FNMMkgEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="String">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
-        </DATATYPE-DEFINITION-STRING>
+        </DATATYPE-DEFINITION-XHTML>
       </DATATYPES>
       <SPEC-TYPES>
-        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A legal requirement is a non-functional requirement that states a regulation that must be recognized by the system. Regulations could be laws, standards, specifications, etc." reqif.xsd:IDENTIFIER="LEGAL-REQ" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Legal Requirement">
+        <SPEC-OBJECT-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_LaeSsMkhEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Requirement Type">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <SPEC-ATTRIBUTES>
-            <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:DESC="The status of the requirement." reqif.xsd:IDENTIFIER="PERF-REQ-STATUS" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
+            <ATTRIBUTE-DEFINITION-ENUMERATION reqif.xsd:IDENTIFIER="_0VDX0Mk3Eee5A_N9aQFa1w" reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="IE Object Type">
               <DEFAULT-VALUE></DEFAULT-VALUE>
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <TYPE>
-                <DATATYPE-DEFINITION-ENUMERATION-REF>Status</DATATYPE-DEFINITION-ENUMERATION-REF>
+                <DATATYPE-DEFINITION-ENUMERATION-REF>_ahyOEMk3Eee5A_N9aQFa1w</DATATYPE-DEFINITION-ENUMERATION-REF>
               </TYPE>
             </ATTRIBUTE-DEFINITION-ENUMERATION>
-            <ATTRIBUTE-DEFINITION-STRING reqif.xsd:DESC="The textual description of the performance requirement." reqif.xsd:IDENTIFIER="PERF-REQ-TXT" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
+            <ATTRIBUTE-DEFINITION-XHTML reqif.xsd:IDENTIFIER="_25YvEMkyEee5A_N9aQFa1w" reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="IE PUID">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
               <DEFAULT-VALUE></DEFAULT-VALUE>
               <TYPE>
-                <DATATYPE-DEFINITION-STRING-REF>Text</DATATYPE-DEFINITION-STRING-REF>
+                <DATATYPE-DEFINITION-XHTML-REF>_i6FNMMkgEee8KsfWrp9EJQ</DATATYPE-DEFINITION-XHTML-REF>
               </TYPE>
-            </ATTRIBUTE-DEFINITION-STRING>
+            </ATTRIBUTE-DEFINITION-XHTML>
           </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
-        <SPEC-RELATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="The refine relationship can be used to specify an element that refines a requirement, i.e. the element is an increase in detail compared to the requirement." reqif.xsd:IDENTIFIER="refine" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Refine Relationship">
+        <SPECIFICATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_NAXScMkhEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Module Type">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
-          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
-        </SPEC-RELATION-TYPE>
-        <SPECIFICATION-TYPE xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="A Subsystem/Components Requirements Specification contains the next level of requirements after system requirements.The aim of subsystem and component requirements is to set precise technical requirements for the development of a subsystem/component. Subsystem/component requirements are derived from system requirements by considering existing technology, components, interfaces and so on." reqif.xsd:IDENTIFIER="CRS" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Subsystem/Components Requirements Specification">
-          <ALTERNATIVE-ID></ALTERNATIVE-ID>
-          <SPEC-ATTRIBUTES></SPEC-ATTRIBUTES>
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-XHTML reqif.xsd:IDENTIFIER="_jLB90MkhEee8KsfWrp9EJQ" reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="ReqIF.Name">
+              <ALTERNATIVE-ID></ALTERNATIVE-ID>
+              <DEFAULT-VALUE></DEFAULT-VALUE>
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_i6FNMMkgEee8KsfWrp9EJQ</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+          </SPEC-ATTRIBUTES>
         </SPECIFICATION-TYPE>
       </SPEC-TYPES>
       <SPEC-OBJECTS>
-        <SPEC-OBJECT xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="R003" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Fast system">
+        <SPEC-OBJECT xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_xen_QMkhEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Requirement-1">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <VALUES>
             <ATTRIBUTE-VALUE-ENUMERATION>
               <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>PERF-REQ-STATUS</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>_0VDX0Mk3Eee5A_N9aQFa1w</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
               </DEFINITION>
               <VALUES>
-                <ENUM-VALUE-REF>Proposed</ENUM-VALUE-REF>
+                <ENUM-VALUE-REF>_gXZ9oMk3Eee5A_N9aQFa1w</ENUM-VALUE-REF>
               </VALUES>
             </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING reqif.xsd:THE-VALUE="The time span between detection of a fire and alerting of control center shall be less than 3 sec.">
+            <ATTRIBUTE-VALUE-XHTML>
+              <THE-VALUE></THE-VALUE>
               <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>PERF-REQ-TXT</ATTRIBUTE-DEFINITION-STRING-REF>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_cf7-0MkhEee8KsfWrp9EJQ</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
+            </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
-            <SPEC-OBJECT-TYPE-REF>PERF-REQ</SPEC-OBJECT-TYPE-REF>
+            <SPEC-OBJECT-TYPE-REF>_LaeSsMkhEee8KsfWrp9EJQ</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
       </SPEC-OBJECTS>
-      <SPEC-RELATIONS>
-        <SPEC-RELATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="ADB3C6E4-8014-4167-9D21-A8E13D98C6CA" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
-          <ALTERNATIVE-ID></ALTERNATIVE-ID>
-          <VALUES></VALUES>
-          <SOURCE>
-            <SPEC-OBJECT-REF>FUNC-REQ-1</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>FUNC-REQ-2</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>deriveReq</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-        </SPEC-RELATION>
-      </SPEC-RELATIONS>
+      <SPEC-RELATIONS></SPEC-RELATIONS>
       <SPECIFICATIONS>
-        <SPECIFICATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:DESC="This is the User Requirements Specification for the Forest Fire Detection System of Customer Y." reqif.xsd:IDENTIFIER="F785DE59-9D79-4DEB-9709-AACC015EF7A1" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00" reqif.xsd:LONG-NAME="Forest Fire Detection System">
+        <SPECIFICATION xmlns:reqif.xsd="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" reqif.xsd:IDENTIFIER="_dESzoMkiEee8KsfWrp9EJQ" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="MODULE-1">
           <ALTERNATIVE-ID></ALTERNATIVE-ID>
           <VALUES></VALUES>
           <CHILDREN>
-            <SPEC-HIERARCHY reqif.xsd:IDENTIFIER="E65E8A75-F1C1-48D1-9681-8AD99E2BE6EE" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
+            <SPEC-HIERARCHY reqif.xsd:IDENTIFIER="_Ob6YgMkjEee8KsfWrp9EJQ" reqif.xsd:IS-EDITABLE="true" reqif.xsd:LAST-CHANGE="2017-11-14T15:44:26.000+02:00" reqif.xsd:LONG-NAME="Requirement-1">
               <ALTERNATIVE-ID></ALTERNATIVE-ID>
-              <CHILDREN>
-                <SPEC-HIERARCHY reqif.xsd:IDENTIFIER="A980AE9C-9C06-40B8-BFAE-213C27451649" reqif.xsd:LAST-CHANGE="2011-06-13T10:24:18.000+01:00">
-                  <ALTERNATIVE-ID></ALTERNATIVE-ID>
-                  <CHILDREN></CHILDREN>
-                  <EDITABLE-ATTS></EDITABLE-ATTS>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>FUNC-REQ-2</SPEC-OBJECT-REF>
-                  </OBJECT>
-                </SPEC-HIERARCHY>
-              </CHILDREN>
+              <CHILDREN></CHILDREN>
               <EDITABLE-ATTS></EDITABLE-ATTS>
               <OBJECT>
-                <SPEC-OBJECT-REF>FUNC-REQ-1</SPEC-OBJECT-REF>
+                <SPEC-OBJECT-REF>_xen_QMkhEee8KsfWrp9EJQ</SPEC-OBJECT-REF>
               </OBJECT>
             </SPEC-HIERARCHY>
           </CHILDREN>
           <TYPE>
-            <SPECIFICATION-TYPE-REF>URS</SPECIFICATION-TYPE-REF>
+            <SPECIFICATION-TYPE-REF>_NAXScMkhEee8KsfWrp9EJQ</SPECIFICATION-TYPE-REF>
           </TYPE>
         </SPECIFICATION>
       </SPECIFICATIONS>

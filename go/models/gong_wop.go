@@ -72,6 +72,7 @@ func (from *SPECIFICATION) CopyBasicFields(to *SPECIFICATION) {
 type SPEC_HIERARCHY_WOP struct {
 	// insertion point
 	Name string
+	OBJECT string
 	DESC string
 	IDENTIFIER string
 	IS_EDITABLE bool
@@ -83,6 +84,7 @@ type SPEC_HIERARCHY_WOP struct {
 func (from *SPEC_HIERARCHY) CopyBasicFields(to *SPEC_HIERARCHY) {
 	// insertion point
 	to.Name = from.Name
+	to.OBJECT = from.OBJECT
 	to.DESC = from.DESC
 	to.IDENTIFIER = from.IDENTIFIER
 	to.IS_EDITABLE = from.IS_EDITABLE

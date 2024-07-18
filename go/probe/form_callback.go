@@ -401,6 +401,10 @@ func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(spec_hierarchy_.Name), formDiv)
+		case "CHILDREN":
+			FormDivSelectFieldToField(&(spec_hierarchy_.CHILDREN), spec_hierarchyFormCallback.probe.stageOfInterest, formDiv)
+		case "OBJECT":
+			FormDivBasicFieldToField(&(spec_hierarchy_.OBJECT), formDiv)
 		case "DESC":
 			FormDivBasicFieldToField(&(spec_hierarchy_.DESC), formDiv)
 		case "IDENTIFIER":

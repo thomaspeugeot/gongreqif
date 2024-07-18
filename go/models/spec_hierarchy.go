@@ -16,6 +16,7 @@ type SPEC_HIERARCHY struct {
 	// CHILDREN struct {
 	// 	SPEC_HIERARCHY *SPEC_HIERARCHY `xml:"SPEC-HIERARCHY,omitempty" json:"SPEC-HIERARCHY,omitempty"`
 	// } `xml:"CHILDREN,omitempty" json:"CHILDREN,omitempty"`
+	CHILDREN *SPEC_HIERARCHY
 
 	// EDITABLE_ATTS struct {
 	// 	ATTRIBUTE_DEFINITION_BOOLEAN_REF *LOCAL_REF `xml:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty" json:"ATTRIBUTE-DEFINITION-BOOLEAN-REF,omitempty"`
@@ -36,6 +37,7 @@ type SPEC_HIERARCHY struct {
 	// OBJECT struct {
 	// 	SPEC_OBJECT_REF *LOCAL_REF `xml:"SPEC-OBJECT-REF,omitempty" json:"SPEC-OBJECT-REF,omitempty"`
 	// } `xml:"OBJECT,omitempty" json:"OBJECT,omitempty"`
+	OBJECT string
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
 
@@ -61,4 +63,14 @@ func (reqif *SPEC_HIERARCHY) Walk(_reqif *schema.SPEC_HIERARCHY, stage *StageStr
 	reqif.IS_TABLE_INTERNAL = _reqif.IS_TABLE_INTERNAL
 	reqif.LAST_CHANGE = _reqif.LAST_CHANGE.ToGoTime()
 	reqif.LONG_NAME = _reqif.LONG_NAME
+	if _reqif.OBJECT.SPEC_OBJECT_REF != nil {
+		reqif.OBJECT = string(*_reqif.OBJECT.SPEC_OBJECT_REF)
+		reqif.Name = reqif.OBJECT
+	}
+
+	if _reqif.CHILDREN.SPEC_HIERARCHY != nil {
+		sh := new(SPEC_HIERARCHY).Stage(stage)
+		sh.Walk(_reqif.CHILDREN.SPEC_HIERARCHY, stage)
+		reqif.CHILDREN = sh
+	}
 }
