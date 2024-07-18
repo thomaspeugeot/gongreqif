@@ -25,6 +25,7 @@ func (reqif *SPECIFICATION_TYPE) Walk(_reqif *schema.SPECIFICATION_TYPE, stage *
 	reqif.DESC = _reqif.DESC
 	if _reqif.IDENTIFIER != nil {
 		reqif.IDENTIFIER = string(*_reqif.IDENTIFIER)
+		reqif.Name = reqif.IDENTIFIER
 	}
 	reqif.LAST_CHANGE = _reqif.LAST_CHANGE.ToGoTime()
 	reqif.LONG_NAME = _reqif.LONG_NAME

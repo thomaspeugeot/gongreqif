@@ -190,6 +190,9 @@ func (stage *StageStruct) StageBranchSPECIFICATION(specification *SPECIFICATION)
 	if specification.CHILDREN != nil {
 		StageBranch(stage, specification.CHILDREN)
 	}
+	if specification.SPECIFICATION_TYPE != nil {
+		StageBranch(stage, specification.SPECIFICATION_TYPE)
+	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -377,6 +380,9 @@ func CopyBranchSPECIFICATION(mapOrigCopy map[any]any, specificationFrom *SPECIFI
 	if specificationFrom.CHILDREN != nil {
 		specificationTo.CHILDREN = CopyBranchSPEC_HIERARCHY(mapOrigCopy, specificationFrom.CHILDREN)
 	}
+	if specificationFrom.SPECIFICATION_TYPE != nil {
+		specificationTo.SPECIFICATION_TYPE = CopyBranchSPECIFICATION_TYPE(mapOrigCopy, specificationFrom.SPECIFICATION_TYPE)
+	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -550,6 +556,9 @@ func (stage *StageStruct) UnstageBranchSPECIFICATION(specification *SPECIFICATIO
 	//insertion point for the staging of instances referenced by pointers
 	if specification.CHILDREN != nil {
 		UnstageBranch(stage, specification.CHILDREN)
+	}
+	if specification.SPECIFICATION_TYPE != nil {
+		UnstageBranch(stage, specification.SPECIFICATION_TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers

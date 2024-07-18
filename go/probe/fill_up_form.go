@@ -67,6 +67,7 @@ func FillUpForm[T models.Gongstruct](
 			false, false, 0, false, 0)
 		BasicFieldtoForm("TYPE", instanceWithInferedType.TYPE, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+		AssociationFieldToForm("SPECIFICATION_TYPE", instanceWithInferedType.SPECIFICATION_TYPE, formGroup, probe)
 		{
 			var rf models.ReverseField
 			_ = rf

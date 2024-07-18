@@ -1008,6 +1008,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			// Initialisation of associations
 			// field is initialized with an instance of SPEC_HIERARCHY with the name of the field
 			CHILDREN: &SPEC_HIERARCHY{Name: "CHILDREN"},
+			// field is initialized with an instance of SPECIFICATION_TYPE with the name of the field
+			SPECIFICATION_TYPE: &SPECIFICATION_TYPE{Name: "SPECIFICATION_TYPE"},
 		}).(*Type)
 	case SPECIFICATION_TYPE:
 		return any(&SPECIFICATION_TYPE{
@@ -1108,6 +1110,23 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 					}
 					specifications = append(specifications, specification)
 					res[spec_hierarchy_] = specifications
+				}
+			}
+			return any(res).(map[*End][]*Start)
+		case "SPECIFICATION_TYPE":
+			res := make(map[*SPECIFICATION_TYPE][]*SPECIFICATION)
+			for specification := range stage.SPECIFICATIONs {
+				if specification.SPECIFICATION_TYPE != nil {
+					specification_type_ := specification.SPECIFICATION_TYPE
+					var specifications []*SPECIFICATION
+					_, ok := res[specification_type_]
+					if ok {
+						specifications = res[specification_type_]
+					} else {
+						specifications = make([]*SPECIFICATION, 0)
+					}
+					specifications = append(specifications, specification)
+					res[specification_type_] = specifications
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -1289,7 +1308,7 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
 	case SPECIFICATION:
-		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "TYPE"}
+		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "TYPE", "SPECIFICATION_TYPE"}
 	case SPECIFICATION_TYPE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	case SPEC_HIERARCHY:
@@ -1362,7 +1381,7 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
 	case *SPECIFICATION:
-		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "TYPE"}
+		res = []string{"Name", "CHILDREN", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "TYPE", "SPECIFICATION_TYPE"}
 	case *SPECIFICATION_TYPE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	case *SPEC_HIERARCHY:
@@ -1457,6 +1476,10 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 			res = inferedInstance.LONG_NAME
 		case "TYPE":
 			res = inferedInstance.TYPE
+		case "SPECIFICATION_TYPE":
+			if inferedInstance.SPECIFICATION_TYPE != nil {
+				res = inferedInstance.SPECIFICATION_TYPE.Name
+			}
 		}
 	case *SPECIFICATION_TYPE:
 		switch fieldName {
@@ -1600,6 +1623,10 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 			res = inferedInstance.LONG_NAME
 		case "TYPE":
 			res = inferedInstance.TYPE
+		case "SPECIFICATION_TYPE":
+			if inferedInstance.SPECIFICATION_TYPE != nil {
+				res = inferedInstance.SPECIFICATION_TYPE.Name
+			}
 		}
 	case SPECIFICATION_TYPE:
 		switch fieldName {

@@ -13,7 +13,8 @@ type SPECIFICATION struct {
 
 	StandardAttributes
 
-	TYPE string
+	TYPE               string
+	SPECIFICATION_TYPE *SPECIFICATION_TYPE
 }
 
 func (reqif *SPECIFICATION) Walk(_reqif *schema.SPECIFICATION, stage *StageStruct) {
@@ -28,6 +29,14 @@ func (reqif *SPECIFICATION) Walk(_reqif *schema.SPECIFICATION, stage *StageStruc
 
 	if _type := _reqif.TYPE.SPECIFICATION_TYPE_REF; _type != nil {
 		reqif.TYPE = string(*_type)
+
+		// make the link with the actual specification type if it exists
+		map_ := *GetGongstructInstancesSet[SPECIFICATION_TYPE](stage)
+		for spec_type := range map_ {
+			if spec_type.IDENTIFIER == reqif.TYPE {
+				reqif.SPECIFICATION_TYPE = spec_type
+			}
+		}
 	}
 
 	for _, _sh := range _reqif.CHILDREN.SPEC_HIERARCHY {

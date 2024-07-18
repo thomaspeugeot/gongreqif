@@ -324,6 +324,8 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(specification_.LONG_NAME), formDiv)
 		case "TYPE":
 			FormDivBasicFieldToField(&(specification_.TYPE), formDiv)
+		case "SPECIFICATION_TYPE":
+			FormDivSelectFieldToField(&(specification_.SPECIFICATION_TYPE), specificationFormCallback.probe.stageOfInterest, formDiv)
 		case "REQ_IF_CONTENT:SPECIFICATIONS":
 			// we need to retrieve the field owner before the change
 			var pastREQ_IF_CONTENTOwner *models.REQ_IF_CONTENT

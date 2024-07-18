@@ -50,6 +50,10 @@ type SPECIFICATIONPointersEncoding struct {
 	// field CHILDREN is a pointer to another Struct (optional or 0..1)
 	// This field is generated into another field to enable AS ONE association
 	CHILDRENID sql.NullInt64
+
+	// field SPECIFICATION_TYPE is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	SPECIFICATION_TYPEID sql.NullInt64
 }
 
 // SPECIFICATIONDB describes a specification in the database
@@ -257,6 +261,18 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseTwoInstance
 			specificationDB.CHILDRENID.Valid = true
 		}
 
+		// commit pointer value specification.SPECIFICATION_TYPE translates to updating the specification.SPECIFICATION_TYPEID
+		specificationDB.SPECIFICATION_TYPEID.Valid = true // allow for a 0 value (nil association)
+		if specification.SPECIFICATION_TYPE != nil {
+			if SPECIFICATION_TYPEId, ok := backRepo.BackRepoSPECIFICATION_TYPE.Map_SPECIFICATION_TYPEPtr_SPECIFICATION_TYPEDBID[specification.SPECIFICATION_TYPE]; ok {
+				specificationDB.SPECIFICATION_TYPEID.Int64 = int64(SPECIFICATION_TYPEId)
+				specificationDB.SPECIFICATION_TYPEID.Valid = true
+			}
+		} else {
+			specificationDB.SPECIFICATION_TYPEID.Int64 = 0
+			specificationDB.SPECIFICATION_TYPEID.Valid = true
+		}
+
 		query := backRepoSPECIFICATION.db.Save(&specificationDB)
 		if query.Error != nil {
 			log.Fatalln(query.Error)
@@ -374,6 +390,11 @@ func (specificationDB *SPECIFICATIONDB) DecodePointers(backRepo *BackRepoStruct,
 	specification.CHILDREN = nil
 	if specificationDB.CHILDRENID.Int64 != 0 {
 		specification.CHILDREN = backRepo.BackRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYDBID_SPEC_HIERARCHYPtr[uint(specificationDB.CHILDRENID.Int64)]
+	}
+	// SPECIFICATION_TYPE field
+	specification.SPECIFICATION_TYPE = nil
+	if specificationDB.SPECIFICATION_TYPEID.Int64 != 0 {
+		specification.SPECIFICATION_TYPE = backRepo.BackRepoSPECIFICATION_TYPE.Map_SPECIFICATION_TYPEDBID_SPECIFICATION_TYPEPtr[uint(specificationDB.SPECIFICATION_TYPEID.Int64)]
 	}
 	return
 }
@@ -667,6 +688,12 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) RestorePhaseTwo() {
 		if specificationDB.CHILDRENID.Int64 != 0 {
 			specificationDB.CHILDRENID.Int64 = int64(BackRepoSPEC_HIERARCHYid_atBckpTime_newID[uint(specificationDB.CHILDRENID.Int64)])
 			specificationDB.CHILDRENID.Valid = true
+		}
+
+		// reindexing SPECIFICATION_TYPE field
+		if specificationDB.SPECIFICATION_TYPEID.Int64 != 0 {
+			specificationDB.SPECIFICATION_TYPEID.Int64 = int64(BackRepoSPECIFICATION_TYPEid_atBckpTime_newID[uint(specificationDB.SPECIFICATION_TYPEID.Int64)])
+			specificationDB.SPECIFICATION_TYPEID.Valid = true
 		}
 
 		// update databse with new index encoding

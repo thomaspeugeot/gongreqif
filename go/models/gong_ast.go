@@ -899,6 +899,9 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 				case "CHILDREN":
 					targetIdentifier := ident.Name
 					__gong__map_SPECIFICATION[identifier].CHILDREN = __gong__map_SPEC_HIERARCHY[targetIdentifier]
+				case "SPECIFICATION_TYPE":
+					targetIdentifier := ident.Name
+					__gong__map_SPECIFICATION[identifier].SPECIFICATION_TYPE = __gong__map_SPECIFICATION_TYPE[targetIdentifier]
 				}
 			case "SPECIFICATION_TYPE":
 				switch fieldName {
