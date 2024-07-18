@@ -34,6 +34,11 @@ func GetReverseFieldOwnerName[T models.Gongstruct](
 		// insertion point
 		}
 
+	case *models.SPEC_HIERARCHY:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
 	default:
 		_ = inst
 	}
@@ -65,6 +70,11 @@ func GetReverseFieldOwner[T models.Gongstruct](
 		}
 
 	case *models.SPECIFICATION:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *models.SPEC_HIERARCHY:
 		switch reverseField.GongstructName {
 		// insertion point
 		}

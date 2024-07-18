@@ -8,7 +8,7 @@ import (
 type GongstructDB interface {
 	// insertion point for generic types
 	// "int" is present to handle the case when no struct is present
-	int | REQIFDB | REQ_IF_CONTENTDB | REQ_IF_HEADERDB | SPECIFICATIONDB
+	int | REQIFDB | REQ_IF_CONTENTDB | REQ_IF_HEADERDB | SPECIFICATIONDB | SPEC_HIERARCHYDB
 }
 
 func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
@@ -33,6 +33,10 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 	case *models.SPECIFICATION:
 		specificationInstance := any(concreteInstance).(*models.SPECIFICATION)
 		ret2 := backRepo.BackRepoSPECIFICATION.GetSPECIFICATIONDBFromSPECIFICATIONPtr(specificationInstance)
+		ret = any(ret2).(*T2)
+	case *models.SPEC_HIERARCHY:
+		spec_hierarchyInstance := any(concreteInstance).(*models.SPEC_HIERARCHY)
+		ret2 := backRepo.BackRepoSPEC_HIERARCHY.GetSPEC_HIERARCHYDBFromSPEC_HIERARCHYPtr(spec_hierarchyInstance)
 		ret = any(ret2).(*T2)
 	default:
 		_ = concreteInstance
@@ -67,6 +71,11 @@ func GetID[T models.Gongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.SPEC_HIERARCHY:
+		tmp := GetInstanceDBFromInstance[models.SPEC_HIERARCHY, SPEC_HIERARCHYDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	default:
 		_ = inst
 	}
@@ -97,6 +106,11 @@ func GetIDPointer[T models.PointerToGongstruct](
 		id = int(tmp.ID)
 	case *models.SPECIFICATION:
 		tmp := GetInstanceDBFromInstance[models.SPECIFICATION, SPECIFICATIONDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.SPEC_HIERARCHY:
+		tmp := GetInstanceDBFromInstance[models.SPEC_HIERARCHY, SPEC_HIERARCHYDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)

@@ -22,6 +22,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *StageStruct, instance *Type) {
 		if stage.OnAfterSPECIFICATIONCreateCallback != nil {
 			stage.OnAfterSPECIFICATIONCreateCallback.OnAfterCreate(stage, target)
 		}
+	case *SPEC_HIERARCHY:
+		if stage.OnAfterSPEC_HIERARCHYCreateCallback != nil {
+			stage.OnAfterSPEC_HIERARCHYCreateCallback.OnAfterCreate(stage, target)
+		}
 	default:
 		_ = target
 	}
@@ -51,6 +55,11 @@ func AfterUpdateFromFront[Type Gongstruct](stage *StageStruct, old, new *Type) {
 		newTarget := any(new).(*SPECIFICATION)
 		if stage.OnAfterSPECIFICATIONUpdateCallback != nil {
 			stage.OnAfterSPECIFICATIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *SPEC_HIERARCHY:
+		newTarget := any(new).(*SPEC_HIERARCHY)
+		if stage.OnAfterSPEC_HIERARCHYUpdateCallback != nil {
+			stage.OnAfterSPEC_HIERARCHYUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
 	default:
 		_ = oldTarget
@@ -82,6 +91,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *StageStruct, staged, front *Ty
 			staged := any(staged).(*SPECIFICATION)
 			stage.OnAfterSPECIFICATIONDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *SPEC_HIERARCHY:
+		if stage.OnAfterSPEC_HIERARCHYDeleteCallback != nil {
+			staged := any(staged).(*SPEC_HIERARCHY)
+			stage.OnAfterSPEC_HIERARCHYDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	default:
 		_ = front
 	}
@@ -108,6 +122,10 @@ func AfterReadFromFront[Type Gongstruct](stage *StageStruct, instance *Type) {
 		if stage.OnAfterSPECIFICATIONReadCallback != nil {
 			stage.OnAfterSPECIFICATIONReadCallback.OnAfterRead(stage, target)
 		}
+	case *SPEC_HIERARCHY:
+		if stage.OnAfterSPEC_HIERARCHYReadCallback != nil {
+			stage.OnAfterSPEC_HIERARCHYReadCallback.OnAfterRead(stage, target)
+		}
 	default:
 		_ = target
 	}
@@ -131,6 +149,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *StageStruct, callba
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION])
 	
+	case *SPEC_HIERARCHY:
+		stage.OnAfterSPEC_HIERARCHYUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_HIERARCHY])
+	
 	}
 }
 func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *StageStruct, callback OnAfterCreateInterface[Type]) {
@@ -149,6 +170,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *StageStruct, callba
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONCreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION])
+	
+	case *SPEC_HIERARCHY:
+		stage.OnAfterSPEC_HIERARCHYCreateCallback = any(callback).(OnAfterCreateInterface[SPEC_HIERARCHY])
 	
 	}
 }
@@ -169,6 +193,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *StageStruct, callba
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION])
 	
+	case *SPEC_HIERARCHY:
+		stage.OnAfterSPEC_HIERARCHYDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_HIERARCHY])
+	
 	}
 }
 func SetCallbackAfterReadFromFront[Type Gongstruct](stage *StageStruct, callback OnAfterReadInterface[Type]) {
@@ -187,6 +214,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *StageStruct, callback
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION])
+	
+	case *SPEC_HIERARCHY:
+		stage.OnAfterSPEC_HIERARCHYReadCallback = any(callback).(OnAfterReadInterface[SPEC_HIERARCHY])
 	
 	}
 }

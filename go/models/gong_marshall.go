@@ -296,6 +296,76 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 
 	}
 
+	map_SPEC_HIERARCHY_Identifiers := make(map[*SPEC_HIERARCHY]string)
+	_ = map_SPEC_HIERARCHY_Identifiers
+
+	spec_hierarchyOrdered := []*SPEC_HIERARCHY{}
+	for spec_hierarchy := range stage.SPEC_HIERARCHYs {
+		spec_hierarchyOrdered = append(spec_hierarchyOrdered, spec_hierarchy)
+	}
+	sort.Slice(spec_hierarchyOrdered[:], func(i, j int) bool {
+		return spec_hierarchyOrdered[i].Name < spec_hierarchyOrdered[j].Name
+	})
+	if len(spec_hierarchyOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, spec_hierarchy := range spec_hierarchyOrdered {
+
+		id = generatesIdentifier("SPEC_HIERARCHY", idx, spec_hierarchy.Name)
+		map_SPEC_HIERARCHY_Identifiers[spec_hierarchy] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_HIERARCHY")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_hierarchy.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.DESC))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.IDENTIFIER))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_EDITABLE")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_hierarchy.IS_EDITABLE))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_TABLE_INTERNAL")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_hierarchy.IS_TABLE_INTERNAL))
+		initializerStatements += setValueField
+
+		setValueField = TimeInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", spec_hierarchy.LAST_CHANGE.String())
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.LONG_NAME))
+		initializerStatements += setValueField
+
+	}
+
 	// insertion initialization of objects to stage
 	for idx, reqif := range reqifOrdered {
 		var setPointerField string
@@ -357,6 +427,24 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 
 		id = generatesIdentifier("SPECIFICATION", idx, specification.Name)
 		map_SPECIFICATION_Identifiers[specification] = id
+
+		// Initialisation of values
+		if specification.CHILDREN != nil {
+			setPointerField = PointerFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "CHILDREN")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPEC_HIERARCHY_Identifiers[specification.CHILDREN])
+			pointersInitializesStatements += setPointerField
+		}
+
+	}
+
+	for idx, spec_hierarchy := range spec_hierarchyOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("SPEC_HIERARCHY", idx, spec_hierarchy.Name)
+		map_SPEC_HIERARCHY_Identifiers[spec_hierarchy] = id
 
 		// Initialisation of values
 	}

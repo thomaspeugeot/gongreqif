@@ -1,6 +1,7 @@
 package models
 
 import (
+	"log"
 	"time"
 
 	"github.com/thomaspeugeot/gongreqif/go/schema"
@@ -31,6 +32,7 @@ type SPECIFICATION struct {
 	// CHILDREN struct {
 	// 	SPEC_HIERARCHY *SPEC_HIERARCHY `xml:"SPEC-HIERARCHY,omitempty" json:"SPEC-HIERARCHY,omitempty"`
 	// } `xml:"CHILDREN,omitempty" json:"CHILDREN,omitempty"`
+	CHILDREN *SPEC_HIERARCHY
 
 	// TYPE struct {
 	// 	SPECIFICATION_TYPE_REF *LOCAL_REF `xml:"SPECIFICATION-TYPE-REF,omitempty" json:"SPECIFICATION-TYPE-REF,omitempty"`
@@ -46,9 +48,18 @@ type SPECIFICATION struct {
 }
 
 func (reqif *SPECIFICATION) Walk(_reqif *schema.SPECIFICATION, stage *StageStruct) {
+	log.Println("SPECIFICATION", "Walk")
 
 	reqif.DESC = _reqif.DESC
-	reqif.IDENTIFIER = string(*_reqif.IDENTIFIER)
+	if _reqif.IDENTIFIER != nil {
+		reqif.IDENTIFIER = string(*_reqif.IDENTIFIER)
+	}
 	reqif.LAST_CHANGE = _reqif.LAST_CHANGE.ToGoTime()
 	reqif.LONG_NAME = _reqif.LONG_NAME
+
+	if _reqif.CHILDREN.SPEC_HIERARCHY != nil {
+		sh := new(SPEC_HIERARCHY).Stage(stage)
+		sh.Walk(_reqif.CHILDREN.SPEC_HIERARCHY, stage)
+		reqif.CHILDREN = sh
+	}
 }

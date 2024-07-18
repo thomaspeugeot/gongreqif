@@ -69,3 +69,25 @@ func (from *SPECIFICATION) CopyBasicFields(to *SPECIFICATION) {
 	to.LONG_NAME = from.LONG_NAME
 }
 
+type SPEC_HIERARCHY_WOP struct {
+	// insertion point
+	Name string
+	DESC string
+	IDENTIFIER string
+	IS_EDITABLE bool
+	IS_TABLE_INTERNAL bool
+	LAST_CHANGE time.Time
+	LONG_NAME string
+}
+
+func (from *SPEC_HIERARCHY) CopyBasicFields(to *SPEC_HIERARCHY) {
+	// insertion point
+	to.Name = from.Name
+	to.DESC = from.DESC
+	to.IDENTIFIER = from.IDENTIFIER
+	to.IS_EDITABLE = from.IS_EDITABLE
+	to.IS_TABLE_INTERNAL = from.IS_TABLE_INTERNAL
+	to.LAST_CHANGE = from.LAST_CHANGE
+	to.LONG_NAME = from.LONG_NAME
+}
+

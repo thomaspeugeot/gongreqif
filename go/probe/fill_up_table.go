@@ -28,6 +28,8 @@ func fillUpTablePointerToGongstruct[T models.PointerToGongstruct](
 		fillUpTable[models.REQ_IF_HEADER](probe)
 	case *models.SPECIFICATION:
 		fillUpTable[models.SPECIFICATION](probe)
+	case *models.SPEC_HIERARCHY:
+		fillUpTable[models.SPEC_HIERARCHY](probe)
 	default:
 		log.Println("unknow type")
 	}

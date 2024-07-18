@@ -46,6 +46,10 @@ type SPECIFICATIONAPI struct {
 // reverse pointers of slice of poitners to Struct
 type SPECIFICATIONPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
+
+	// field CHILDREN is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	CHILDRENID sql.NullInt64
 }
 
 // SPECIFICATIONDB describes a specification in the database
@@ -235,6 +239,18 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseTwoInstance
 		specificationDB.CopyBasicFieldsFromSPECIFICATION(specification)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value specification.CHILDREN translates to updating the specification.CHILDRENID
+		specificationDB.CHILDRENID.Valid = true // allow for a 0 value (nil association)
+		if specification.CHILDREN != nil {
+			if CHILDRENId, ok := backRepo.BackRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYPtr_SPEC_HIERARCHYDBID[specification.CHILDREN]; ok {
+				specificationDB.CHILDRENID.Int64 = int64(CHILDRENId)
+				specificationDB.CHILDRENID.Valid = true
+			}
+		} else {
+			specificationDB.CHILDRENID.Int64 = 0
+			specificationDB.CHILDRENID.Valid = true
+		}
+
 		query := backRepoSPECIFICATION.db.Save(&specificationDB)
 		if query.Error != nil {
 			log.Fatalln(query.Error)
@@ -348,6 +364,11 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CheckoutPhaseTwoInstan
 func (specificationDB *SPECIFICATIONDB) DecodePointers(backRepo *BackRepoStruct, specification *models.SPECIFICATION) {
 
 	// insertion point for checkout of pointer encoding
+	// CHILDREN field
+	specification.CHILDREN = nil
+	if specificationDB.CHILDRENID.Int64 != 0 {
+		specification.CHILDREN = backRepo.BackRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYDBID_SPEC_HIERARCHYPtr[uint(specificationDB.CHILDRENID.Int64)]
+	}
 	return
 }
 
@@ -624,6 +645,12 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) RestorePhaseTwo() {
 		_ = specificationDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing CHILDREN field
+		if specificationDB.CHILDRENID.Int64 != 0 {
+			specificationDB.CHILDRENID.Int64 = int64(BackRepoSPEC_HIERARCHYid_atBckpTime_newID[uint(specificationDB.CHILDRENID.Int64)])
+			specificationDB.CHILDRENID.Valid = true
+		}
+
 		// update databse with new index encoding
 		query := backRepoSPECIFICATION.db.Model(specificationDB).Updates(*specificationDB)
 		if query.Error != nil {

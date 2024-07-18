@@ -68,6 +68,18 @@ func FillUpNamedFormFromGongstruct[T models.Gongstruct](instance *T, probe *Prob
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.SPEC_HIERARCHY:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "SPEC_HIERARCHY Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__SPEC_HIERARCHYFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
 	default:
 		_ = instancesTyped
 	}

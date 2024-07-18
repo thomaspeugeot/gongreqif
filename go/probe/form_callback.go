@@ -314,6 +314,8 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(specification_.Name), formDiv)
+		case "CHILDREN":
+			FormDivSelectFieldToField(&(specification_.CHILDREN), specificationFormCallback.probe.stageOfInterest, formDiv)
 		case "DESC":
 			FormDivBasicFieldToField(&(specification_.DESC), formDiv)
 		case "IDENTIFIER":
@@ -353,4 +355,93 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 	}
 
 	fillUpTree(specificationFormCallback.probe)
+}
+func __gong__New__SPEC_HIERARCHYFormCallback(
+	spec_hierarchy *models.SPEC_HIERARCHY,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) {
+	spec_hierarchyFormCallback = new(SPEC_HIERARCHYFormCallback)
+	spec_hierarchyFormCallback.probe = probe
+	spec_hierarchyFormCallback.spec_hierarchy = spec_hierarchy
+	spec_hierarchyFormCallback.formGroup = formGroup
+
+	spec_hierarchyFormCallback.CreationMode = (spec_hierarchy == nil)
+
+	return
+}
+
+type SPEC_HIERARCHYFormCallback struct {
+	spec_hierarchy *models.SPEC_HIERARCHY
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
+
+	log.Println("SPEC_HIERARCHYFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	spec_hierarchyFormCallback.probe.formStage.Checkout()
+
+	if spec_hierarchyFormCallback.spec_hierarchy == nil {
+		spec_hierarchyFormCallback.spec_hierarchy = new(models.SPEC_HIERARCHY).Stage(spec_hierarchyFormCallback.probe.stageOfInterest)
+	}
+	spec_hierarchy_ := spec_hierarchyFormCallback.spec_hierarchy
+	_ = spec_hierarchy_
+
+	for _, formDiv := range spec_hierarchyFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(spec_hierarchy_.Name), formDiv)
+		case "DESC":
+			FormDivBasicFieldToField(&(spec_hierarchy_.DESC), formDiv)
+		case "IDENTIFIER":
+			FormDivBasicFieldToField(&(spec_hierarchy_.IDENTIFIER), formDiv)
+		case "IS_EDITABLE":
+			FormDivBasicFieldToField(&(spec_hierarchy_.IS_EDITABLE), formDiv)
+		case "IS_TABLE_INTERNAL":
+			FormDivBasicFieldToField(&(spec_hierarchy_.IS_TABLE_INTERNAL), formDiv)
+		case "LAST_CHANGE":
+			FormDivBasicFieldToField(&(spec_hierarchy_.LAST_CHANGE), formDiv)
+		case "LONG_NAME":
+			FormDivBasicFieldToField(&(spec_hierarchy_.LONG_NAME), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if spec_hierarchyFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		spec_hierarchy_.Unstage(spec_hierarchyFormCallback.probe.stageOfInterest)
+	}
+
+	spec_hierarchyFormCallback.probe.stageOfInterest.Commit()
+	fillUpTable[models.SPEC_HIERARCHY](
+		spec_hierarchyFormCallback.probe,
+	)
+	spec_hierarchyFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if spec_hierarchyFormCallback.CreationMode || spec_hierarchyFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		spec_hierarchyFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: table.FormGroupDefaultName.ToString(),
+		}).Stage(spec_hierarchyFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__SPEC_HIERARCHYFormCallback(
+			nil,
+			spec_hierarchyFormCallback.probe,
+			newFormGroup,
+		)
+		spec_hierarchy := new(models.SPEC_HIERARCHY)
+		FillUpForm(spec_hierarchy, newFormGroup, spec_hierarchyFormCallback.probe)
+		spec_hierarchyFormCallback.probe.formStage.Commit()
+	}
+
+	fillUpTree(spec_hierarchyFormCallback.probe)
 }

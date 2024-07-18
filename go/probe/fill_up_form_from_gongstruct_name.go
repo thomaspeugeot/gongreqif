@@ -78,6 +78,19 @@ func FillUpFormFromGongstructName(
 		specification := new(models.SPECIFICATION)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(specification, formGroup, probe)
+	case "SPEC_HIERARCHY":
+		formGroup := (&form.FormGroup{
+			Name:  form.FormGroupDefaultName.ToString(),
+			Label: prefix + "SPEC_HIERARCHY Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__SPEC_HIERARCHYFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		spec_hierarchy := new(models.SPEC_HIERARCHY)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(spec_hierarchy, formGroup, probe)
 	}
 	formStage.Commit()
 }

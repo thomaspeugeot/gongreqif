@@ -60,5 +60,6 @@ func (reqifContent *REQ_IF_CONTENT) Walk(_reqifContent *schema.REQ_IF_CONTENT, s
 
 	specification := new(SPECIFICATION).Stage(stage)
 	reqifContent.SPECIFICATION = specification
+	specification.Walk(_reqifContent.SPECIFICATIONS.SPECIFICATION, stage)
 
 }

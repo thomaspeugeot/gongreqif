@@ -318,6 +318,7 @@ var __gong__map_REQIF = make(map[string]*REQIF)
 var __gong__map_REQ_IF_CONTENT = make(map[string]*REQ_IF_CONTENT)
 var __gong__map_REQ_IF_HEADER = make(map[string]*REQ_IF_HEADER)
 var __gong__map_SPECIFICATION = make(map[string]*SPECIFICATION)
+var __gong__map_SPEC_HIERARCHY = make(map[string]*SPEC_HIERARCHY)
 
 // Parser needs to be configured for having the [Name1.Name2] or [pkg.Name1] ...
 // to be recognized as a proper identifier.
@@ -506,6 +507,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 										instanceSPECIFICATION := (&SPECIFICATION{Name: instanceName}).Stage(stage)
 										instance = any(instanceSPECIFICATION)
 										__gong__map_SPECIFICATION[identifier] = instanceSPECIFICATION
+									case "SPEC_HIERARCHY":
+										instanceSPEC_HIERARCHY := (&SPEC_HIERARCHY{Name: instanceName}).Stage(stage)
+										instance = any(instanceSPEC_HIERARCHY)
+										__gong__map_SPEC_HIERARCHY[identifier] = instanceSPEC_HIERARCHY
 									}
 									__gong__map_Indentifiers_gongstructName[identifier] = gongstructName
 									return
@@ -566,6 +571,14 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 									"2006-01-02 15:04:05.999999999 -0700 MST",
 									date)
 							}
+						case "SPEC_HIERARCHY":
+							switch fieldName {
+							// insertion point for date assign code
+							case "LAST_CHANGE":
+								__gong__map_SPEC_HIERARCHY[identifier].LAST_CHANGE, _ = time.Parse(
+									"2006-01-02 15:04:05.999999999 -0700 MST",
+									date)
+							}
 						}
 					}
 				}
@@ -604,6 +617,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 						// insertion point for slice of pointers assign code
 						}
 					case "SPECIFICATION":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "SPEC_HIERARCHY":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -724,6 +741,26 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_SPECIFICATION[identifier].LONG_NAME = fielValue
 				}
+			case "SPEC_HIERARCHY":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_HIERARCHY[identifier].Name = fielValue
+				case "DESC":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_HIERARCHY[identifier].DESC = fielValue
+				case "IDENTIFIER":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_HIERARCHY[identifier].IDENTIFIER = fielValue
+				case "LONG_NAME":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_HIERARCHY[identifier].LONG_NAME = fielValue
+				}
 			}
 		case *ast.Ident:
 			// assignment to boolean field ?
@@ -762,6 +799,27 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 			case "SPECIFICATION":
 				switch fieldName {
 				// insertion point for field dependant code
+				case "CHILDREN":
+					targetIdentifier := ident.Name
+					__gong__map_SPECIFICATION[identifier].CHILDREN = __gong__map_SPEC_HIERARCHY[targetIdentifier]
+				}
+			case "SPEC_HIERARCHY":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "IS_EDITABLE":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPEC_HIERARCHY[identifier].IS_EDITABLE = fielValue
+				case "IS_TABLE_INTERNAL":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPEC_HIERARCHY[identifier].IS_TABLE_INTERNAL = fielValue
 				}
 			}
 		case *ast.SelectorExpr:
@@ -804,6 +862,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					// insertion point for enum assign code
 					}
 				case "SPECIFICATION":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "SPEC_HIERARCHY":
 					switch fieldName {
 					// insertion point for enum assign code
 					}

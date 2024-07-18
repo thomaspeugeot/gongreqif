@@ -5,11 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "go run",
+            "name": "go run on sample 1",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "go/cmd/gongreqif"
+            "program": "go/cmd/gongreqif",
+            "args": [
+                "-filename",
+                "../../../test/sample 1.reqif"
+            ]
+        },
+        {
+            "name": "go run on sample 2",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "go/cmd/gongreqif",
+            "args": [
+                "-filename",
+                "../../../test/sample 2.reqif"
+            ]
         },
         {
             "name": "go run on toto",
@@ -21,6 +36,14 @@
                 "-filename",
                 "../../../../toto.reqif"
             ]
+        },
+        {
+            "name": "go run append reqif.xsd: to attributes",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "test",
+            "args": []
         }
     ]
 }
