@@ -20,6 +20,7 @@ func SerializeStage(stage *StageStruct, filename string) {
 		SerializeExcelize[SPECIFICATION](stage, f)
 		SerializeExcelize[SPECIFICATION_TYPE](stage, f)
 		SerializeExcelize[SPEC_HIERARCHY](stage, f)
+		SerializeExcelize[SPEC_OBJECT_TYPE](stage, f)
 	}
 
 	var tab ExcelizeTabulator

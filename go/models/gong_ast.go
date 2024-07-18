@@ -320,6 +320,7 @@ var __gong__map_REQ_IF_HEADER = make(map[string]*REQ_IF_HEADER)
 var __gong__map_SPECIFICATION = make(map[string]*SPECIFICATION)
 var __gong__map_SPECIFICATION_TYPE = make(map[string]*SPECIFICATION_TYPE)
 var __gong__map_SPEC_HIERARCHY = make(map[string]*SPEC_HIERARCHY)
+var __gong__map_SPEC_OBJECT_TYPE = make(map[string]*SPEC_OBJECT_TYPE)
 
 // Parser needs to be configured for having the [Name1.Name2] or [pkg.Name1] ...
 // to be recognized as a proper identifier.
@@ -516,6 +517,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 										instanceSPEC_HIERARCHY := (&SPEC_HIERARCHY{Name: instanceName}).Stage(stage)
 										instance = any(instanceSPEC_HIERARCHY)
 										__gong__map_SPEC_HIERARCHY[identifier] = instanceSPEC_HIERARCHY
+									case "SPEC_OBJECT_TYPE":
+										instanceSPEC_OBJECT_TYPE := (&SPEC_OBJECT_TYPE{Name: instanceName}).Stage(stage)
+										instance = any(instanceSPEC_OBJECT_TYPE)
+										__gong__map_SPEC_OBJECT_TYPE[identifier] = instanceSPEC_OBJECT_TYPE
 									}
 									__gong__map_Indentifiers_gongstructName[identifier] = gongstructName
 									return
@@ -592,6 +597,14 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 									"2006-01-02 15:04:05.999999999 -0700 MST",
 									date)
 							}
+						case "SPEC_OBJECT_TYPE":
+							switch fieldName {
+							// insertion point for date assign code
+							case "LAST_CHANGE":
+								__gong__map_SPEC_OBJECT_TYPE[identifier].LAST_CHANGE, _ = time.Parse(
+									"2006-01-02 15:04:05.999999999 -0700 MST",
+									date)
+							}
 						}
 					}
 				}
@@ -624,6 +637,18 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					case "REQ_IF_CONTENT":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
+						case "SPEC_OBJECT_TYPES":
+							// remove first and last char
+							targetIdentifier := ident.Name
+							target := __gong__map_SPEC_OBJECT_TYPE[targetIdentifier]
+							__gong__map_REQ_IF_CONTENT[identifier].SPEC_OBJECT_TYPES =
+								append(__gong__map_REQ_IF_CONTENT[identifier].SPEC_OBJECT_TYPES, target)
+						case "SPECIFICATIONS":
+							// remove first and last char
+							targetIdentifier := ident.Name
+							target := __gong__map_SPECIFICATION[targetIdentifier]
+							__gong__map_REQ_IF_CONTENT[identifier].SPECIFICATIONS =
+								append(__gong__map_REQ_IF_CONTENT[identifier].SPECIFICATIONS, target)
 						}
 					case "REQ_IF_HEADER":
 						switch fieldName {
@@ -638,6 +663,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 						// insertion point for slice of pointers assign code
 						}
 					case "SPEC_HIERARCHY":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "SPEC_OBJECT_TYPE":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -802,6 +831,26 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_SPEC_HIERARCHY[identifier].LONG_NAME = fielValue
 				}
+			case "SPEC_OBJECT_TYPE":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_OBJECT_TYPE[identifier].Name = fielValue
+				case "DESC":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_OBJECT_TYPE[identifier].DESC = fielValue
+				case "IDENTIFIER":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_OBJECT_TYPE[identifier].IDENTIFIER = fielValue
+				case "LONG_NAME":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_OBJECT_TYPE[identifier].LONG_NAME = fielValue
+				}
 			}
 		case *ast.Ident:
 			// assignment to boolean field ?
@@ -829,9 +878,6 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 			case "REQ_IF_CONTENT":
 				switch fieldName {
 				// insertion point for field dependant code
-				case "SPECIFICATION":
-					targetIdentifier := ident.Name
-					__gong__map_REQ_IF_CONTENT[identifier].SPECIFICATION = __gong__map_SPECIFICATION[targetIdentifier]
 				}
 			case "REQ_IF_HEADER":
 				switch fieldName {
@@ -868,6 +914,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 						log.Fatalln(err)
 					}
 					__gong__map_SPEC_HIERARCHY[identifier].IS_TABLE_INTERNAL = fielValue
+				}
+			case "SPEC_OBJECT_TYPE":
+				switch fieldName {
+				// insertion point for field dependant code
 				}
 			}
 		case *ast.SelectorExpr:
@@ -918,6 +968,10 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 					// insertion point for enum assign code
 					}
 				case "SPEC_HIERARCHY":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "SPEC_OBJECT_TYPE":
 					switch fieldName {
 					// insertion point for enum assign code
 					}

@@ -50,6 +50,7 @@ func NewStackInstance(
 	models.SetOrchestratorOnAfterUpdate[models.SPECIFICATION](stage)
 	models.SetOrchestratorOnAfterUpdate[models.SPECIFICATION_TYPE](stage)
 	models.SetOrchestratorOnAfterUpdate[models.SPEC_HIERARCHY](stage)
+	models.SetOrchestratorOnAfterUpdate[models.SPEC_OBJECT_TYPE](stage)
 
 	return
 }

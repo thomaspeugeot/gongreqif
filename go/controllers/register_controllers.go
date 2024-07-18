@@ -89,6 +89,13 @@ func registerControllers(r *gin.Engine) {
 		v1.PUT("/v1/spec_hierarchys/:id", GetController().UpdateSPEC_HIERARCHY)
 		v1.DELETE("/v1/spec_hierarchys/:id", GetController().DeleteSPEC_HIERARCHY)
 
+		v1.GET("/v1/spec_object_types", GetController().GetSPEC_OBJECT_TYPEs)
+		v1.GET("/v1/spec_object_types/:id", GetController().GetSPEC_OBJECT_TYPE)
+		v1.POST("/v1/spec_object_types", GetController().PostSPEC_OBJECT_TYPE)
+		v1.PATCH("/v1/spec_object_types/:id", GetController().UpdateSPEC_OBJECT_TYPE)
+		v1.PUT("/v1/spec_object_types/:id", GetController().UpdateSPEC_OBJECT_TYPE)
+		v1.DELETE("/v1/spec_object_types/:id", GetController().DeleteSPEC_OBJECT_TYPE)
+
 		v1.GET("/v1/commitfrombacknb", GetController().GetLastCommitFromBackNb)
 		v1.GET("/v1/pushfromfrontnb", GetController().GetLastPushFromFrontNb)
 

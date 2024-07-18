@@ -764,7 +764,7 @@ type SPEC_HIERARCHY struct {
 	} `xml:"EDITABLE-ATTS,omitempty" json:"EDITABLE-ATTS,omitempty"`
 
 	OBJECT struct {
-		SPEC_OBJECT_REF []*LOCAL_REF `xml:"SPEC-OBJECT-REF,omitempty" json:"SPEC-OBJECT-REF,omitempty"`
+		SPEC_OBJECT_REF *LOCAL_REF `xml:"SPEC-OBJECT-REF,omitempty" json:"SPEC-OBJECT-REF,omitempty"`
 	} `xml:"OBJECT,omitempty" json:"OBJECT,omitempty"`
 
 	DESC string `xml:"http://www.omg.org/spec/ReqIF/20110401/reqif.xsd DESC,attr,omitempty" json:"DESC,omitempty"`
@@ -866,11 +866,11 @@ type SPEC_RELATION struct {
 	} `xml:"VALUES,omitempty" json:"VALUES,omitempty"`
 
 	SOURCE struct {
-		SPEC_OBJECT_REF []*GLOBAL_REF `xml:"SPEC-OBJECT-REF,omitempty" json:"SPEC-OBJECT-REF,omitempty"`
+		SPEC_OBJECT_REF *GLOBAL_REF `xml:"SPEC-OBJECT-REF,omitempty" json:"SPEC-OBJECT-REF,omitempty"`
 	} `xml:"SOURCE,omitempty" json:"SOURCE,omitempty"`
 
 	TARGET struct {
-		SPEC_OBJECT_REF []*GLOBAL_REF `xml:"SPEC-OBJECT-REF,omitempty" json:"SPEC-OBJECT-REF,omitempty"`
+		SPEC_OBJECT_REF *GLOBAL_REF `xml:"SPEC-OBJECT-REF,omitempty" json:"SPEC-OBJECT-REF,omitempty"`
 	} `xml:"TARGET,omitempty" json:"TARGET,omitempty"`
 
 	TYPE struct {

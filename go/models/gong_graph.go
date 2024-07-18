@@ -23,6 +23,9 @@ func IsStaged[Type Gongstruct](stage *StageStruct, instance *Type) (ok bool) {
 	case *SPEC_HIERARCHY:
 		ok = stage.IsStagedSPEC_HIERARCHY(target)
 
+	case *SPEC_OBJECT_TYPE:
+		ok = stage.IsStagedSPEC_OBJECT_TYPE(target)
+
 	default:
 		_ = target
 	}
@@ -72,6 +75,13 @@ func (stage *StageStruct) IsStagedSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARCHY)
 	return
 }
 
+func (stage *StageStruct) IsStagedSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_TYPE) (ok bool) {
+
+	_, ok = stage.SPEC_OBJECT_TYPEs[spec_object_type]
+
+	return
+}
+
 // StageBranch stages instance and apply StageBranch on all gongstruct instances that are
 // referenced by pointers or slices of pointers of the instance
 //
@@ -97,6 +107,9 @@ func StageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 
 	case *SPEC_HIERARCHY:
 		stage.StageBranchSPEC_HIERARCHY(target)
+
+	case *SPEC_OBJECT_TYPE:
+		stage.StageBranchSPEC_OBJECT_TYPE(target)
 
 	default:
 		_ = target
@@ -135,11 +148,14 @@ func (stage *StageStruct) StageBranchREQ_IF_CONTENT(req_if_content *REQ_IF_CONTE
 	req_if_content.Stage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
-	if req_if_content.SPECIFICATION != nil {
-		StageBranch(stage, req_if_content.SPECIFICATION)
-	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _spec_object_type := range req_if_content.SPEC_OBJECT_TYPES {
+		StageBranch(stage, _spec_object_type)
+	}
+	for _, _specification := range req_if_content.SPECIFICATIONS {
+		StageBranch(stage, _specification)
+	}
 
 }
 
@@ -209,6 +225,21 @@ func (stage *StageStruct) StageBranchSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARC
 
 }
 
+func (stage *StageStruct) StageBranchSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_TYPE) {
+
+	// check if instance is already staged
+	if IsStaged(stage, spec_object_type) {
+		return
+	}
+
+	spec_object_type.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 // CopyBranch stages instance and apply CopyBranch on all gongstruct instances that are
 // referenced by pointers or slices of pointers of the instance
 //
@@ -242,6 +273,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *SPEC_HIERARCHY:
 		toT := CopyBranchSPEC_HIERARCHY(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *SPEC_OBJECT_TYPE:
+		toT := CopyBranchSPEC_OBJECT_TYPE(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	default:
@@ -289,11 +324,14 @@ func CopyBranchREQ_IF_CONTENT(mapOrigCopy map[any]any, req_if_contentFrom *REQ_I
 	req_if_contentFrom.CopyBasicFields(req_if_contentTo)
 
 	//insertion point for the staging of instances referenced by pointers
-	if req_if_contentFrom.SPECIFICATION != nil {
-		req_if_contentTo.SPECIFICATION = CopyBranchSPECIFICATION(mapOrigCopy, req_if_contentFrom.SPECIFICATION)
-	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _spec_object_type := range req_if_contentFrom.SPEC_OBJECT_TYPES {
+		req_if_contentTo.SPEC_OBJECT_TYPES = append(req_if_contentTo.SPEC_OBJECT_TYPES, CopyBranchSPEC_OBJECT_TYPE(mapOrigCopy, _spec_object_type))
+	}
+	for _, _specification := range req_if_contentFrom.SPECIFICATIONS {
+		req_if_contentTo.SPECIFICATIONS = append(req_if_contentTo.SPECIFICATIONS, CopyBranchSPECIFICATION(mapOrigCopy, _specification))
+	}
 
 	return
 }
@@ -380,6 +418,25 @@ func CopyBranchSPEC_HIERARCHY(mapOrigCopy map[any]any, spec_hierarchyFrom *SPEC_
 	return
 }
 
+func CopyBranchSPEC_OBJECT_TYPE(mapOrigCopy map[any]any, spec_object_typeFrom *SPEC_OBJECT_TYPE) (spec_object_typeTo *SPEC_OBJECT_TYPE) {
+
+	// spec_object_typeFrom has already been copied
+	if _spec_object_typeTo, ok := mapOrigCopy[spec_object_typeFrom]; ok {
+		spec_object_typeTo = _spec_object_typeTo.(*SPEC_OBJECT_TYPE)
+		return
+	}
+
+	spec_object_typeTo = new(SPEC_OBJECT_TYPE)
+	mapOrigCopy[spec_object_typeFrom] = spec_object_typeTo
+	spec_object_typeFrom.CopyBasicFields(spec_object_typeTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 // UnstageBranch stages instance and apply UnstageBranch on all gongstruct instances that are
 // referenced by pointers or slices of pointers of the insance
 //
@@ -405,6 +462,9 @@ func UnstageBranch[Type Gongstruct](stage *StageStruct, instance *Type) {
 
 	case *SPEC_HIERARCHY:
 		stage.UnstageBranchSPEC_HIERARCHY(target)
+
+	case *SPEC_OBJECT_TYPE:
+		stage.UnstageBranchSPEC_OBJECT_TYPE(target)
 
 	default:
 		_ = target
@@ -443,11 +503,14 @@ func (stage *StageStruct) UnstageBranchREQ_IF_CONTENT(req_if_content *REQ_IF_CON
 	req_if_content.Unstage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
-	if req_if_content.SPECIFICATION != nil {
-		UnstageBranch(stage, req_if_content.SPECIFICATION)
-	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _spec_object_type := range req_if_content.SPEC_OBJECT_TYPES {
+		UnstageBranch(stage, _spec_object_type)
+	}
+	for _, _specification := range req_if_content.SPECIFICATIONS {
+		UnstageBranch(stage, _specification)
+	}
 
 }
 
@@ -512,6 +575,21 @@ func (stage *StageStruct) UnstageBranchSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERA
 	if spec_hierarchy.CHILDREN != nil {
 		UnstageBranch(stage, spec_hierarchy.CHILDREN)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *StageStruct) UnstageBranchSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_TYPE) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, spec_object_type) {
+		return
+	}
+
+	spec_object_type.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 

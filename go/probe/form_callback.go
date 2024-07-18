@@ -144,8 +144,6 @@ func (req_if_contentFormCallback *REQ_IF_CONTENTFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(req_if_content_.Name), formDiv)
-		case "SPECIFICATION":
-			FormDivSelectFieldToField(&(req_if_content_.SPECIFICATION), req_if_contentFormCallback.probe.stageOfInterest, formDiv)
 		}
 	}
 
@@ -324,6 +322,48 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(specification_.LAST_CHANGE), formDiv)
 		case "LONG_NAME":
 			FormDivBasicFieldToField(&(specification_.LONG_NAME), formDiv)
+		case "REQ_IF_CONTENT:SPECIFICATIONS":
+			// we need to retrieve the field owner before the change
+			var pastREQ_IF_CONTENTOwner *models.REQ_IF_CONTENT
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "REQ_IF_CONTENT"
+			rf.Fieldname = "SPECIFICATIONS"
+			reverseFieldOwner := orm.GetReverseFieldOwner(
+				specificationFormCallback.probe.stageOfInterest,
+				specificationFormCallback.probe.backRepoOfInterest,
+				specification_,
+				&rf)
+
+			if reverseFieldOwner != nil {
+				pastREQ_IF_CONTENTOwner = reverseFieldOwner.(*models.REQ_IF_CONTENT)
+			}
+			if formDiv.FormFields[0].FormFieldSelect.Value == nil {
+				if pastREQ_IF_CONTENTOwner != nil {
+					idx := slices.Index(pastREQ_IF_CONTENTOwner.SPECIFICATIONS, specification_)
+					pastREQ_IF_CONTENTOwner.SPECIFICATIONS = slices.Delete(pastREQ_IF_CONTENTOwner.SPECIFICATIONS, idx, idx+1)
+				}
+			} else {
+				// we need to retrieve the field owner after the change
+				// parse all astrcut and get the one with the name in the
+				// div
+				for _req_if_content := range *models.GetGongstructInstancesSet[models.REQ_IF_CONTENT](specificationFormCallback.probe.stageOfInterest) {
+
+					// the match is base on the name
+					if _req_if_content.GetName() == formDiv.FormFields[0].FormFieldSelect.Value.GetName() {
+						newREQ_IF_CONTENTOwner := _req_if_content // we have a match
+						if pastREQ_IF_CONTENTOwner != nil {
+							if newREQ_IF_CONTENTOwner != pastREQ_IF_CONTENTOwner {
+								idx := slices.Index(pastREQ_IF_CONTENTOwner.SPECIFICATIONS, specification_)
+								pastREQ_IF_CONTENTOwner.SPECIFICATIONS = slices.Delete(pastREQ_IF_CONTENTOwner.SPECIFICATIONS, idx, idx+1)
+								newREQ_IF_CONTENTOwner.SPECIFICATIONS = append(newREQ_IF_CONTENTOwner.SPECIFICATIONS, specification_)
+							}
+						} else {
+							newREQ_IF_CONTENTOwner.SPECIFICATIONS = append(newREQ_IF_CONTENTOwner.SPECIFICATIONS, specification_)
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -533,4 +573,131 @@ func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
 	}
 
 	fillUpTree(spec_hierarchyFormCallback.probe)
+}
+func __gong__New__SPEC_OBJECT_TYPEFormCallback(
+	spec_object_type *models.SPEC_OBJECT_TYPE,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (spec_object_typeFormCallback *SPEC_OBJECT_TYPEFormCallback) {
+	spec_object_typeFormCallback = new(SPEC_OBJECT_TYPEFormCallback)
+	spec_object_typeFormCallback.probe = probe
+	spec_object_typeFormCallback.spec_object_type = spec_object_type
+	spec_object_typeFormCallback.formGroup = formGroup
+
+	spec_object_typeFormCallback.CreationMode = (spec_object_type == nil)
+
+	return
+}
+
+type SPEC_OBJECT_TYPEFormCallback struct {
+	spec_object_type *models.SPEC_OBJECT_TYPE
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (spec_object_typeFormCallback *SPEC_OBJECT_TYPEFormCallback) OnSave() {
+
+	log.Println("SPEC_OBJECT_TYPEFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	spec_object_typeFormCallback.probe.formStage.Checkout()
+
+	if spec_object_typeFormCallback.spec_object_type == nil {
+		spec_object_typeFormCallback.spec_object_type = new(models.SPEC_OBJECT_TYPE).Stage(spec_object_typeFormCallback.probe.stageOfInterest)
+	}
+	spec_object_type_ := spec_object_typeFormCallback.spec_object_type
+	_ = spec_object_type_
+
+	for _, formDiv := range spec_object_typeFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(spec_object_type_.Name), formDiv)
+		case "DESC":
+			FormDivBasicFieldToField(&(spec_object_type_.DESC), formDiv)
+		case "IDENTIFIER":
+			FormDivBasicFieldToField(&(spec_object_type_.IDENTIFIER), formDiv)
+		case "LAST_CHANGE":
+			FormDivBasicFieldToField(&(spec_object_type_.LAST_CHANGE), formDiv)
+		case "LONG_NAME":
+			FormDivBasicFieldToField(&(spec_object_type_.LONG_NAME), formDiv)
+		case "REQ_IF_CONTENT:SPEC_OBJECT_TYPES":
+			// we need to retrieve the field owner before the change
+			var pastREQ_IF_CONTENTOwner *models.REQ_IF_CONTENT
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "REQ_IF_CONTENT"
+			rf.Fieldname = "SPEC_OBJECT_TYPES"
+			reverseFieldOwner := orm.GetReverseFieldOwner(
+				spec_object_typeFormCallback.probe.stageOfInterest,
+				spec_object_typeFormCallback.probe.backRepoOfInterest,
+				spec_object_type_,
+				&rf)
+
+			if reverseFieldOwner != nil {
+				pastREQ_IF_CONTENTOwner = reverseFieldOwner.(*models.REQ_IF_CONTENT)
+			}
+			if formDiv.FormFields[0].FormFieldSelect.Value == nil {
+				if pastREQ_IF_CONTENTOwner != nil {
+					idx := slices.Index(pastREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES, spec_object_type_)
+					pastREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES = slices.Delete(pastREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES, idx, idx+1)
+				}
+			} else {
+				// we need to retrieve the field owner after the change
+				// parse all astrcut and get the one with the name in the
+				// div
+				for _req_if_content := range *models.GetGongstructInstancesSet[models.REQ_IF_CONTENT](spec_object_typeFormCallback.probe.stageOfInterest) {
+
+					// the match is base on the name
+					if _req_if_content.GetName() == formDiv.FormFields[0].FormFieldSelect.Value.GetName() {
+						newREQ_IF_CONTENTOwner := _req_if_content // we have a match
+						if pastREQ_IF_CONTENTOwner != nil {
+							if newREQ_IF_CONTENTOwner != pastREQ_IF_CONTENTOwner {
+								idx := slices.Index(pastREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES, spec_object_type_)
+								pastREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES = slices.Delete(pastREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES, idx, idx+1)
+								newREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES = append(newREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES, spec_object_type_)
+							}
+						} else {
+							newREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES = append(newREQ_IF_CONTENTOwner.SPEC_OBJECT_TYPES, spec_object_type_)
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// manage the suppress operation
+	if spec_object_typeFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		spec_object_type_.Unstage(spec_object_typeFormCallback.probe.stageOfInterest)
+	}
+
+	spec_object_typeFormCallback.probe.stageOfInterest.Commit()
+	fillUpTable[models.SPEC_OBJECT_TYPE](
+		spec_object_typeFormCallback.probe,
+	)
+	spec_object_typeFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if spec_object_typeFormCallback.CreationMode || spec_object_typeFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		spec_object_typeFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: table.FormGroupDefaultName.ToString(),
+		}).Stage(spec_object_typeFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__SPEC_OBJECT_TYPEFormCallback(
+			nil,
+			spec_object_typeFormCallback.probe,
+			newFormGroup,
+		)
+		spec_object_type := new(models.SPEC_OBJECT_TYPE)
+		FillUpForm(spec_object_type, newFormGroup, spec_object_typeFormCallback.probe)
+		spec_object_typeFormCallback.probe.formStage.Commit()
+	}
+
+	fillUpTree(spec_object_typeFormCallback.probe)
 }

@@ -47,9 +47,11 @@ type REQ_IF_CONTENTAPI struct {
 type REQ_IF_CONTENTPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	// field SPECIFICATION is a pointer to another Struct (optional or 0..1)
-	// This field is generated into another field to enable AS ONE association
-	SPECIFICATIONID sql.NullInt64
+	// field SPEC_OBJECT_TYPES is a slice of pointers to another Struct (optional or 0..1)
+	SPEC_OBJECT_TYPES IntSlice `gorm:"type:TEXT"`
+
+	// field SPECIFICATIONS is a slice of pointers to another Struct (optional or 0..1)
+	SPECIFICATIONS IntSlice `gorm:"type:TEXT"`
 }
 
 // REQ_IF_CONTENTDB describes a req_if_content in the database
@@ -215,16 +217,40 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CommitPhaseTwoInstan
 		req_if_contentDB.CopyBasicFieldsFromREQ_IF_CONTENT(req_if_content)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// commit pointer value req_if_content.SPECIFICATION translates to updating the req_if_content.SPECIFICATIONID
-		req_if_contentDB.SPECIFICATIONID.Valid = true // allow for a 0 value (nil association)
-		if req_if_content.SPECIFICATION != nil {
-			if SPECIFICATIONId, ok := backRepo.BackRepoSPECIFICATION.Map_SPECIFICATIONPtr_SPECIFICATIONDBID[req_if_content.SPECIFICATION]; ok {
-				req_if_contentDB.SPECIFICATIONID.Int64 = int64(SPECIFICATIONId)
-				req_if_contentDB.SPECIFICATIONID.Valid = true
+		// 1. reset
+		req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPEC_OBJECT_TYPES = make([]int, 0)
+		// 2. encode
+		for _, spec_object_typeAssocEnd := range req_if_content.SPEC_OBJECT_TYPES {
+			spec_object_typeAssocEnd_DB :=
+				backRepo.BackRepoSPEC_OBJECT_TYPE.GetSPEC_OBJECT_TYPEDBFromSPEC_OBJECT_TYPEPtr(spec_object_typeAssocEnd)
+			
+			// the stage might be inconsistant, meaning that the spec_object_typeAssocEnd_DB might
+			// be missing from the stage. In this case, the commit operation is robust
+			// An alternative would be to crash here to reveal the missing element.
+			if spec_object_typeAssocEnd_DB == nil {
+				continue
 			}
-		} else {
-			req_if_contentDB.SPECIFICATIONID.Int64 = 0
-			req_if_contentDB.SPECIFICATIONID.Valid = true
+			
+			req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPEC_OBJECT_TYPES =
+				append(req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPEC_OBJECT_TYPES, int(spec_object_typeAssocEnd_DB.ID))
+		}
+
+		// 1. reset
+		req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPECIFICATIONS = make([]int, 0)
+		// 2. encode
+		for _, specificationAssocEnd := range req_if_content.SPECIFICATIONS {
+			specificationAssocEnd_DB :=
+				backRepo.BackRepoSPECIFICATION.GetSPECIFICATIONDBFromSPECIFICATIONPtr(specificationAssocEnd)
+			
+			// the stage might be inconsistant, meaning that the specificationAssocEnd_DB might
+			// be missing from the stage. In this case, the commit operation is robust
+			// An alternative would be to crash here to reveal the missing element.
+			if specificationAssocEnd_DB == nil {
+				continue
+			}
+			
+			req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPECIFICATIONS =
+				append(req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPECIFICATIONS, int(specificationAssocEnd_DB.ID))
 		}
 
 		query := backRepoREQ_IF_CONTENT.db.Save(&req_if_contentDB)
@@ -340,11 +366,24 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CheckoutPhaseTwoInst
 func (req_if_contentDB *REQ_IF_CONTENTDB) DecodePointers(backRepo *BackRepoStruct, req_if_content *models.REQ_IF_CONTENT) {
 
 	// insertion point for checkout of pointer encoding
-	// SPECIFICATION field
-	req_if_content.SPECIFICATION = nil
-	if req_if_contentDB.SPECIFICATIONID.Int64 != 0 {
-		req_if_content.SPECIFICATION = backRepo.BackRepoSPECIFICATION.Map_SPECIFICATIONDBID_SPECIFICATIONPtr[uint(req_if_contentDB.SPECIFICATIONID.Int64)]
+	// This loop redeem req_if_content.SPEC_OBJECT_TYPES in the stage from the encode in the back repo
+	// It parses all SPEC_OBJECT_TYPEDB in the back repo and if the reverse pointer encoding matches the back repo ID
+	// it appends the stage instance
+	// 1. reset the slice
+	req_if_content.SPEC_OBJECT_TYPES = req_if_content.SPEC_OBJECT_TYPES[:0]
+	for _, _SPEC_OBJECT_TYPEid := range req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPEC_OBJECT_TYPES {
+		req_if_content.SPEC_OBJECT_TYPES = append(req_if_content.SPEC_OBJECT_TYPES, backRepo.BackRepoSPEC_OBJECT_TYPE.Map_SPEC_OBJECT_TYPEDBID_SPEC_OBJECT_TYPEPtr[uint(_SPEC_OBJECT_TYPEid)])
 	}
+
+	// This loop redeem req_if_content.SPECIFICATIONS in the stage from the encode in the back repo
+	// It parses all SPECIFICATIONDB in the back repo and if the reverse pointer encoding matches the back repo ID
+	// it appends the stage instance
+	// 1. reset the slice
+	req_if_content.SPECIFICATIONS = req_if_content.SPECIFICATIONS[:0]
+	for _, _SPECIFICATIONid := range req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPECIFICATIONS {
+		req_if_content.SPECIFICATIONS = append(req_if_content.SPECIFICATIONS, backRepo.BackRepoSPECIFICATION.Map_SPECIFICATIONDBID_SPECIFICATIONPtr[uint(_SPECIFICATIONid)])
+	}
+
 	return
 }
 
@@ -573,12 +612,6 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) RestorePhaseTwo() {
 		_ = req_if_contentDB
 
 		// insertion point for reindexing pointers encoding
-		// reindexing SPECIFICATION field
-		if req_if_contentDB.SPECIFICATIONID.Int64 != 0 {
-			req_if_contentDB.SPECIFICATIONID.Int64 = int64(BackRepoSPECIFICATIONid_atBckpTime_newID[uint(req_if_contentDB.SPECIFICATIONID.Int64)])
-			req_if_contentDB.SPECIFICATIONID.Valid = true
-		}
-
 		// update databse with new index encoding
 		query := backRepoREQ_IF_CONTENT.db.Model(req_if_contentDB).Updates(*req_if_contentDB)
 		if query.Error != nil {

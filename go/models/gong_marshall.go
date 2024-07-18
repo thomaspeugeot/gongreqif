@@ -430,6 +430,64 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 
 	}
 
+	map_SPEC_OBJECT_TYPE_Identifiers := make(map[*SPEC_OBJECT_TYPE]string)
+	_ = map_SPEC_OBJECT_TYPE_Identifiers
+
+	spec_object_typeOrdered := []*SPEC_OBJECT_TYPE{}
+	for spec_object_type := range stage.SPEC_OBJECT_TYPEs {
+		spec_object_typeOrdered = append(spec_object_typeOrdered, spec_object_type)
+	}
+	sort.Slice(spec_object_typeOrdered[:], func(i, j int) bool {
+		return spec_object_typeOrdered[i].Name < spec_object_typeOrdered[j].Name
+	})
+	if len(spec_object_typeOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, spec_object_type := range spec_object_typeOrdered {
+
+		id = generatesIdentifier("SPEC_OBJECT_TYPE", idx, spec_object_type.Name)
+		map_SPEC_OBJECT_TYPE_Identifiers[spec_object_type] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_OBJECT_TYPE")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object_type.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type.DESC))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type.IDENTIFIER))
+		initializerStatements += setValueField
+
+		setValueField = TimeInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", spec_object_type.LAST_CHANGE.String())
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type.LONG_NAME))
+		initializerStatements += setValueField
+
+	}
+
 	// insertion initialization of objects to stage
 	for idx, reqif := range reqifOrdered {
 		var setPointerField string
@@ -465,11 +523,19 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 		map_REQ_IF_CONTENT_Identifiers[req_if_content] = id
 
 		// Initialisation of values
-		if req_if_content.SPECIFICATION != nil {
-			setPointerField = PointerFieldInitStatement
+		for _, _spec_object_type := range req_if_content.SPEC_OBJECT_TYPES {
+			setPointerField = SliceOfPointersFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPECIFICATION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPECIFICATION_Identifiers[req_if_content.SPECIFICATION])
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_OBJECT_TYPES")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPEC_OBJECT_TYPE_Identifiers[_spec_object_type])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _specification := range req_if_content.SPECIFICATIONS {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPECIFICATIONS")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPECIFICATION_Identifiers[_specification])
 			pointersInitializesStatements += setPointerField
 		}
 
@@ -529,6 +595,16 @@ func (stage *StageStruct) Marshall(file *os.File, modelsPackageName, packageName
 			pointersInitializesStatements += setPointerField
 		}
 
+	}
+
+	for idx, spec_object_type := range spec_object_typeOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("SPEC_OBJECT_TYPE", idx, spec_object_type.Name)
+		map_SPEC_OBJECT_TYPE_Identifiers[spec_object_type] = id
+
+		// Initialisation of values
 	}
 
 	res = strings.ReplaceAll(res, "{{Identifiers}}", identifiersDecl)

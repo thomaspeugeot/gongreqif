@@ -111,3 +111,21 @@ func (from *SPEC_HIERARCHY) CopyBasicFields(to *SPEC_HIERARCHY) {
 	to.LONG_NAME = from.LONG_NAME
 }
 
+type SPEC_OBJECT_TYPE_WOP struct {
+	// insertion point
+	Name string
+	DESC string
+	IDENTIFIER string
+	LAST_CHANGE time.Time
+	LONG_NAME string
+}
+
+func (from *SPEC_OBJECT_TYPE) CopyBasicFields(to *SPEC_OBJECT_TYPE) {
+	// insertion point
+	to.Name = from.Name
+	to.DESC = from.DESC
+	to.IDENTIFIER = from.IDENTIFIER
+	to.LAST_CHANGE = from.LAST_CHANGE
+	to.LONG_NAME = from.LONG_NAME
+}
+

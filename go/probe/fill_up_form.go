@@ -29,7 +29,8 @@ func FillUpForm[T models.Gongstruct](
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		AssociationFieldToForm("SPECIFICATION", instanceWithInferedType.SPECIFICATION, formGroup, probe)
+		AssociationSliceToForm("SPEC_OBJECT_TYPES", instanceWithInferedType, &instanceWithInferedType.SPEC_OBJECT_TYPES, formGroup, probe)
+		AssociationSliceToForm("SPECIFICATIONS", instanceWithInferedType, &instanceWithInferedType.SPECIFICATIONS, formGroup, probe)
 
 	case *models.REQ_IF_HEADER:
 		// insertion point
@@ -63,6 +64,28 @@ func FillUpForm[T models.Gongstruct](
 			false, false, 0, false, 0)
 		BasicFieldtoForm("LONG_NAME", instanceWithInferedType.LONG_NAME, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "REQ_IF_CONTENT"
+			rf.Fieldname = "SPECIFICATIONS"
+			reverseFieldOwner := orm.GetReverseFieldOwner(probe.stageOfInterest, probe.backRepoOfInterest, instanceWithInferedType, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.REQ_IF_CONTENT),
+					"SPECIFICATIONS",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.REQ_IF_CONTENT, *models.SPECIFICATION](
+					nil,
+					"SPECIFICATIONS",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
 
 	case *models.SPECIFICATION_TYPE:
 		// insertion point
@@ -96,6 +119,41 @@ func FillUpForm[T models.Gongstruct](
 			false, false, 0, false, 0)
 		BasicFieldtoForm("LONG_NAME", instanceWithInferedType.LONG_NAME, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+
+	case *models.SPEC_OBJECT_TYPE:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("DESC", instanceWithInferedType.DESC, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("IDENTIFIER", instanceWithInferedType.IDENTIFIER, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("LAST_CHANGE", instanceWithInferedType.LAST_CHANGE, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("LONG_NAME", instanceWithInferedType.LONG_NAME, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "REQ_IF_CONTENT"
+			rf.Fieldname = "SPEC_OBJECT_TYPES"
+			reverseFieldOwner := orm.GetReverseFieldOwner(probe.stageOfInterest, probe.backRepoOfInterest, instanceWithInferedType, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.REQ_IF_CONTENT),
+					"SPEC_OBJECT_TYPES",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.REQ_IF_CONTENT, *models.SPEC_OBJECT_TYPE](
+					nil,
+					"SPEC_OBJECT_TYPES",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
 
 	default:
 		_ = instanceWithInferedType

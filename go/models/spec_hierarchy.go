@@ -63,14 +63,15 @@ func (reqif *SPEC_HIERARCHY) Walk(_reqif *schema.SPEC_HIERARCHY, stage *StageStr
 	reqif.IS_TABLE_INTERNAL = _reqif.IS_TABLE_INTERNAL
 	reqif.LAST_CHANGE = _reqif.LAST_CHANGE.ToGoTime()
 	reqif.LONG_NAME = _reqif.LONG_NAME
-	// if _reqif.OBJECT.SPEC_OBJECT_REF != nil {
-	// 	reqif.OBJECT = string(*_reqif.OBJECT.SPEC_OBJECT_REF)
-	// 	reqif.Name = reqif.OBJECT
-	// }
 
-	// if _reqif.CHILDREN.SPEC_HIERARCHY != nil {
-	// 	sh := new(SPEC_HIERARCHY).Stage(stage)
-	// 	sh.Walk(_reqif.CHILDREN.SPEC_HIERARCHY, stage)
-	// 	reqif.CHILDREN = sh
-	// }
+	if _reqif.OBJECT.SPEC_OBJECT_REF != nil {
+		reqif.OBJECT = string(*_reqif.OBJECT.SPEC_OBJECT_REF)
+		reqif.Name = reqif.OBJECT
+	}
+
+	for _, _sh := range _reqif.CHILDREN.SPEC_HIERARCHY {
+		sh := new(SPEC_HIERARCHY).Stage(stage)
+		sh.Walk(_sh, stage)
+		reqif.CHILDREN = sh
+	}
 }

@@ -63,6 +63,8 @@ type StageStruct struct {
 	REQ_IF_CONTENTs_mapString map[string]*REQ_IF_CONTENT
 
 	// insertion point for slice of pointers maps
+	REQ_IF_CONTENT_SPEC_OBJECT_TYPES_reverseMap map[*SPEC_OBJECT_TYPE]*REQ_IF_CONTENT
+	REQ_IF_CONTENT_SPECIFICATIONS_reverseMap map[*SPECIFICATION]*REQ_IF_CONTENT
 
 	OnAfterREQ_IF_CONTENTCreateCallback OnAfterCreateInterface[REQ_IF_CONTENT]
 	OnAfterREQ_IF_CONTENTUpdateCallback OnAfterUpdateInterface[REQ_IF_CONTENT]
@@ -108,6 +110,16 @@ type StageStruct struct {
 	OnAfterSPEC_HIERARCHYUpdateCallback OnAfterUpdateInterface[SPEC_HIERARCHY]
 	OnAfterSPEC_HIERARCHYDeleteCallback OnAfterDeleteInterface[SPEC_HIERARCHY]
 	OnAfterSPEC_HIERARCHYReadCallback   OnAfterReadInterface[SPEC_HIERARCHY]
+
+	SPEC_OBJECT_TYPEs           map[*SPEC_OBJECT_TYPE]any
+	SPEC_OBJECT_TYPEs_mapString map[string]*SPEC_OBJECT_TYPE
+
+	// insertion point for slice of pointers maps
+
+	OnAfterSPEC_OBJECT_TYPECreateCallback OnAfterCreateInterface[SPEC_OBJECT_TYPE]
+	OnAfterSPEC_OBJECT_TYPEUpdateCallback OnAfterUpdateInterface[SPEC_OBJECT_TYPE]
+	OnAfterSPEC_OBJECT_TYPEDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT_TYPE]
+	OnAfterSPEC_OBJECT_TYPEReadCallback   OnAfterReadInterface[SPEC_OBJECT_TYPE]
 
 	AllModelsStructCreateCallback AllModelsStructCreateInterface
 
@@ -189,6 +201,8 @@ type BackRepoInterface interface {
 	CheckoutSPECIFICATION_TYPE(specification_type *SPECIFICATION_TYPE)
 	CommitSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARCHY)
 	CheckoutSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARCHY)
+	CommitSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_TYPE)
+	CheckoutSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_TYPE)
 	GetLastCommitFromBackNb() uint
 	GetLastPushFromFrontNb() uint
 }
@@ -213,6 +227,9 @@ func NewStage(path string) (stage *StageStruct) {
 
 		SPEC_HIERARCHYs:           make(map[*SPEC_HIERARCHY]any),
 		SPEC_HIERARCHYs_mapString: make(map[string]*SPEC_HIERARCHY),
+
+		SPEC_OBJECT_TYPEs:           make(map[*SPEC_OBJECT_TYPE]any),
+		SPEC_OBJECT_TYPEs_mapString: make(map[string]*SPEC_OBJECT_TYPE),
 
 		// end of insertion point
 		Map_GongStructName_InstancesNb: make(map[string]int),
@@ -253,6 +270,7 @@ func (stage *StageStruct) Commit() {
 	stage.Map_GongStructName_InstancesNb["SPECIFICATION"] = len(stage.SPECIFICATIONs)
 	stage.Map_GongStructName_InstancesNb["SPECIFICATION_TYPE"] = len(stage.SPECIFICATION_TYPEs)
 	stage.Map_GongStructName_InstancesNb["SPEC_HIERARCHY"] = len(stage.SPEC_HIERARCHYs)
+	stage.Map_GongStructName_InstancesNb["SPEC_OBJECT_TYPE"] = len(stage.SPEC_OBJECT_TYPEs)
 
 }
 
@@ -269,6 +287,7 @@ func (stage *StageStruct) Checkout() {
 	stage.Map_GongStructName_InstancesNb["SPECIFICATION"] = len(stage.SPECIFICATIONs)
 	stage.Map_GongStructName_InstancesNb["SPECIFICATION_TYPE"] = len(stage.SPECIFICATION_TYPEs)
 	stage.Map_GongStructName_InstancesNb["SPEC_HIERARCHY"] = len(stage.SPEC_HIERARCHYs)
+	stage.Map_GongStructName_InstancesNb["SPEC_OBJECT_TYPE"] = len(stage.SPEC_OBJECT_TYPEs)
 
 }
 
@@ -601,6 +620,56 @@ func (spec_hierarchy *SPEC_HIERARCHY) GetName() (res string) {
 	return spec_hierarchy.Name
 }
 
+// Stage puts spec_object_type to the model stage
+func (spec_object_type *SPEC_OBJECT_TYPE) Stage(stage *StageStruct) *SPEC_OBJECT_TYPE {
+	stage.SPEC_OBJECT_TYPEs[spec_object_type] = __member
+	stage.SPEC_OBJECT_TYPEs_mapString[spec_object_type.Name] = spec_object_type
+
+	return spec_object_type
+}
+
+// Unstage removes spec_object_type off the model stage
+func (spec_object_type *SPEC_OBJECT_TYPE) Unstage(stage *StageStruct) *SPEC_OBJECT_TYPE {
+	delete(stage.SPEC_OBJECT_TYPEs, spec_object_type)
+	delete(stage.SPEC_OBJECT_TYPEs_mapString, spec_object_type.Name)
+	return spec_object_type
+}
+
+// UnstageVoid removes spec_object_type off the model stage
+func (spec_object_type *SPEC_OBJECT_TYPE) UnstageVoid(stage *StageStruct) {
+	delete(stage.SPEC_OBJECT_TYPEs, spec_object_type)
+	delete(stage.SPEC_OBJECT_TYPEs_mapString, spec_object_type.Name)
+}
+
+// commit spec_object_type to the back repo (if it is already staged)
+func (spec_object_type *SPEC_OBJECT_TYPE) Commit(stage *StageStruct) *SPEC_OBJECT_TYPE {
+	if _, ok := stage.SPEC_OBJECT_TYPEs[spec_object_type]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitSPEC_OBJECT_TYPE(spec_object_type)
+		}
+	}
+	return spec_object_type
+}
+
+func (spec_object_type *SPEC_OBJECT_TYPE) CommitVoid(stage *StageStruct) {
+	spec_object_type.Commit(stage)
+}
+
+// Checkout spec_object_type to the back repo (if it is already staged)
+func (spec_object_type *SPEC_OBJECT_TYPE) Checkout(stage *StageStruct) *SPEC_OBJECT_TYPE {
+	if _, ok := stage.SPEC_OBJECT_TYPEs[spec_object_type]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutSPEC_OBJECT_TYPE(spec_object_type)
+		}
+	}
+	return spec_object_type
+}
+
+// for satisfaction of GongStruct interface
+func (spec_object_type *SPEC_OBJECT_TYPE) GetName() (res string) {
+	return spec_object_type.Name
+}
+
 // swagger:ignore
 type AllModelsStructCreateInterface interface { // insertion point for Callbacks on creation
 	CreateORMREQIF(REQIF *REQIF)
@@ -609,6 +678,7 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMSPECIFICATION(SPECIFICATION *SPECIFICATION)
 	CreateORMSPECIFICATION_TYPE(SPECIFICATION_TYPE *SPECIFICATION_TYPE)
 	CreateORMSPEC_HIERARCHY(SPEC_HIERARCHY *SPEC_HIERARCHY)
+	CreateORMSPEC_OBJECT_TYPE(SPEC_OBJECT_TYPE *SPEC_OBJECT_TYPE)
 }
 
 type AllModelsStructDeleteInterface interface { // insertion point for Callbacks on deletion
@@ -618,6 +688,7 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMSPECIFICATION(SPECIFICATION *SPECIFICATION)
 	DeleteORMSPECIFICATION_TYPE(SPECIFICATION_TYPE *SPECIFICATION_TYPE)
 	DeleteORMSPEC_HIERARCHY(SPEC_HIERARCHY *SPEC_HIERARCHY)
+	DeleteORMSPEC_OBJECT_TYPE(SPEC_OBJECT_TYPE *SPEC_OBJECT_TYPE)
 }
 
 func (stage *StageStruct) Reset() { // insertion point for array reset
@@ -639,6 +710,9 @@ func (stage *StageStruct) Reset() { // insertion point for array reset
 	stage.SPEC_HIERARCHYs = make(map[*SPEC_HIERARCHY]any)
 	stage.SPEC_HIERARCHYs_mapString = make(map[string]*SPEC_HIERARCHY)
 
+	stage.SPEC_OBJECT_TYPEs = make(map[*SPEC_OBJECT_TYPE]any)
+	stage.SPEC_OBJECT_TYPEs_mapString = make(map[string]*SPEC_OBJECT_TYPE)
+
 }
 
 func (stage *StageStruct) Nil() { // insertion point for array nil
@@ -659,6 +733,9 @@ func (stage *StageStruct) Nil() { // insertion point for array nil
 
 	stage.SPEC_HIERARCHYs = nil
 	stage.SPEC_HIERARCHYs_mapString = nil
+
+	stage.SPEC_OBJECT_TYPEs = nil
+	stage.SPEC_OBJECT_TYPEs_mapString = nil
 
 }
 
@@ -687,6 +764,10 @@ func (stage *StageStruct) Unstage() { // insertion point for array nil
 		spec_hierarchy.Unstage(stage)
 	}
 
+	for spec_object_type := range stage.SPEC_OBJECT_TYPEs {
+		spec_object_type.Unstage(stage)
+	}
+
 }
 
 // Gongstruct is the type parameter for generated generic function that allows
@@ -695,7 +776,7 @@ func (stage *StageStruct) Unstage() { // insertion point for array nil
 // - full refactoring of Gongstruct identifiers / fields
 type Gongstruct interface {
 	// insertion point for generic types
-	REQIF | REQ_IF_CONTENT | REQ_IF_HEADER | SPECIFICATION | SPECIFICATION_TYPE | SPEC_HIERARCHY
+	REQIF | REQ_IF_CONTENT | REQ_IF_HEADER | SPECIFICATION | SPECIFICATION_TYPE | SPEC_HIERARCHY | SPEC_OBJECT_TYPE
 }
 
 type GongtructBasicField interface {
@@ -708,7 +789,7 @@ type GongtructBasicField interface {
 // - full refactoring of Gongstruct identifiers / fields
 type PointerToGongstruct interface {
 	// insertion point for generic types
-	*REQIF | *REQ_IF_CONTENT | *REQ_IF_HEADER | *SPECIFICATION | *SPECIFICATION_TYPE | *SPEC_HIERARCHY
+	*REQIF | *REQ_IF_CONTENT | *REQ_IF_HEADER | *SPECIFICATION | *SPECIFICATION_TYPE | *SPEC_HIERARCHY | *SPEC_OBJECT_TYPE
 	GetName() string
 	CommitVoid(*StageStruct)
 	UnstageVoid(stage *StageStruct)
@@ -743,6 +824,7 @@ type GongstructSet interface {
 		map[*SPECIFICATION]any |
 		map[*SPECIFICATION_TYPE]any |
 		map[*SPEC_HIERARCHY]any |
+		map[*SPEC_OBJECT_TYPE]any |
 		map[*any]any // because go does not support an extra "|" at the end of type specifications
 }
 
@@ -755,6 +837,7 @@ type GongstructMapString interface {
 		map[string]*SPECIFICATION |
 		map[string]*SPECIFICATION_TYPE |
 		map[string]*SPEC_HIERARCHY |
+		map[string]*SPEC_OBJECT_TYPE |
 		map[*any]any // because go does not support an extra "|" at the end of type specifications
 }
 
@@ -777,6 +860,8 @@ func GongGetSet[Type GongstructSet](stage *StageStruct) *Type {
 		return any(&stage.SPECIFICATION_TYPEs).(*Type)
 	case map[*SPEC_HIERARCHY]any:
 		return any(&stage.SPEC_HIERARCHYs).(*Type)
+	case map[*SPEC_OBJECT_TYPE]any:
+		return any(&stage.SPEC_OBJECT_TYPEs).(*Type)
 	default:
 		return nil
 	}
@@ -801,6 +886,8 @@ func GongGetMap[Type GongstructMapString](stage *StageStruct) *Type {
 		return any(&stage.SPECIFICATION_TYPEs_mapString).(*Type)
 	case map[string]*SPEC_HIERARCHY:
 		return any(&stage.SPEC_HIERARCHYs_mapString).(*Type)
+	case map[string]*SPEC_OBJECT_TYPE:
+		return any(&stage.SPEC_OBJECT_TYPEs_mapString).(*Type)
 	default:
 		return nil
 	}
@@ -825,6 +912,8 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *StageStruct) *map[*Type]a
 		return any(&stage.SPECIFICATION_TYPEs).(*map[*Type]any)
 	case SPEC_HIERARCHY:
 		return any(&stage.SPEC_HIERARCHYs).(*map[*Type]any)
+	case SPEC_OBJECT_TYPE:
+		return any(&stage.SPEC_OBJECT_TYPEs).(*map[*Type]any)
 	default:
 		return nil
 	}
@@ -849,6 +938,8 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.SPECIFICATION_TYPEs).(*map[Type]any)
 	case *SPEC_HIERARCHY:
 		return any(&stage.SPEC_HIERARCHYs).(*map[Type]any)
+	case *SPEC_OBJECT_TYPE:
+		return any(&stage.SPEC_OBJECT_TYPEs).(*map[Type]any)
 	default:
 		return nil
 	}
@@ -873,6 +964,8 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *StageStruct) *map[string]
 		return any(&stage.SPECIFICATION_TYPEs_mapString).(*map[string]*Type)
 	case SPEC_HIERARCHY:
 		return any(&stage.SPEC_HIERARCHYs_mapString).(*map[string]*Type)
+	case SPEC_OBJECT_TYPE:
+		return any(&stage.SPEC_OBJECT_TYPEs_mapString).(*map[string]*Type)
 	default:
 		return nil
 	}
@@ -898,8 +991,10 @@ func GetAssociationName[Type Gongstruct]() *Type {
 	case REQ_IF_CONTENT:
 		return any(&REQ_IF_CONTENT{
 			// Initialisation of associations
+			// field is initialized with an instance of SPEC_OBJECT_TYPE with the name of the field
+			SPEC_OBJECT_TYPES: []*SPEC_OBJECT_TYPE{{Name: "SPEC_OBJECT_TYPES"}},
 			// field is initialized with an instance of SPECIFICATION with the name of the field
-			SPECIFICATION: &SPECIFICATION{Name: "SPECIFICATION"},
+			SPECIFICATIONS: []*SPECIFICATION{{Name: "SPECIFICATIONS"}},
 		}).(*Type)
 	case REQ_IF_HEADER:
 		return any(&REQ_IF_HEADER{
@@ -920,6 +1015,10 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			// Initialisation of associations
 			// field is initialized with an instance of SPEC_HIERARCHY with the name of the field
 			CHILDREN: &SPEC_HIERARCHY{Name: "CHILDREN"},
+		}).(*Type)
+	case SPEC_OBJECT_TYPE:
+		return any(&SPEC_OBJECT_TYPE{
+			// Initialisation of associations
 		}).(*Type)
 	default:
 		return nil
@@ -982,23 +1081,6 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 	case REQ_IF_CONTENT:
 		switch fieldname {
 		// insertion point for per direct association field
-		case "SPECIFICATION":
-			res := make(map[*SPECIFICATION][]*REQ_IF_CONTENT)
-			for req_if_content := range stage.REQ_IF_CONTENTs {
-				if req_if_content.SPECIFICATION != nil {
-					specification_ := req_if_content.SPECIFICATION
-					var req_if_contents []*REQ_IF_CONTENT
-					_, ok := res[specification_]
-					if ok {
-						req_if_contents = res[specification_]
-					} else {
-						req_if_contents = make([]*REQ_IF_CONTENT, 0)
-					}
-					req_if_contents = append(req_if_contents, req_if_content)
-					res[specification_] = req_if_contents
-				}
-			}
-			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of REQ_IF_HEADER
 	case REQ_IF_HEADER:
@@ -1054,6 +1136,11 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *StageS
 			}
 			return any(res).(map[*End][]*Start)
 		}
+	// reverse maps of direct associations of SPEC_OBJECT_TYPE
+	case SPEC_OBJECT_TYPE:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
 	}
 	return nil
 }
@@ -1079,6 +1166,22 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 	case REQ_IF_CONTENT:
 		switch fieldname {
 		// insertion point for per direct association field
+		case "SPEC_OBJECT_TYPES":
+			res := make(map[*SPEC_OBJECT_TYPE]*REQ_IF_CONTENT)
+			for req_if_content := range stage.REQ_IF_CONTENTs {
+				for _, spec_object_type_ := range req_if_content.SPEC_OBJECT_TYPES {
+					res[spec_object_type_] = req_if_content
+				}
+			}
+			return any(res).(map[*End]*Start)
+		case "SPECIFICATIONS":
+			res := make(map[*SPECIFICATION]*REQ_IF_CONTENT)
+			for req_if_content := range stage.REQ_IF_CONTENTs {
+				for _, specification_ := range req_if_content.SPECIFICATIONS {
+					res[specification_] = req_if_content
+				}
+			}
+			return any(res).(map[*End]*Start)
 		}
 	// reverse maps of direct associations of REQ_IF_HEADER
 	case REQ_IF_HEADER:
@@ -1097,6 +1200,11 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		}
 	// reverse maps of direct associations of SPEC_HIERARCHY
 	case SPEC_HIERARCHY:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of SPEC_OBJECT_TYPE
+	case SPEC_OBJECT_TYPE:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -1124,6 +1232,8 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "SPECIFICATION_TYPE"
 	case SPEC_HIERARCHY:
 		res = "SPEC_HIERARCHY"
+	case SPEC_OBJECT_TYPE:
+		res = "SPEC_OBJECT_TYPE"
 	}
 	return res
 }
@@ -1148,6 +1258,8 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "SPECIFICATION_TYPE"
 	case *SPEC_HIERARCHY:
 		res = "SPEC_HIERARCHY"
+	case *SPEC_OBJECT_TYPE:
+		res = "SPEC_OBJECT_TYPE"
 	}
 	return res
 }
@@ -1162,7 +1274,7 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case REQIF:
 		res = []string{"Name", "REQ_IF_HEADER", "REQ_IF_CONTENT"}
 	case REQ_IF_CONTENT:
-		res = []string{"Name", "SPECIFICATION"}
+		res = []string{"Name", "SPEC_OBJECT_TYPES", "SPECIFICATIONS"}
 	case REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
 	case SPECIFICATION:
@@ -1171,6 +1283,8 @@ func GetFields[Type Gongstruct]() (res []string) {
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	case SPEC_HIERARCHY:
 		res = []string{"Name", "CHILDREN", "OBJECT", "DESC", "IDENTIFIER", "IS_EDITABLE", "IS_TABLE_INTERNAL", "LAST_CHANGE", "LONG_NAME"}
+	case SPEC_OBJECT_TYPE:
+		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	}
 	return
 }
@@ -1201,12 +1315,21 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 	case SPECIFICATION:
 		var rf ReverseField
 		_ = rf
+		rf.GongstructName = "REQ_IF_CONTENT"
+		rf.Fieldname = "SPECIFICATIONS"
+		res = append(res, rf)
 	case SPECIFICATION_TYPE:
 		var rf ReverseField
 		_ = rf
 	case SPEC_HIERARCHY:
 		var rf ReverseField
 		_ = rf
+	case SPEC_OBJECT_TYPE:
+		var rf ReverseField
+		_ = rf
+		rf.GongstructName = "REQ_IF_CONTENT"
+		rf.Fieldname = "SPEC_OBJECT_TYPES"
+		res = append(res, rf)
 	}
 	return
 }
@@ -1221,7 +1344,7 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *REQIF:
 		res = []string{"Name", "REQ_IF_HEADER", "REQ_IF_CONTENT"}
 	case *REQ_IF_CONTENT:
-		res = []string{"Name", "SPECIFICATION"}
+		res = []string{"Name", "SPEC_OBJECT_TYPES", "SPECIFICATIONS"}
 	case *REQ_IF_HEADER:
 		res = []string{"Name", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
 	case *SPECIFICATION:
@@ -1230,6 +1353,8 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	case *SPEC_HIERARCHY:
 		res = []string{"Name", "CHILDREN", "OBJECT", "DESC", "IDENTIFIER", "IS_EDITABLE", "IS_TABLE_INTERNAL", "LAST_CHANGE", "LONG_NAME"}
+	case *SPEC_OBJECT_TYPE:
+		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME"}
 	}
 	return
 }
@@ -1257,9 +1382,19 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 		// string value of fields
 		case "Name":
 			res = inferedInstance.Name
-		case "SPECIFICATION":
-			if inferedInstance.SPECIFICATION != nil {
-				res = inferedInstance.SPECIFICATION.Name
+		case "SPEC_OBJECT_TYPES":
+			for idx, __instance__ := range inferedInstance.SPEC_OBJECT_TYPES {
+				if idx > 0 {
+					res += "\n"
+				}
+				res += __instance__.Name
+			}
+		case "SPECIFICATIONS":
+			for idx, __instance__ := range inferedInstance.SPECIFICATIONS {
+				if idx > 0 {
+					res += "\n"
+				}
+				res += __instance__.Name
 			}
 		}
 	case *REQ_IF_HEADER:
@@ -1333,6 +1468,20 @@ func GetFieldStringValueFromPointer[Type PointerToGongstruct](instance Type, fie
 			res = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
 		case "IS_TABLE_INTERNAL":
 			res = fmt.Sprintf("%t", inferedInstance.IS_TABLE_INTERNAL)
+		case "LAST_CHANGE":
+			res = inferedInstance.LAST_CHANGE.String()
+		case "LONG_NAME":
+			res = inferedInstance.LONG_NAME
+		}
+	case *SPEC_OBJECT_TYPE:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res = inferedInstance.Name
+		case "DESC":
+			res = inferedInstance.DESC
+		case "IDENTIFIER":
+			res = inferedInstance.IDENTIFIER
 		case "LAST_CHANGE":
 			res = inferedInstance.LAST_CHANGE.String()
 		case "LONG_NAME":
@@ -1367,9 +1516,19 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 		// string value of fields
 		case "Name":
 			res = inferedInstance.Name
-		case "SPECIFICATION":
-			if inferedInstance.SPECIFICATION != nil {
-				res = inferedInstance.SPECIFICATION.Name
+		case "SPEC_OBJECT_TYPES":
+			for idx, __instance__ := range inferedInstance.SPEC_OBJECT_TYPES {
+				if idx > 0 {
+					res += "\n"
+				}
+				res += __instance__.Name
+			}
+		case "SPECIFICATIONS":
+			for idx, __instance__ := range inferedInstance.SPECIFICATIONS {
+				if idx > 0 {
+					res += "\n"
+				}
+				res += __instance__.Name
 			}
 		}
 	case REQ_IF_HEADER:
@@ -1443,6 +1602,20 @@ func GetFieldStringValue[Type Gongstruct](instance Type, fieldName string) (res 
 			res = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
 		case "IS_TABLE_INTERNAL":
 			res = fmt.Sprintf("%t", inferedInstance.IS_TABLE_INTERNAL)
+		case "LAST_CHANGE":
+			res = inferedInstance.LAST_CHANGE.String()
+		case "LONG_NAME":
+			res = inferedInstance.LONG_NAME
+		}
+	case SPEC_OBJECT_TYPE:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res = inferedInstance.Name
+		case "DESC":
+			res = inferedInstance.DESC
+		case "IDENTIFIER":
+			res = inferedInstance.IDENTIFIER
 		case "LAST_CHANGE":
 			res = inferedInstance.LAST_CHANGE.String()
 		case "LONG_NAME":

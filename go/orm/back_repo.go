@@ -34,6 +34,8 @@ type BackRepoStruct struct {
 
 	BackRepoSPEC_HIERARCHY BackRepoSPEC_HIERARCHYStruct
 
+	BackRepoSPEC_OBJECT_TYPE BackRepoSPEC_OBJECT_TYPEStruct
+
 	CommitFromBackNb uint // records commit increments when performed by the back
 
 	PushFromFrontNb uint // records commit increments when performed by the front
@@ -80,6 +82,7 @@ func NewBackRepo(stage *models.StageStruct, filename string) (backRepo *BackRepo
 		&SPECIFICATIONDB{},
 		&SPECIFICATION_TYPEDB{},
 		&SPEC_HIERARCHYDB{},
+		&SPEC_OBJECT_TYPEDB{},
 	)
 
 	if err != nil {
@@ -138,6 +141,14 @@ func NewBackRepo(stage *models.StageStruct, filename string) (backRepo *BackRepo
 		db:    db,
 		stage: stage,
 	}
+	backRepo.BackRepoSPEC_OBJECT_TYPE = BackRepoSPEC_OBJECT_TYPEStruct{
+		Map_SPEC_OBJECT_TYPEDBID_SPEC_OBJECT_TYPEPtr: make(map[uint]*models.SPEC_OBJECT_TYPE, 0),
+		Map_SPEC_OBJECT_TYPEDBID_SPEC_OBJECT_TYPEDB:  make(map[uint]*SPEC_OBJECT_TYPEDB, 0),
+		Map_SPEC_OBJECT_TYPEPtr_SPEC_OBJECT_TYPEDBID: make(map[*models.SPEC_OBJECT_TYPE]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
 
 	stage.BackRepo = backRepo
 	backRepo.stage = stage
@@ -192,6 +203,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.StageStruct) {
 	backRepo.BackRepoSPECIFICATION.CommitPhaseOne(stage)
 	backRepo.BackRepoSPECIFICATION_TYPE.CommitPhaseOne(stage)
 	backRepo.BackRepoSPEC_HIERARCHY.CommitPhaseOne(stage)
+	backRepo.BackRepoSPEC_OBJECT_TYPE.CommitPhaseOne(stage)
 
 	// insertion point for per struct back repo phase two commit
 	backRepo.BackRepoREQIF.CommitPhaseTwo(backRepo)
@@ -200,6 +212,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.StageStruct) {
 	backRepo.BackRepoSPECIFICATION.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoSPECIFICATION_TYPE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoSPEC_HIERARCHY.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoSPEC_OBJECT_TYPE.CommitPhaseTwo(backRepo)
 
 	backRepo.IncrementCommitFromBackNb()
 }
@@ -213,6 +226,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.StageStruct) {
 	backRepo.BackRepoSPECIFICATION.CheckoutPhaseOne()
 	backRepo.BackRepoSPECIFICATION_TYPE.CheckoutPhaseOne()
 	backRepo.BackRepoSPEC_HIERARCHY.CheckoutPhaseOne()
+	backRepo.BackRepoSPEC_OBJECT_TYPE.CheckoutPhaseOne()
 
 	// insertion point for per struct back repo phase two commit
 	backRepo.BackRepoREQIF.CheckoutPhaseTwo(backRepo)
@@ -221,6 +235,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.StageStruct) {
 	backRepo.BackRepoSPECIFICATION.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoSPECIFICATION_TYPE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoSPEC_HIERARCHY.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoSPEC_OBJECT_TYPE.CheckoutPhaseTwo(backRepo)
 }
 
 // Backup the BackRepoStruct
@@ -234,6 +249,7 @@ func (backRepo *BackRepoStruct) Backup(stage *models.StageStruct, dirPath string
 	backRepo.BackRepoSPECIFICATION.Backup(dirPath)
 	backRepo.BackRepoSPECIFICATION_TYPE.Backup(dirPath)
 	backRepo.BackRepoSPEC_HIERARCHY.Backup(dirPath)
+	backRepo.BackRepoSPEC_OBJECT_TYPE.Backup(dirPath)
 }
 
 // Backup in XL the BackRepoStruct
@@ -250,6 +266,7 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.StageStruct, dirPath stri
 	backRepo.BackRepoSPECIFICATION.BackupXL(file)
 	backRepo.BackRepoSPECIFICATION_TYPE.BackupXL(file)
 	backRepo.BackRepoSPEC_HIERARCHY.BackupXL(file)
+	backRepo.BackRepoSPEC_OBJECT_TYPE.BackupXL(file)
 
 	var b bytes.Buffer
 	writer := bufio.NewWriter(&b)
@@ -280,6 +297,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.StageStruct, dirPath strin
 	backRepo.BackRepoSPECIFICATION.RestorePhaseOne(dirPath)
 	backRepo.BackRepoSPECIFICATION_TYPE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoSPEC_HIERARCHY.RestorePhaseOne(dirPath)
+	backRepo.BackRepoSPEC_OBJECT_TYPE.RestorePhaseOne(dirPath)
 
 	//
 	// restauration second phase (reindex pointers with the new ID)
@@ -292,6 +310,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.StageStruct, dirPath strin
 	backRepo.BackRepoSPECIFICATION.RestorePhaseTwo()
 	backRepo.BackRepoSPECIFICATION_TYPE.RestorePhaseTwo()
 	backRepo.BackRepoSPEC_HIERARCHY.RestorePhaseTwo()
+	backRepo.BackRepoSPEC_OBJECT_TYPE.RestorePhaseTwo()
 
 	backRepo.stage.Checkout()
 }
@@ -325,6 +344,7 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.StageStruct, dirPath str
 	backRepo.BackRepoSPECIFICATION.RestoreXLPhaseOne(file)
 	backRepo.BackRepoSPECIFICATION_TYPE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoSPEC_HIERARCHY.RestoreXLPhaseOne(file)
+	backRepo.BackRepoSPEC_OBJECT_TYPE.RestoreXLPhaseOne(file)
 
 	// commit the restored stage
 	backRepo.stage.Commit()
