@@ -13,7 +13,7 @@ import (
 // if there are no elements in the stage to marshall
 var _ time.Time
 
-// _ point for meta package dummy declaration
+// Injection point for meta package dummy declaration
 var _ ref_models.StageStruct
 
 // When parsed, those maps will help with the renaming process
@@ -69,6 +69,8 @@ var _ map[string]any = map[string]any{
 	"ref_models.SPECIFICATION.LONG_NAME": (ref_models.SPECIFICATION{}).LONG_NAME,
 
 	"ref_models.SPECIFICATION.Name": (ref_models.SPECIFICATION{}).Name,
+
+	"ref_models.SPECIFICATION.SPECIFICATION_TYPE": (ref_models.SPECIFICATION{}).SPECIFICATION_TYPE,
 
 	"ref_models.SPECIFICATION.TYPE": (ref_models.SPECIFICATION{}).TYPE,
 
@@ -139,8 +141,9 @@ func _(stage *models.StageStruct) {
 	__Link__000002_REQ_IF_CONTENT := (&models.Link{Name: `REQ_IF_CONTENT`}).Stage(stage)
 	__Link__000003_REQ_IF_HEADER := (&models.Link{Name: `REQ_IF_HEADER`}).Stage(stage)
 	__Link__000004_SPECIFICATIONS := (&models.Link{Name: `SPECIFICATIONS`}).Stage(stage)
-	__Link__000005_SPECIFICATION_TYPES := (&models.Link{Name: `SPECIFICATION_TYPES`}).Stage(stage)
-	__Link__000006_SPEC_OBJECT_TYPES := (&models.Link{Name: `SPEC_OBJECT_TYPES`}).Stage(stage)
+	__Link__000005_SPECIFICATION_TYPE := (&models.Link{Name: `SPECIFICATION_TYPE`}).Stage(stage)
+	__Link__000006_SPECIFICATION_TYPES := (&models.Link{Name: `SPECIFICATION_TYPES`}).Stage(stage)
+	__Link__000007_SPEC_OBJECT_TYPES := (&models.Link{Name: `SPEC_OBJECT_TYPES`}).Stage(stage)
 
 	__Position__000000_Pos_Default_REQIF := (&models.Position{Name: `Pos-Default-REQIF`}).Stage(stage)
 	__Position__000001_Pos_Default_REQ_IF_CONTENT := (&models.Position{Name: `Pos-Default-REQ_IF_CONTENT`}).Stage(stage)
@@ -155,8 +158,9 @@ func _(stage *models.StageStruct) {
 	__Vertice__000002_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPECIFICATION := (&models.Vertice{Name: `Verticle in class diagram Default in middle between Default-REQ_IF_CONTENT and Default-SPECIFICATION`}).Stage(stage)
 	__Vertice__000003_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPECIFICATION_TYPE := (&models.Vertice{Name: `Verticle in class diagram Default in middle between Default-REQ_IF_CONTENT and Default-SPECIFICATION_TYPE`}).Stage(stage)
 	__Vertice__000004_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPEC_OBJECT_TYPE := (&models.Vertice{Name: `Verticle in class diagram Default in middle between Default-REQ_IF_CONTENT and Default-SPEC_OBJECT_TYPE`}).Stage(stage)
-	__Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY := (&models.Vertice{Name: `Verticle in class diagram Default in middle between Default-SPECIFICATION and Default-SPEC_HIERARCHY`}).Stage(stage)
-	__Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY := (&models.Vertice{Name: `Verticle in class diagram Default in middle between Default-SPEC_HIERARCHY and Default-SPEC_HIERARCHY`}).Stage(stage)
+	__Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPECIFICATION_TYPE := (&models.Vertice{Name: `Verticle in class diagram Default in middle between Default-SPECIFICATION and Default-SPECIFICATION_TYPE`}).Stage(stage)
+	__Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY := (&models.Vertice{Name: `Verticle in class diagram Default in middle between Default-SPECIFICATION and Default-SPEC_HIERARCHY`}).Stage(stage)
+	__Vertice__000007_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY := (&models.Vertice{Name: `Verticle in class diagram Default in middle between Default-SPEC_HIERARCHY and Default-SPEC_HIERARCHY`}).Stage(stage)
 
 	// Setup of values
 
@@ -243,8 +247,8 @@ func _(stage *models.StageStruct) {
 
 	__Link__000000_CHILDREN.Name = `CHILDREN`
 
-	//gong:ident [ref_models.SPECIFICATION.CHILDREN] comment added to overcome the problem with the comment map association
-	__Link__000000_CHILDREN.Identifier = `ref_models.SPECIFICATION.CHILDREN`
+	//gong:ident [ref_models.SPEC_HIERARCHY.CHILDREN] comment added to overcome the problem with the comment map association
+	__Link__000000_CHILDREN.Identifier = `ref_models.SPEC_HIERARCHY.CHILDREN`
 
 	//gong:ident [ref_models.SPEC_HIERARCHY] comment added to overcome the problem with the comment map association
 	__Link__000000_CHILDREN.Fieldtypename = `ref_models.SPEC_HIERARCHY`
@@ -256,16 +260,16 @@ func _(stage *models.StageStruct) {
 	__Link__000000_CHILDREN.SourceMultiplicity = models.MANY
 	__Link__000000_CHILDREN.SourceMultiplicityOffsetX = 10.000000
 	__Link__000000_CHILDREN.SourceMultiplicityOffsetY = -50.000000
-	__Link__000000_CHILDREN.StartOrientation = models.ORIENTATION_HORIZONTAL
-	__Link__000000_CHILDREN.StartRatio = 0.862696
-	__Link__000000_CHILDREN.EndOrientation = models.ORIENTATION_HORIZONTAL
-	__Link__000000_CHILDREN.EndRatio = 0.500000
-	__Link__000000_CHILDREN.CornerOffsetRatio = 1.646806
+	__Link__000000_CHILDREN.StartOrientation = models.ORIENTATION_VERTICAL
+	__Link__000000_CHILDREN.StartRatio = 0.130139
+	__Link__000000_CHILDREN.EndOrientation = models.ORIENTATION_VERTICAL
+	__Link__000000_CHILDREN.EndRatio = 0.888472
+	__Link__000000_CHILDREN.CornerOffsetRatio = 3.053172
 
 	__Link__000001_CHILDREN.Name = `CHILDREN`
 
-	//gong:ident [ref_models.SPEC_HIERARCHY.CHILDREN] comment added to overcome the problem with the comment map association
-	__Link__000001_CHILDREN.Identifier = `ref_models.SPEC_HIERARCHY.CHILDREN`
+	//gong:ident [ref_models.SPECIFICATION.CHILDREN] comment added to overcome the problem with the comment map association
+	__Link__000001_CHILDREN.Identifier = `ref_models.SPECIFICATION.CHILDREN`
 
 	//gong:ident [ref_models.SPEC_HIERARCHY] comment added to overcome the problem with the comment map association
 	__Link__000001_CHILDREN.Fieldtypename = `ref_models.SPEC_HIERARCHY`
@@ -277,11 +281,11 @@ func _(stage *models.StageStruct) {
 	__Link__000001_CHILDREN.SourceMultiplicity = models.MANY
 	__Link__000001_CHILDREN.SourceMultiplicityOffsetX = 10.000000
 	__Link__000001_CHILDREN.SourceMultiplicityOffsetY = -50.000000
-	__Link__000001_CHILDREN.StartOrientation = models.ORIENTATION_VERTICAL
-	__Link__000001_CHILDREN.StartRatio = 0.130139
-	__Link__000001_CHILDREN.EndOrientation = models.ORIENTATION_VERTICAL
-	__Link__000001_CHILDREN.EndRatio = 0.888472
-	__Link__000001_CHILDREN.CornerOffsetRatio = 3.053172
+	__Link__000001_CHILDREN.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__Link__000001_CHILDREN.StartRatio = 0.862696
+	__Link__000001_CHILDREN.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__Link__000001_CHILDREN.EndRatio = 0.500000
+	__Link__000001_CHILDREN.CornerOffsetRatio = 1.646806
 
 	__Link__000002_REQ_IF_CONTENT.Name = `REQ_IF_CONTENT`
 
@@ -346,47 +350,68 @@ func _(stage *models.StageStruct) {
 	__Link__000004_SPECIFICATIONS.EndRatio = 0.234105
 	__Link__000004_SPECIFICATIONS.CornerOffsetRatio = 1.053172
 
-	__Link__000005_SPECIFICATION_TYPES.Name = `SPECIFICATION_TYPES`
+	__Link__000005_SPECIFICATION_TYPE.Name = `SPECIFICATION_TYPE`
 
-	//gong:ident [ref_models.REQ_IF_CONTENT.SPECIFICATION_TYPES] comment added to overcome the problem with the comment map association
-	__Link__000005_SPECIFICATION_TYPES.Identifier = `ref_models.REQ_IF_CONTENT.SPECIFICATION_TYPES`
+	//gong:ident [ref_models.SPECIFICATION.SPECIFICATION_TYPE] comment added to overcome the problem with the comment map association
+	__Link__000005_SPECIFICATION_TYPE.Identifier = `ref_models.SPECIFICATION.SPECIFICATION_TYPE`
 
 	//gong:ident [ref_models.SPECIFICATION_TYPE] comment added to overcome the problem with the comment map association
-	__Link__000005_SPECIFICATION_TYPES.Fieldtypename = `ref_models.SPECIFICATION_TYPE`
-	__Link__000005_SPECIFICATION_TYPES.FieldOffsetX = -50.000000
-	__Link__000005_SPECIFICATION_TYPES.FieldOffsetY = -16.000000
-	__Link__000005_SPECIFICATION_TYPES.TargetMultiplicity = models.MANY
-	__Link__000005_SPECIFICATION_TYPES.TargetMultiplicityOffsetX = -50.000000
-	__Link__000005_SPECIFICATION_TYPES.TargetMultiplicityOffsetY = 16.000000
-	__Link__000005_SPECIFICATION_TYPES.SourceMultiplicity = models.MANY
-	__Link__000005_SPECIFICATION_TYPES.SourceMultiplicityOffsetX = 10.000000
-	__Link__000005_SPECIFICATION_TYPES.SourceMultiplicityOffsetY = -50.000000
-	__Link__000005_SPECIFICATION_TYPES.StartOrientation = models.ORIENTATION_VERTICAL
-	__Link__000005_SPECIFICATION_TYPES.StartRatio = 0.834306
-	__Link__000005_SPECIFICATION_TYPES.EndOrientation = models.ORIENTATION_HORIZONTAL
-	__Link__000005_SPECIFICATION_TYPES.EndRatio = 0.500000
-	__Link__000005_SPECIFICATION_TYPES.CornerOffsetRatio = 1.005553
+	__Link__000005_SPECIFICATION_TYPE.Fieldtypename = `ref_models.SPECIFICATION_TYPE`
+	__Link__000005_SPECIFICATION_TYPE.FieldOffsetX = -50.000000
+	__Link__000005_SPECIFICATION_TYPE.FieldOffsetY = -16.000000
+	__Link__000005_SPECIFICATION_TYPE.TargetMultiplicity = models.ZERO_ONE
+	__Link__000005_SPECIFICATION_TYPE.TargetMultiplicityOffsetX = -50.000000
+	__Link__000005_SPECIFICATION_TYPE.TargetMultiplicityOffsetY = 16.000000
+	__Link__000005_SPECIFICATION_TYPE.SourceMultiplicity = models.MANY
+	__Link__000005_SPECIFICATION_TYPE.SourceMultiplicityOffsetX = 10.000000
+	__Link__000005_SPECIFICATION_TYPE.SourceMultiplicityOffsetY = -50.000000
+	__Link__000005_SPECIFICATION_TYPE.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__Link__000005_SPECIFICATION_TYPE.StartRatio = 0.500000
+	__Link__000005_SPECIFICATION_TYPE.EndOrientation = models.ORIENTATION_VERTICAL
+	__Link__000005_SPECIFICATION_TYPE.EndRatio = 0.188472
+	__Link__000005_SPECIFICATION_TYPE.CornerOffsetRatio = -1.063908
 
-	__Link__000006_SPEC_OBJECT_TYPES.Name = `SPEC_OBJECT_TYPES`
+	__Link__000006_SPECIFICATION_TYPES.Name = `SPECIFICATION_TYPES`
+
+	//gong:ident [ref_models.REQ_IF_CONTENT.SPECIFICATION_TYPES] comment added to overcome the problem with the comment map association
+	__Link__000006_SPECIFICATION_TYPES.Identifier = `ref_models.REQ_IF_CONTENT.SPECIFICATION_TYPES`
+
+	//gong:ident [ref_models.SPECIFICATION_TYPE] comment added to overcome the problem with the comment map association
+	__Link__000006_SPECIFICATION_TYPES.Fieldtypename = `ref_models.SPECIFICATION_TYPE`
+	__Link__000006_SPECIFICATION_TYPES.FieldOffsetX = -50.000000
+	__Link__000006_SPECIFICATION_TYPES.FieldOffsetY = -16.000000
+	__Link__000006_SPECIFICATION_TYPES.TargetMultiplicity = models.MANY
+	__Link__000006_SPECIFICATION_TYPES.TargetMultiplicityOffsetX = -50.000000
+	__Link__000006_SPECIFICATION_TYPES.TargetMultiplicityOffsetY = 16.000000
+	__Link__000006_SPECIFICATION_TYPES.SourceMultiplicity = models.MANY
+	__Link__000006_SPECIFICATION_TYPES.SourceMultiplicityOffsetX = 10.000000
+	__Link__000006_SPECIFICATION_TYPES.SourceMultiplicityOffsetY = -50.000000
+	__Link__000006_SPECIFICATION_TYPES.StartOrientation = models.ORIENTATION_VERTICAL
+	__Link__000006_SPECIFICATION_TYPES.StartRatio = 0.834306
+	__Link__000006_SPECIFICATION_TYPES.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__Link__000006_SPECIFICATION_TYPES.EndRatio = 0.500000
+	__Link__000006_SPECIFICATION_TYPES.CornerOffsetRatio = 1.005553
+
+	__Link__000007_SPEC_OBJECT_TYPES.Name = `SPEC_OBJECT_TYPES`
 
 	//gong:ident [ref_models.REQ_IF_CONTENT.SPEC_OBJECT_TYPES] comment added to overcome the problem with the comment map association
-	__Link__000006_SPEC_OBJECT_TYPES.Identifier = `ref_models.REQ_IF_CONTENT.SPEC_OBJECT_TYPES`
+	__Link__000007_SPEC_OBJECT_TYPES.Identifier = `ref_models.REQ_IF_CONTENT.SPEC_OBJECT_TYPES`
 
 	//gong:ident [ref_models.SPEC_OBJECT_TYPE] comment added to overcome the problem with the comment map association
-	__Link__000006_SPEC_OBJECT_TYPES.Fieldtypename = `ref_models.SPEC_OBJECT_TYPE`
-	__Link__000006_SPEC_OBJECT_TYPES.FieldOffsetX = -50.000000
-	__Link__000006_SPEC_OBJECT_TYPES.FieldOffsetY = -16.000000
-	__Link__000006_SPEC_OBJECT_TYPES.TargetMultiplicity = models.MANY
-	__Link__000006_SPEC_OBJECT_TYPES.TargetMultiplicityOffsetX = -50.000000
-	__Link__000006_SPEC_OBJECT_TYPES.TargetMultiplicityOffsetY = 16.000000
-	__Link__000006_SPEC_OBJECT_TYPES.SourceMultiplicity = models.MANY
-	__Link__000006_SPEC_OBJECT_TYPES.SourceMultiplicityOffsetX = 10.000000
-	__Link__000006_SPEC_OBJECT_TYPES.SourceMultiplicityOffsetY = -50.000000
-	__Link__000006_SPEC_OBJECT_TYPES.StartOrientation = models.ORIENTATION_VERTICAL
-	__Link__000006_SPEC_OBJECT_TYPES.StartRatio = 0.055139
-	__Link__000006_SPEC_OBJECT_TYPES.EndOrientation = models.ORIENTATION_HORIZONTAL
-	__Link__000006_SPEC_OBJECT_TYPES.EndRatio = 0.500000
-	__Link__000006_SPEC_OBJECT_TYPES.CornerOffsetRatio = 1.069045
+	__Link__000007_SPEC_OBJECT_TYPES.Fieldtypename = `ref_models.SPEC_OBJECT_TYPE`
+	__Link__000007_SPEC_OBJECT_TYPES.FieldOffsetX = -50.000000
+	__Link__000007_SPEC_OBJECT_TYPES.FieldOffsetY = -16.000000
+	__Link__000007_SPEC_OBJECT_TYPES.TargetMultiplicity = models.MANY
+	__Link__000007_SPEC_OBJECT_TYPES.TargetMultiplicityOffsetX = -50.000000
+	__Link__000007_SPEC_OBJECT_TYPES.TargetMultiplicityOffsetY = 16.000000
+	__Link__000007_SPEC_OBJECT_TYPES.SourceMultiplicity = models.MANY
+	__Link__000007_SPEC_OBJECT_TYPES.SourceMultiplicityOffsetX = 10.000000
+	__Link__000007_SPEC_OBJECT_TYPES.SourceMultiplicityOffsetY = -50.000000
+	__Link__000007_SPEC_OBJECT_TYPES.StartOrientation = models.ORIENTATION_VERTICAL
+	__Link__000007_SPEC_OBJECT_TYPES.StartRatio = 0.055139
+	__Link__000007_SPEC_OBJECT_TYPES.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__Link__000007_SPEC_OBJECT_TYPES.EndRatio = 0.500000
+	__Link__000007_SPEC_OBJECT_TYPES.CornerOffsetRatio = 1.069045
 
 	__Position__000000_Pos_Default_REQIF.X = 44.000000
 	__Position__000000_Pos_Default_REQIF.Y = 28.000000
@@ -404,8 +429,8 @@ func _(stage *models.StageStruct) {
 	__Position__000003_Pos_Default_SPECIFICATION.Y = 450.000000
 	__Position__000003_Pos_Default_SPECIFICATION.Name = `Pos-Default-SPECIFICATION`
 
-	__Position__000004_Pos_Default_SPECIFICATION_TYPE.X = 1190.000061
-	__Position__000004_Pos_Default_SPECIFICATION_TYPE.Y = 226.000000
+	__Position__000004_Pos_Default_SPECIFICATION_TYPE.X = 1111.000061
+	__Position__000004_Pos_Default_SPECIFICATION_TYPE.Y = 243.000000
 	__Position__000004_Pos_Default_SPECIFICATION_TYPE.Name = `Pos-Default-SPECIFICATION_TYPE`
 
 	__Position__000005_Pos_Default_SPEC_HIERARCHY.X = 37.000000
@@ -436,13 +461,17 @@ func _(stage *models.StageStruct) {
 	__Vertice__000004_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPEC_OBJECT_TYPE.Y = 191.500000
 	__Vertice__000004_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPEC_OBJECT_TYPE.Name = `Verticle in class diagram Default in middle between Default-REQ_IF_CONTENT and Default-SPEC_OBJECT_TYPE`
 
-	__Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY.X = 402.000000
-	__Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY.Y = 562.000000
-	__Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY.Name = `Verticle in class diagram Default in middle between Default-SPECIFICATION and Default-SPEC_HIERARCHY`
+	__Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPECIFICATION_TYPE.X = 974.000030
+	__Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPECIFICATION_TYPE.Y = 413.500000
+	__Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPECIFICATION_TYPE.Name = `Verticle in class diagram Default in middle between Default-SPECIFICATION and Default-SPECIFICATION_TYPE`
 
-	__Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY.X = 406.000000
-	__Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY.Y = 642.500000
-	__Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY.Name = `Verticle in class diagram Default in middle between Default-SPEC_HIERARCHY and Default-SPEC_HIERARCHY`
+	__Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY.X = 402.000000
+	__Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY.Y = 562.000000
+	__Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY.Name = `Verticle in class diagram Default in middle between Default-SPECIFICATION and Default-SPEC_HIERARCHY`
+
+	__Vertice__000007_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY.X = 406.000000
+	__Vertice__000007_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY.Y = 642.500000
+	__Vertice__000007_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY.Name = `Verticle in class diagram Default in middle between Default-SPEC_HIERARCHY and Default-SPEC_HIERARCHY`
 
 	// Setup of pointers
 	__Classdiagram__000000_Default.GongStructShapes = append(__Classdiagram__000000_Default.GongStructShapes, __GongStructShape__000000_Default_REQIF)
@@ -456,22 +485,24 @@ func _(stage *models.StageStruct) {
 	__GongStructShape__000000_Default_REQIF.Links = append(__GongStructShape__000000_Default_REQIF.Links, __Link__000003_REQ_IF_HEADER)
 	__GongStructShape__000000_Default_REQIF.Links = append(__GongStructShape__000000_Default_REQIF.Links, __Link__000002_REQ_IF_CONTENT)
 	__GongStructShape__000001_Default_REQ_IF_CONTENT.Position = __Position__000001_Pos_Default_REQ_IF_CONTENT
-	__GongStructShape__000001_Default_REQ_IF_CONTENT.Links = append(__GongStructShape__000001_Default_REQ_IF_CONTENT.Links, __Link__000006_SPEC_OBJECT_TYPES)
-	__GongStructShape__000001_Default_REQ_IF_CONTENT.Links = append(__GongStructShape__000001_Default_REQ_IF_CONTENT.Links, __Link__000005_SPECIFICATION_TYPES)
+	__GongStructShape__000001_Default_REQ_IF_CONTENT.Links = append(__GongStructShape__000001_Default_REQ_IF_CONTENT.Links, __Link__000007_SPEC_OBJECT_TYPES)
+	__GongStructShape__000001_Default_REQ_IF_CONTENT.Links = append(__GongStructShape__000001_Default_REQ_IF_CONTENT.Links, __Link__000006_SPECIFICATION_TYPES)
 	__GongStructShape__000001_Default_REQ_IF_CONTENT.Links = append(__GongStructShape__000001_Default_REQ_IF_CONTENT.Links, __Link__000004_SPECIFICATIONS)
 	__GongStructShape__000002_Default_REQ_IF_HEADER.Position = __Position__000002_Pos_Default_REQ_IF_HEADER
 	__GongStructShape__000003_Default_SPECIFICATION.Position = __Position__000003_Pos_Default_SPECIFICATION
 	__GongStructShape__000003_Default_SPECIFICATION.Fields = append(__GongStructShape__000003_Default_SPECIFICATION.Fields, __Field__000000_TYPE)
-	__GongStructShape__000003_Default_SPECIFICATION.Links = append(__GongStructShape__000003_Default_SPECIFICATION.Links, __Link__000000_CHILDREN)
+	__GongStructShape__000003_Default_SPECIFICATION.Links = append(__GongStructShape__000003_Default_SPECIFICATION.Links, __Link__000001_CHILDREN)
+	__GongStructShape__000003_Default_SPECIFICATION.Links = append(__GongStructShape__000003_Default_SPECIFICATION.Links, __Link__000005_SPECIFICATION_TYPE)
 	__GongStructShape__000004_Default_SPECIFICATION_TYPE.Position = __Position__000004_Pos_Default_SPECIFICATION_TYPE
 	__GongStructShape__000005_Default_SPEC_HIERARCHY.Position = __Position__000005_Pos_Default_SPEC_HIERARCHY
-	__GongStructShape__000005_Default_SPEC_HIERARCHY.Links = append(__GongStructShape__000005_Default_SPEC_HIERARCHY.Links, __Link__000001_CHILDREN)
+	__GongStructShape__000005_Default_SPEC_HIERARCHY.Links = append(__GongStructShape__000005_Default_SPEC_HIERARCHY.Links, __Link__000000_CHILDREN)
 	__GongStructShape__000006_Default_SPEC_OBJECT_TYPE.Position = __Position__000006_Pos_Default_SPEC_OBJECT_TYPE
-	__Link__000000_CHILDREN.Middlevertice = __Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY
-	__Link__000001_CHILDREN.Middlevertice = __Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY
+	__Link__000000_CHILDREN.Middlevertice = __Vertice__000007_Verticle_in_class_diagram_Default_in_middle_between_Default_SPEC_HIERARCHY_and_Default_SPEC_HIERARCHY
+	__Link__000001_CHILDREN.Middlevertice = __Vertice__000006_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPEC_HIERARCHY
 	__Link__000002_REQ_IF_CONTENT.Middlevertice = __Vertice__000000_Verticle_in_class_diagram_Default_in_middle_between_Default_REQIF_and_Default_REQ_IF_CONTENT
 	__Link__000003_REQ_IF_HEADER.Middlevertice = __Vertice__000001_Verticle_in_class_diagram_Default_in_middle_between_Default_REQIF_and_Default_REQ_IF_HEADER
 	__Link__000004_SPECIFICATIONS.Middlevertice = __Vertice__000002_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPECIFICATION
-	__Link__000005_SPECIFICATION_TYPES.Middlevertice = __Vertice__000003_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPECIFICATION_TYPE
-	__Link__000006_SPEC_OBJECT_TYPES.Middlevertice = __Vertice__000004_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPEC_OBJECT_TYPE
+	__Link__000005_SPECIFICATION_TYPE.Middlevertice = __Vertice__000005_Verticle_in_class_diagram_Default_in_middle_between_Default_SPECIFICATION_and_Default_SPECIFICATION_TYPE
+	__Link__000006_SPECIFICATION_TYPES.Middlevertice = __Vertice__000003_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPECIFICATION_TYPE
+	__Link__000007_SPEC_OBJECT_TYPES.Middlevertice = __Vertice__000004_Verticle_in_class_diagram_Default_in_middle_between_Default_REQ_IF_CONTENT_and_Default_SPEC_OBJECT_TYPE
 }
